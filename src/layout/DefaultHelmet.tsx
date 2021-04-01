@@ -1,28 +1,24 @@
-import React from "react";
-import { useIntl } from "react-intl";
-import Helmet from "react-helmet";
-import { RouteComponentProps, withRouter } from "react-router-dom";
-import { routes } from "../../src/constants/routes";
+import AppBar from "@material-ui/core/AppBar";
+import IconButton from "@material-ui/core/IconButton";
+import InputBase from "@material-ui/core/InputBase";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import {
+  createStyles,
   fade,
   makeStyles,
   Theme,
-  createStyles,
 } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
-import Badge from "@material-ui/core/Badge";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
-import MenuIcon from "@material-ui/icons/Menu";
-import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from "@material-ui/icons/Notifications";
+import MenuIcon from "@material-ui/icons/Menu";
 import MoreIcon from "@material-ui/icons/MoreVert";
+import SearchIcon from "@material-ui/icons/Search";
+import React from "react";
+import { RouteComponentProps, withRouter } from "react-router-dom";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import { Col, Row } from "../modules/common/Elements";
 interface Props {}
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -48,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
       marginLeft: 0,
       width: "100%",
-      [theme.breakpoints.up("sm")]: {
+      [theme.breakpoints.up("xl")]: {
         marginLeft: theme.spacing(3),
         width: "auto",
       },
@@ -144,22 +140,6 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -171,6 +151,17 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
         </IconButton>
         <p>Profile</p>
       </MenuItem>
+      <MenuItem>
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <ShoppingCartIcon />
+          <Typography>Giỏ hàng</Typography>
+        </IconButton>
+      </MenuItem>
     </Menu>
   );
 
@@ -178,6 +169,14 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
+          <Typography
+            className={classes.title}
+            variant="h6"
+            noWrap
+            style={{ marginRight: 10, width:150 }}
+          >
+            Team Đụt
+          </Typography>
           <IconButton
             edge="start"
             className={classes.menuButton}
@@ -186,9 +185,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Team Đụt
-          </Typography>
+
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -204,25 +201,47 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            <Row style={{ width: 120 }}>
+              <IconButton
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle fontSize="large" />
+              </IconButton>
+              <Col>
+                <Typography
+                  style={{ fontSize: 10, paddingTop: 10 }}
+                  variant="body2"
+                >
+                  Tài khoản
+                </Typography>
+                <Typography
+                  style={{ fontSize: 10, paddingBottom: 10 }}
+                  variant="body2"
+                >
+                  Nguyen Anh
+                </Typography>
+              </Col>
+            </Row>
+          </div>
+          <div className={classes.sectionDesktop}>
             <IconButton
               edge="end"
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              <Row>
+                <ShoppingCartIcon fontSize="large"/>
+                <Typography style={{ fontSize: 10, paddingTop: 12 }}>
+                  Giỏ hàng
+                </Typography>
+              </Row>
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
