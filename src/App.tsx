@@ -29,33 +29,6 @@ interface Props extends ReturnType<typeof mapStateToProps> {}
 
 const App: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const dispatch = useDispatch<ThunkDispatch<AppState, null, Action<string>>>();
-  const goToLogin = () => props?.history?.push(routes.LOGIN);
-  // const fetchEmployeesInfo = async () => {
-  //   //consistent employee status for all screens
-  //   try {
-  //     const res: some = await actionGetEmployeesInfo();
-  //     if (res?.code === SUCCESS_CODE) {
-  //       dispatch(actionSetStatus(res?.data?.status));
-  //       dispatch(actionsetAcceptChat(res?.data.acceptChat));
-  //     }
-  //   } catch (error) {
-  //   } finally {
-  //   }
-  // };
-  const fetchDeviceId = async () => {
-    if (isEmpty(localStorage.getItem(UUID))) {
-      localStorage.setItem(UUID, uuidv4());
-    }
-    if (localStorage.getItem(ACCESS_TOKEN)) {
-      // fetchEmployeesInfo();
-    } else {
-      goToLogin();
-    }
-  };
-  useEffect(() => {
-    fetchDeviceId(); //eslint-disable-next-line
-  }, []);
-
   return (
     <>
       <React.Suspense fallback={<LoadingIcon />}>

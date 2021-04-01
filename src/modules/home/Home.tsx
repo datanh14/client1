@@ -8,7 +8,6 @@ import { Row } from "../common/Elements";
 import DashboardChart from "./DashboardChart";
 import ProductItemSale from "./ProductItemSale";
 
-let chartData = [1, 53, 65, -5, -74, -71, -28, -1, 0, -11, -14, -4, -2];
 const dataItems = [
   {
     sale: true,
@@ -94,8 +93,6 @@ const dataItems = [
 const Home = (props: some) => {
   return (
     <Box style={{ padding: 24 }}>
-      <DashboardChart data={chartData} title="Chats by Month" />
-      {/* <ProductItem data={chartData} /> */}
       <Row
         style={{
           maxWidth: "80%",
