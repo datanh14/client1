@@ -1,0 +1,16 @@
+// system
+export const CHANGE_LANGUAGE = 'CHANGE_LANGUAGE';
+export const SHOW_LOADING = 'SHOW_LOADING';
+export const HIDE_LOADING = 'HIDE_LOADING';
+export const UPDATE_PROFILE = 'UPDATE_PROFILE';
+
+//chat
+export const SET_STATUS = 'SET_STATUS';
+export const ACCEPTED_CHAT = 'ACCEPTED_CHAT';
+export const SWITCH_STATUS = 'SWITCH_STATUS';
+export const SET_TICKETS = 'SET_TICKETS';
+export const OPEN_CHAT = 'OPEN_CHAT';
+export const UPDATE_LAST_MESSAGE = 'UPDATE_LAST_MESSAGE';
+export const UPDATE_DRAFT_MESSAGE = 'UPDATE_DRAFT_MESSAGE';
+export const UPDATED_MESSAGE_IDS = 'UPDATED_MESSAGE_IDS';
+export const UPDATED_SOCKET = 'UPDATED_SOCKET';

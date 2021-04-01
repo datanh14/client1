@@ -1,0 +1,31 @@
+@import '../../assets/theme/colors.module.scss';
+.management-container {
+  padding: 16px;
+  .action-container {
+    justify-content: center;
+    path {
+      color: $GREY_600;
+    }
+    svg {
+      margin: 0 8px;
+    }
+  }
+  .content-shortcut {
+    white-space: pre-line;
+  }
+}
+.dialog-content {
+  .MuiFormControl-root {
+    width: 100%;
+  }
+}
+
+.header-management {
+  margin: -16px;
+  padding: 16px;
+  background: $WHITE;
+  margin-bottom: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
