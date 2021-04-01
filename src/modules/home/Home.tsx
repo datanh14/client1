@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { some } from "../../constants/constants";
 import { Row } from "../common/Elements";
-import DashboardChart from "./DashboardChart";
 import ProductItemSale from "./ProductItemSale";
 
 const dataItems = [

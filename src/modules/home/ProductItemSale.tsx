@@ -2,11 +2,7 @@ import { Box } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Rating from "@material-ui/lab/Rating";
 import React from "react";
-import { some } from "../../constants/constants";
 
-interface Props {
-  data: some;
-}
 const ProductItem = (props: any) => {
   const { data } = props;
   return (

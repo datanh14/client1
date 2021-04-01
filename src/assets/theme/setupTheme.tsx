@@ -109,7 +109,7 @@ export const MUI_THEME = createMuiTheme({
   typography,
   overrides: {
     MuiPaper: {
-      root: { borderRadius: 8 },
+      root: { borderRadius: 0 },
       outlined: {
         border: `1px solid ${GREY_400}`,
       },
