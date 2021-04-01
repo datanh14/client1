@@ -19,9 +19,16 @@ import React from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { Col, Row } from "../modules/common/Elements";
+import { Popover } from "@material-ui/core";
 interface Props {}
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    popover: {
+      pointerEvents: "none",
+    },
+    paper: {
+      padding: theme.spacing(1),
+    },
     grow: {
       flexGrow: 1,
     },
@@ -88,6 +95,19 @@ const useStyles = makeStyles((theme: Theme) =>
 const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorElMenu, setAnchorElMenu] = React.useState<HTMLElement | null>(
+    null
+  );
+  const handlePopoverOpen = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    setAnchorElMenu(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorElMenu(null);
+  };
+  const open = Boolean(anchorElMenu);
   const [
     mobileMoreAnchorEl,
     setMobileMoreAnchorEl,
@@ -178,7 +198,15 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
             Team Đụt
           </Typography>
           <Row style={{ width: 200 }}>
-            <IconButton edge="start" color="inherit" aria-label="open drawer">
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              aria-owns={open ? "mouse-over-popover" : undefined}
+              aria-haspopup="true"
+              onMouseEnter={handlePopoverOpen}
+              onMouseLeave={handlePopoverClose}
+            >
               <Row>
                 <MenuIcon fontSize="large" />
                 <Col>
@@ -199,6 +227,27 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                     Sản Phẩm
                   </Typography>
                 </Col>
+                <Popover
+                  id="mouse-over-popover"
+                  className={classes.popover}
+                  classes={{
+                    paper: classes.paper,
+                  }}
+                  open={open}
+                  anchorEl={anchorElMenu}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  onClose={handlePopoverClose}
+                  disableRestoreFocus
+                >
+                  <Typography>I use Popover.</Typography>
+                </Popover>
               </Row>
             </IconButton>
           </Row>
