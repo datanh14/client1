@@ -60,7 +60,7 @@ const App: React.FC<RouteComponentProps<any> & Props> = (props) => {
     <>
       <React.Suspense fallback={<LoadingIcon />}>
         <Switch>
-          <Route exact path={routes.LOGIN} component={Login} />
+          {/* <Route exact path={routes.LOGIN} component={Login} /> */}
           <Route exact path={routes.NOT_FOUND} component={NotFound} />
           {/* <ProtectedRoute path={"*"} component={MainLayout} /> */}
           <Route path={"*"} component={MainLayout} />
