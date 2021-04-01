@@ -173,18 +173,35 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
             className={classes.title}
             variant="h6"
             noWrap
-            style={{ marginRight: 10, width:150 }}
+            style={{ marginRight: 10, width: 150 }}
           >
             Team Đụt
           </Typography>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
+          <Row style={{ width: 200 }}>
+            <IconButton edge="start" color="inherit" aria-label="open drawer">
+              <Row>
+                <MenuIcon fontSize="large" />
+                <Col>
+                  <Typography
+                    style={{ fontSize: 10, paddingTop: 10, textAlign: "left" }}
+                    variant="body2"
+                  >
+                    Danh Mục
+                  </Typography>
+                  <Typography
+                    style={{
+                      fontSize: 12,
+                      paddingBottom: 10,
+                      fontWeight: "bold",
+                    }}
+                    variant="body2"
+                  >
+                    Sản Phẩm
+                  </Typography>
+                </Col>
+              </Row>
+            </IconButton>
+          </Row>
 
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -210,22 +227,28 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                 onClick={handleProfileMenuOpen}
                 color="inherit"
               >
-                <AccountCircle fontSize="large" />
+                <Row>
+                  <AccountCircle fontSize="large" />
+                  <Col>
+                    <Typography
+                      style={{
+                        fontSize: 10,
+                        paddingTop: 10,
+                        textAlign: "left",
+                      }}
+                      variant="body2"
+                    >
+                      Tài khoản
+                    </Typography>
+                    <Typography
+                      style={{ fontSize: 10, paddingBottom: 10 }}
+                      variant="body2"
+                    >
+                      Nguyen Anh
+                    </Typography>
+                  </Col>
+                </Row>
               </IconButton>
-              <Col>
-                <Typography
-                  style={{ fontSize: 10, paddingTop: 10 }}
-                  variant="body2"
-                >
-                  Tài khoản
-                </Typography>
-                <Typography
-                  style={{ fontSize: 10, paddingBottom: 10 }}
-                  variant="body2"
-                >
-                  Nguyen Anh
-                </Typography>
-              </Col>
             </Row>
           </div>
           <div className={classes.sectionDesktop}>
@@ -237,7 +260,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
               color="inherit"
             >
               <Row>
-                <ShoppingCartIcon fontSize="large"/>
+                <ShoppingCartIcon fontSize="large" />
                 <Typography style={{ fontSize: 10, paddingTop: 12 }}>
                   Giỏ hàng
                 </Typography>
