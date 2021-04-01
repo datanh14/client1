@@ -44,7 +44,6 @@ const MainLayout: React.FC<RouteComponentProps<any> & Props> = (props) => {
       <main
         className={classes.content}
         style={{
-          marginLeft: 73,
           transition: "linear 225ms",
         }}
       >

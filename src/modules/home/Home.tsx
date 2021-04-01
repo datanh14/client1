@@ -94,9 +94,7 @@ const Home = (props: some) => {
     <Box style={{ padding: 24 }}>
       <Row
         style={{
-          maxWidth: "80%",
           display: "flex",
-          alignItems: "center",
           flexWrap: "wrap",
         }}
       >
@@ -104,7 +102,6 @@ const Home = (props: some) => {
           return <ProductItemSale data={item} />;
         })}
       </Row>
-      {/* <ProductItemSale data={chartData} /> */}
     </Box>
   );
 };
