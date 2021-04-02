@@ -15,11 +15,15 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuIcon from "@material-ui/icons/Menu";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import SearchIcon from "@material-ui/icons/Search";
-import React from "react";
+import React, { useEffect } from "react";
+import { ACCESS_TOKEN, some } from "../constants/constants";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { Col, Row } from "../modules/common/Elements";
-interface Props {}
+import { routes } from "../constants/routes";
+interface Props {
+  readonly profile?: some;
+}
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     grow: {
@@ -86,15 +90,20 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
+  const { profile } = props;
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [
     mobileMoreAnchorEl,
     setMobileMoreAnchorEl,
   ] = React.useState<null | HTMLElement>(null);
-
+  const [islogin, setLogin] = React.useState(profile?.account !== undefined); 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  useEffect(() => {
+    setLogin(profile?.account !== undefined); // eslint-disable-next-line
+  }, []);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -113,6 +122,13 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleMenuLogin = (route: string) => props?.history?.push(route);
+
+  const handleMenuLogout = (route: string) => {
+    localStorage.removeItem(ACCESS_TOKEN);
+    props?.history?.push(route);
+  }
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -126,6 +142,9 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      { islogin
+       ? <MenuItem onClick={() => {handleMenuLogout(routes.LOGIN);}}>Logout</MenuItem>
+       : <MenuItem onClick={() => {handleMenuLogin(routes.LOGIN);}}>Login</MenuItem>}
     </Menu>
   );
 
@@ -244,7 +263,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                       style={{ fontSize: 10, paddingBottom: 10 }}
                       variant="body2"
                     >
-                      Nguyen Anh
+                      {profile?.account}
                     </Typography>
                   </Col>
                 </Row>
