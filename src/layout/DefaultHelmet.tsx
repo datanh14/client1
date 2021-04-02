@@ -1,8 +1,10 @@
+import { Avatar, Button, Paper } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import Popper from "@material-ui/core/Popper";
 import {
   createStyles,
   fade,
@@ -15,11 +17,12 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuIcon from "@material-ui/icons/Menu";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import SearchIcon from "@material-ui/icons/Search";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import { some } from "../constants/constants";
 import { Col, Row } from "../modules/common/Elements";
-import { Popover } from "@material-ui/core";
+
 interface Props {}
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,6 +43,10 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up("sm")]: {
         display: "block",
       },
+    },
+    large: {
+      width: theme.spacing(5),
+      height: theme.spacing(5),
     },
     search: {
       position: "relative",
@@ -132,6 +139,20 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+  const dataCategory = [
+    {
+      id: 1,
+      name: "Tủ Lạnh",
+    },
+    {
+      id: 2,
+      name: "Máy Giặt",
+    },
+    {
+      id: 3,
+      name: "Nồi",
+    },
+  ];
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -184,7 +205,6 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
       </MenuItem>
     </Menu>
   );
-
   return (
     <div className={classes.grow}>
       <AppBar position="static">
@@ -227,27 +247,28 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                     Sản Phẩm
                   </Typography>
                 </Col>
-                <Popover
+                <Popper
                   id="mouse-over-popover"
-                  className={classes.popover}
-                  classes={{
-                    paper: classes.paper,
-                  }}
                   open={open}
                   anchorEl={anchorElMenu}
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "left",
+                  placement="top-start"
+                  disablePortal={true}
+                  modifiers={{
+                    flip: {
+                      enabled: true,
+                    },
+                    preventOverflow: {
+                      enabled: true,
+                      boundariesElement: "scrollParent",
+                    },
                   }}
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                  onClose={handlePopoverClose}
-                  disableRestoreFocus
                 >
-                  <Typography>I use Popover.</Typography>
-                </Popover>
+                  <Paper onMouseLeave={handlePopoverClose}>
+                    {dataCategory.map((data: some, index) => (
+                      <MenuItem>{data?.name}</MenuItem>
+                    ))}
+                  </Paper>
+                </Popper>
               </Row>
             </IconButton>
           </Row>
@@ -277,7 +298,11 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                 color="inherit"
               >
                 <Row>
-                  <AccountCircle fontSize="large" />
+                  <Avatar
+                    alt="Remy Sharp"
+                    src="https://scontent.fhan2-5.fna.fbcdn.net/v/t1.6435-9/153745673_1997564207066819_2723027247060726863_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=A5IMouMiviEAX-qd3fr&_nc_ht=scontent.fhan2-5.fna&oh=732a6d84a3ae1cb3d41924496738ebd6&oe=608C0150"
+                    className={classes.large}
+                  />
                   <Col>
                     <Typography
                       style={{

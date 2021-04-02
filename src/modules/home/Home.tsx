@@ -1,5 +1,5 @@
 // import { FormattedMessage } from 'react-intl';
-import { Box } from "@material-ui/core";
+import { Box, Container } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -91,11 +91,17 @@ const dataItems = [
 ];
 const Home = (props: some) => {
   return (
-    <Box style={{ padding: 24 }}>
+    <Box style={{ padding: 24, width: "100%" }}>
       <Row
         style={{
-          display: "flex",
+          width: "100%",
+        }}
+      ></Row>
+      <Row
+        style={{
           flexWrap: "wrap",
+          margin: "0 auto",
+          width: "100%",
         }}
       >
         {dataItems.map((item: some) => {
