@@ -9,4 +9,5 @@ export const routes: some = {
   TRANSACTION_MANAGEMENT: '/management/transaction',
   WARE_MANAGEMENT: '/management/warehouse',
   PRODUCT_MANAGEMENT: '/management/product',
+  PRODUCT_DETAIL: '/:id',
 };
