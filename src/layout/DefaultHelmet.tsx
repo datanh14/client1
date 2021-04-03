@@ -105,6 +105,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const { profile } = props;
+  console.log(profile);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [data, setData] = React.useState<some>();
@@ -183,7 +184,9 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
     localStorage.removeItem(ACCESS_TOKEN);
     props?.history?.push(route);
   };
-
+  const gotoDetailCategory = (id: number) => {
+    props?.history?.push(`${routes.DETAIL_CATEGORY}/${id}`);
+  };
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -311,9 +314,20 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                   }}
                 >
                   <Paper onMouseLeave={handlePopoverClose}>
-                    {data?.category.childList.map((item: some, index: any) => (
-                      <MenuItem>{item?.name}</MenuItem>
-                    ))}
+                    {data?.category.childList.map(
+                      (items: some, index: number) => {
+                        return (
+                          <MenuItem
+                            key={index}
+                            onClick={() => {
+                              gotoDetailCategory(items.id);
+                            }}
+                          >
+                            {items?.name}
+                          </MenuItem>
+                        );
+                      }
+                    )}
                   </Paper>
                 </Popper>
               </Row>

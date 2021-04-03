@@ -105,8 +105,8 @@ const Home = (props: some) => {
           width: "100%",
         }}
       >
-        {dataItems.map((item: some) => {
-          return <ProductItemSale data={item} />;
+        {dataItems.map((item: some, index: number) => {
+          return <ProductItemSale key={index} data={item} />;
         })}
       </Row>
     </Box>
