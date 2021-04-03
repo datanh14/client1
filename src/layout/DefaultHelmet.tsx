@@ -21,6 +21,8 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { Col, Row } from "../modules/common/Elements";
 import { routes } from "../constants/routes";
+import Helmet from "react-helmet";
+
 interface Props {
   readonly profile?: some;
 }
@@ -97,7 +99,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
     mobileMoreAnchorEl,
     setMobileMoreAnchorEl,
   ] = React.useState<null | HTMLElement>(null);
-  const [islogin, setLogin] = React.useState(profile?.account !== undefined); 
+  const [islogin, setLogin] = React.useState(profile?.account !== undefined);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -127,7 +129,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const handleMenuLogout = (route: string) => {
     localStorage.removeItem(ACCESS_TOKEN);
     props?.history?.push(route);
-  }
+  };
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -142,9 +144,23 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      { islogin
-       ? <MenuItem onClick={() => {handleMenuLogout(routes.LOGIN);}}>Logout</MenuItem>
-       : <MenuItem onClick={() => {handleMenuLogin(routes.LOGIN);}}>Login</MenuItem>}
+      {islogin ? (
+        <MenuItem
+          onClick={() => {
+            handleMenuLogout(routes.LOGIN);
+          }}
+        >
+          Logout
+        </MenuItem>
+      ) : (
+        <MenuItem
+          onClick={() => {
+            handleMenuLogin(routes.LOGIN);
+          }}
+        >
+          Login
+        </MenuItem>
+      )}
     </Menu>
   );
 
@@ -186,68 +202,20 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography
-            className={classes.title}
-            variant="h6"
-            noWrap
-            style={{ marginRight: 10, width: 150 }}
-          >
-            Team Đụt
-          </Typography>
-          <Row style={{ width: 200 }}>
-            <IconButton edge="start" color="inherit" aria-label="open drawer">
-              <Row>
-                <MenuIcon fontSize="large" />
-                <Col>
-                  <Typography
-                    style={{ fontSize: 10, paddingTop: 10, textAlign: "left" }}
-                    variant="body2"
-                  >
-                    Danh Mục
-                  </Typography>
-                  <Typography
-                    style={{
-                      fontSize: 12,
-                      paddingBottom: 10,
-                      fontWeight: "bold",
-                    }}
-                    variant="body2"
-                  >
-                    Sản Phẩm
-                  </Typography>
-                </Col>
-              </Row>
-            </IconButton>
-          </Row>
-
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </div>
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <Row style={{ width: 120 }}>
-              <IconButton
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
+        <AppBar position="static">
+          <Toolbar>
+            <Typography
+              className={classes.title}
+              variant="h6"
+              noWrap
+              style={{ marginRight: 10, width: 150 }}
+            >
+              Team Đụt
+            </Typography>
+            <Row style={{ width: 200 }}>
+              <IconButton edge="start" color="inherit" aria-label="open drawer">
                 <Row>
-                  <AccountCircle fontSize="large" />
+                  <MenuIcon fontSize="large" />
                   <Col>
                     <Typography
                       style={{
@@ -257,50 +225,102 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                       }}
                       variant="body2"
                     >
-                      Tài khoản
+                      Danh Mục
                     </Typography>
                     <Typography
-                      style={{ fontSize: 10, paddingBottom: 10 }}
+                      style={{
+                        fontSize: 12,
+                        paddingBottom: 10,
+                        fontWeight: "bold",
+                      }}
                       variant="body2"
                     >
-                      {profile?.account}
+                      Sản Phẩm
                     </Typography>
                   </Col>
                 </Row>
               </IconButton>
             </Row>
-          </div>
-          <div className={classes.sectionDesktop}>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              color="inherit"
-            >
-              <Row>
-                <ShoppingCartIcon fontSize="large" />
-                <Typography style={{ fontSize: 10, paddingTop: 12 }}>
-                  Giỏ hàng
-                </Typography>
+
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ "aria-label": "search" }}
+              />
+            </div>
+            <div className={classes.grow} />
+            <div className={classes.sectionDesktop}>
+              <Row style={{ width: 120 }}>
+                <IconButton
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <Row>
+                    <AccountCircle fontSize="large" />
+                    <Col>
+                      <Typography
+                        style={{
+                          fontSize: 10,
+                          paddingTop: 10,
+                          textAlign: "left",
+                        }}
+                        variant="body2"
+                      >
+                        Tài khoản
+                      </Typography>
+                      <Typography
+                        style={{ fontSize: 10, paddingBottom: 10 }}
+                        variant="body2"
+                      >
+                        {profile?.account}
+                      </Typography>
+                    </Col>
+                  </Row>
+                </IconButton>
               </Row>
-            </IconButton>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
-        </Toolbar>
-      </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
+            </div>
+            <div className={classes.sectionDesktop}>
+              <IconButton
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                color="inherit"
+              >
+                <Row>
+                  <ShoppingCartIcon fontSize="large" />
+                  <Typography style={{ fontSize: 10, paddingTop: 12 }}>
+                    Giỏ hàng
+                  </Typography>
+                </Row>
+              </IconButton>
+            </div>
+            <div className={classes.sectionMobile}>
+              <IconButton
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}
+                color="inherit"
+              >
+                <MoreIcon />
+              </IconButton>
+            </div>
+          </Toolbar>
+        </AppBar>
+        {renderMobileMenu}
+        {renderMenu}
     </div>
   );
 };
