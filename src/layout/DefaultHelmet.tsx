@@ -20,8 +20,9 @@ import SearchIcon from "@material-ui/icons/Search";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { some } from "../constants/constants";
+import { some, SUCCESS_CODE } from "../constants/constants";
 import { Col, Row } from "../modules/common/Elements";
+import { actionGetAllProduct } from "../modules/system/systemAction";
 
 interface Props {}
 const useStyles = makeStyles((theme: Theme) =>
@@ -102,6 +103,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [data, setData] = React.useState<some>();
   const [anchorElMenu, setAnchorElMenu] = React.useState<HTMLElement | null>(
     null
   );
@@ -139,6 +141,19 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+  const fetchListCategory = async () => {
+    try {
+      const res: some = await actionGetAllProduct();
+      if (res?.code === SUCCESS_CODE) {
+        setData(res);
+      } else {
+      }
+    } catch (error) {}
+  };
+  React.useEffect(() => {
+    fetchListCategory();
+  }, []);
+  console.log(data);
   const dataCategory = [
     {
       id: 1,
@@ -264,8 +279,8 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                   }}
                 >
                   <Paper onMouseLeave={handlePopoverClose}>
-                    {dataCategory.map((data: some, index) => (
-                      <MenuItem>{data?.name}</MenuItem>
+                    {data?.category.childList.map((item: some, index: any) => (
+                      <MenuItem>{item?.name}</MenuItem>
                     ))}
                   </Paper>
                 </Popper>

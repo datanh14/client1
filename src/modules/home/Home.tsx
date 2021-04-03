@@ -3,8 +3,9 @@ import { Box, Container } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { some } from "../../constants/constants";
+import { some, SUCCESS_CODE } from "../../constants/constants";
 import { Row } from "../common/Elements";
+import { actionGetAllProduct } from "../system/systemAction";
 import ProductItemSale from "./ProductItemSale";
 
 const dataItems = [
