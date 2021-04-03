@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom";
 import { some, SUCCESS_CODE } from "../../constants/constants";
 import { Row } from "../common/Elements";
 import { actionGetAllProduct } from "../system/systemAction";
-import ProductItemSale from "./ProductItemSale";
+import Product from "./product/Product";
 
 const dataItems = [
   {
@@ -106,7 +106,7 @@ const Home = (props: some) => {
         }}
       >
         {dataItems.map((item: some, index: number) => {
-          return <ProductItemSale key={index} data={item} />;
+          return <Product key={index} data={item} />;
         })}
       </Row>
     </Box>
