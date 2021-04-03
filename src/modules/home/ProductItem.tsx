@@ -41,7 +41,7 @@ const BorderLinearProgress = withStyles((theme) => ({
   },
 }))(LinearProgress);
 
-const Product = (props: any) => {
+const ProductItem = (props: any) => {
   const tile = {
     img:
       "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
@@ -72,18 +72,13 @@ const Product = (props: any) => {
         />
         <h2> {tile.gia} </h2>
         <Box display="flex" alignItems="flex-start">
-          <Box
-            position="absolute"
-            zIndex="tooltip"
-            left="20%"
-            style={{
-              marginTop: -15,
-            }}
-          >
+          <Box position="absolute" zIndex="tooltip" left="20%" style={{
+                marginTop:-15
+              }} >
             <img
               style={{
                 width: 30,
-                height: 30,
+                height:30,
               }}
               src="https://frontend.tikicdn.com/_desktop-next/static/img/fire_icon.svg"
             />
@@ -95,4 +90,4 @@ const Product = (props: any) => {
   );
 };
 
-export default Product;
+export default ProductItem;
