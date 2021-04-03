@@ -13,6 +13,7 @@ import "./App.scss";
 import { routes } from "./constants/routes";
 import MainLayout from "./layout/MainLayout";
 import LoadingIcon from "./modules/common/LoadingIcon";
+import Login from "./modules/login/Login";
 import { AppState } from "./modules/rootReducer";
 import NotFound from "./modules/system/NotFound";
 
@@ -28,6 +29,7 @@ const App: React.FC<RouteComponentProps<any> & Props> = (props) => {
     <>
       <React.Suspense fallback={<LoadingIcon />}>
         <Switch>
+          <Route exact path={routes.LOGIN} component={Login} />
           <Route exact path={routes.NOT_FOUND} component={NotFound} />
           <Route path={"*"} component={MainLayout} />
         </Switch>

@@ -39,7 +39,7 @@ const MainLayout: React.FC<RouteComponentProps<any> & Props> = (props) => {
 
   return (
     <PageWrapper style={{ background: GREY_100 }}>
-      <DefaultHelmet />
+      <DefaultHelmet profile={profile}/>
       <CssBaseline />
       <main
         className={classes.content}
