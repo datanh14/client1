@@ -14,6 +14,7 @@ import { routes } from "../constants/routes";
 import { PageWrapper } from "../modules/common/Elements";
 import LoadingIcon from "../modules/common/LoadingIcon";
 import Home from "../modules/home/Home";
+import ProductDetail from "../modules/home/ProductDetail";
 import { AppState } from "../modules/rootReducer";
 import DefaultHelmet from "./DefaultHelmet";
 import { mainStyles } from "./styles";
@@ -24,6 +25,12 @@ const SIDE_BAR_MENU: some[] = [
     name: "Dashboard",
     route: routes.HOME,
     component: Home,
+  },
+  {
+    icon: <DashboardIcon />,
+    name: "ProductDetail",
+    route: routes.PRODUCT_DETAIL,
+    component: (id : string) => <ProductDetail productId={id} />,
   },
 ];
 function mapStateToProps(state: AppState) {
@@ -45,6 +52,7 @@ const MainLayout: React.FC<RouteComponentProps<any> & Props> = (props) => {
         className={classes.content}
         style={{
           marginLeft: 73,
+          marginRight: 73,
           transition: "linear 225ms",
         }}
       >

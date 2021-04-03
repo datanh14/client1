@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { some } from "../../constants/constants";
 import { Row } from "../common/Elements";
-import ProductItemSale from "./ProductItemSale";
+import ProductSale from "./ProductSale";
 
 const dataItems = [
   {
@@ -101,10 +101,10 @@ const Home = (props: some) => {
         }}
       >
         {dataItems.map((item: some) => {
-          return <ProductItemSale data={item} />;
+          return <ProductSale data={item} />;
         })}
       </Row>
-      {/* <ProductItemSale data={chartData} /> */}
+      {/* <ProductSale data={chartData} /> */}
     </Box>
   );
 };
