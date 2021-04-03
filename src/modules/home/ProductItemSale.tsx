@@ -9,14 +9,16 @@ const ProductItem = (props: any) => {
     <>
       <Paper
         style={{
-          maxWidth: 256,
-          maxHeight: 400,
+          maxWidth: 224,
+          maxHeight: 320,
           padding: 10,
         }}
       >
         <img
           style={{
-            width: "100%",
+            width: "80%",
+            marginRight: 18,
+            marginLeft: 18,
           }}
           src={data.img}
           alt={data.title}

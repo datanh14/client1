@@ -1,10 +1,11 @@
 // import { FormattedMessage } from 'react-intl';
-import { Box } from "@material-ui/core";
+import { Box, Container } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { some } from "../../constants/constants";
+import { some, SUCCESS_CODE } from "../../constants/constants";
 import { Row } from "../common/Elements";
+import { actionGetAllProduct } from "../system/systemAction";
 import ProductItemSale from "./ProductItemSale";
 
 const dataItems = [
@@ -91,20 +92,23 @@ const dataItems = [
 ];
 const Home = (props: some) => {
   return (
-    <Box style={{ padding: 24 }}>
+    <Box style={{ padding: 24, width: "100%" }}>
       <Row
         style={{
-          maxWidth: "80%",
-          display: "flex",
-          alignItems: "center",
+          width: "100%",
+        }}
+      ></Row>
+      <Row
+        style={{
           flexWrap: "wrap",
+          margin: "0 auto",
+          width: "100%",
         }}
       >
-        {dataItems.map((item: some) => {
-          return <ProductItemSale data={item} />;
+        {dataItems.map((item: some, index: number) => {
+          return <ProductItemSale key={index} data={item} />;
         })}
       </Row>
-      {/* <ProductItemSale data={chartData} /> */}
     </Box>
   );
 };
