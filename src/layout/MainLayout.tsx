@@ -17,6 +17,7 @@ import Home from "../modules/home/Home";
 import { AppState } from "../modules/rootReducer";
 import DefaultHelmet from "./DefaultHelmet";
 import { mainStyles } from "./styles";
+import ProductDetail from "../modules/home/product/ProductDetail"
 
 const SIDE_BAR_MENU: some[] = [
   {
@@ -24,6 +25,12 @@ const SIDE_BAR_MENU: some[] = [
     name: "Dashboard",
     route: routes.HOME,
     component: Home,
+  },
+  {
+    icon: <DashboardIcon />,
+    name: "ProductDetail",
+    route: routes.PRODUCT_DETAIL,
+    component: (id : string) => <ProductDetail productId={id} />,
   },
 ];
 function mapStateToProps(state: AppState) {
