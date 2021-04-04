@@ -6,7 +6,8 @@ import { withRouter } from "react-router-dom";
 import { some, SUCCESS_CODE } from "../../constants/constants";
 import { Row } from "../common/Elements";
 import { actionGetAllProduct } from "../system/systemAction";
-import Product from "./product/Product";
+import Product from "../app_manager/components/product/Product";
+import Comment from "../app_manager/components/comments/Comment";
 
 const dataItems = [
   {
@@ -92,6 +93,7 @@ const dataItems = [
 ];
 const Home = (props: some) => {
   return (
+    <>
     <Box style={{ padding: 24, width: "100%" }}>
       <Row
         style={{
@@ -110,6 +112,8 @@ const Home = (props: some) => {
         })}
       </Row>
     </Box>
+    <Comment />
+    </>
   );
 };
 

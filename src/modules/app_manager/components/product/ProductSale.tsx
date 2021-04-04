@@ -11,7 +11,7 @@ import {
 import { Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import { Box } from "@material-ui/core";
-import { some } from "../../constants/constants";
+import { some } from "../../../../constants/constants";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Rating from "@material-ui/lab/Rating";
@@ -41,7 +41,7 @@ const BorderLinearProgress = withStyles((theme) => ({
   },
 }))(LinearProgress);
 
-const ProductItem = (props: any) => {
+const ProductSale = (props: any) => {
   const tile = {
     img:
       "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
@@ -90,4 +90,4 @@ const ProductItem = (props: any) => {
   );
 };
 
-export default ProductItem;
+export default ProductSale;

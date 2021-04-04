@@ -17,7 +17,7 @@ import Home from "../modules/home/Home";
 import { AppState } from "../modules/rootReducer";
 import DefaultHelmet from "./DefaultHelmet";
 import { mainStyles } from "./styles";
-import ProductDetail from "../modules/home/product/ProductDetail"
+import ProductDetail from "../modules/app_manager/components/product/ProductDetail"
 
 const SIDE_BAR_MENU: some[] = [
   {

@@ -2,16 +2,23 @@ import { Box } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Rating from "@material-ui/lab/Rating";
 import React from "react";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
-const ProductItem = (props: any) => {
+const Product = (props: any) => {
   const { data } = props;
+  const gotoAction = (route : string) => props?.history?.push(route);
   return (
     <>
       <Paper
         style={{
-          maxWidth: 224,
-          maxHeight: 320,
+          minWidth: 230,
+          minHeight: 326,
+          maxWidth: 230,
+          maxHeight: 326,
           padding: 10,
+        }}
+        onClick={() => {
+          gotoAction(data.dir);
         }}
       >
         <img
@@ -69,4 +76,4 @@ const ProductItem = (props: any) => {
   );
 };
 
-export default ProductItem;
+export default withRouter(Product);
