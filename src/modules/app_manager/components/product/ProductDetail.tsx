@@ -25,7 +25,7 @@ import {
   Button,
 } from "@material-ui/core";
 import { Box, Paper, Avatar, Grid } from "@material-ui/core";
-import { some } from "../../../constants/constants";
+import { some } from "../../../../constants/constants";
 import Rating from "@material-ui/lab/Rating";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
@@ -37,7 +37,7 @@ import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox"
 import AddIcon from "@material-ui/icons/Add";
 import StarIcon from "@material-ui/icons/Star";
 import RemoveIcon from "@material-ui/icons/Remove";
-import { Col, Row } from "../../common/Elements";
+import { Col, Row } from "../../../common/Elements";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
