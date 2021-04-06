@@ -2,11 +2,12 @@ import { Box } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Rating from "@material-ui/lab/Rating";
 import React from "react";
+import { routes } from "../../../../constants/routes";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
 const Product = (props: any) => {
   const { data } = props;
-  const gotoAction = (route : string) => props?.history?.push(route);
+  const gotoAction = (route : string) => props?.history?.push(`product-detail/${route}`);
   return (
     <>
       <Paper

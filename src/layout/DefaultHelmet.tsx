@@ -188,6 +188,9 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const gotoDetailCategory = (id: number) => {
     props?.history?.push(`${routes.DETAIL_CATEGORY}/${id}`);
   };
+
+  const gotoCart = (route: string) => props?.history?.push(route);
+  
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -394,6 +397,9 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
               aria-controls={menuId}
               aria-haspopup="true"
               color="inherit"
+              onClick = {() => {
+                gotoCart(routes.PRODUCT_CART);
+              }}
             >
               <Row>
                 <ShoppingCartIcon fontSize="large" />

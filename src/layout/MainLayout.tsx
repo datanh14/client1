@@ -17,7 +17,8 @@ import Home from "../modules/home/Home";
 import { AppState } from "../modules/rootReducer";
 import DefaultHelmet from "./DefaultHelmet";
 import { mainStyles } from "./styles";
-import ProductDetail from "../modules/app_manager/components/product/ProductDetail"
+import ProductDetail from "../modules/app_manager/components/product/ProductDetail";
+import Cart from "../modules/app_manager/components/cart/Cart";
 
 const SIDE_BAR_MENU: some[] = [
   {
@@ -31,6 +32,12 @@ const SIDE_BAR_MENU: some[] = [
     name: "ProductDetail",
     route: routes.PRODUCT_DETAIL,
     component: (id : string) => <ProductDetail productId={id} />,
+  },
+  {
+    icon: <DashboardIcon />,
+    name: "Cart",
+    route: routes.PRODUCT_CART,
+    component: Cart,
   },
 ];
 function mapStateToProps(state: AppState) {
