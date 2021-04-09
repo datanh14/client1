@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Animation } from "@devexpress/dx-react-chart";
 import {
   createStyles,
@@ -38,6 +38,7 @@ import AddIcon from "@material-ui/icons/Add";
 import StarIcon from "@material-ui/icons/Star";
 import RemoveIcon from "@material-ui/icons/Remove";
 import { Col, Row } from "../../../common/Elements";
+import PreviewDialog from "../dialog/PreviewDialog";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,7 +53,25 @@ const useStyles = makeStyles((theme: Theme) =>
       background: "white",
     },
     img: {
-      width: "40%",
+      width: 400,
+      height: "100%",
+      borderRadius: 10,
+    },
+    imgSmall: {
+      width: 70,
+      height: 70,
+      marginRight: 10,
+      borderRadius: 5,
+      display: "flex",
+    },
+    imgSmallBorder: {
+      width: 70,
+      height: 70,
+      borderRadius: 5,
+      marginRight: 10,
+      borderStyle: "solid",
+      display: "flex",
+      borderWidth: 1,
     },
     content: {
       display: "flex",
@@ -81,9 +100,20 @@ const useStyles = makeStyles((theme: Theme) =>
 const ProductDetail = (props: any) => {
   const { productId } = props;
   const classes = useStyles();
+  const [index, setIndex] = useState(0);
+  const [isOpenPreviewDialog, setIsOpenPreviewDialog] = React.useState(false);
+
   const tile = {
-    img:
+    img: [
       "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
+      "https://salt.tikicdn.com/cache/w444/ts/product/6d/fd/20/91181cd3d2b7483399017e8821f30d35.jpg",
+      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
+      "https://salt.tikicdn.com/cache/w444/ts/product/6d/fd/20/91181cd3d2b7483399017e8821f30d35.jpg",
+      "https://salt.tikicdn.com/cache/w444/ts/product/6d/fd/20/91181cd3d2b7483399017e8821f30d35.jpg",
+      "https://salt.tikicdn.com/cache/w444/ts/product/6d/fd/20/91181cd3d2b7483399017e8821f30d35.jpg",
+      "https://salt.tikicdn.com/cache/w444/ts/product/6d/fd/20/91181cd3d2b7483399017e8821f30d35.jpg",
+      "https://salt.tikicdn.com/cache/w444/ts/product/6d/fd/20/91181cd3d2b7483399017e8821f30d35.jpg",
+    ],
     title: "ok",
     gia: "1.000.000 ₫",
     dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
@@ -97,7 +127,10 @@ const ProductDetail = (props: any) => {
     console.info("You clicked a breadcrumb.");
   };
 
-  return (
+  const onCloseDialog = () => {
+    setIsOpenPreviewDialog(false);
+  }
+    return (
     <div className={classes.root}>
       <Breadcrumbs aria-label="breadcrumb">
         <Link color="inherit" href="/" onClick={handleClick}>
@@ -114,11 +147,68 @@ const ProductDetail = (props: any) => {
       </Breadcrumbs>
       <Card className={classes.grow}>
         <div className={classes.content}>
-          <CardMedia
-            className={classes.img}
-            image={tile.img}
-            title={tile.title}
-          />
+          <Col style={{ maxWidth: 400 }}>
+            <img
+              className={classes.img}
+              src={tile.img[index]}
+              alt={tile.title}
+            />
+            <Row
+              style={{
+                marginLeft: 10,
+              }}
+            >
+              {tile.img.map(
+                (item: any, idx: number) =>
+                  idx < 4 && (
+                    <img
+                      className={
+                        index === idx
+                          ? classes.imgSmallBorder
+                          : classes.imgSmall
+                      }
+                      src={item}
+                      alt={tile.title}
+                      onClick={() => setIndex(idx)}
+                    />
+                  )
+              )}
+              <div
+                style={{
+                  backgroundImage: `url(${tile.img[4]})`,
+                  backgroundSize: "70px 70px",
+                  minWidth: 70,
+                  minHeight: 70,
+                  marginRight: 10,
+                  borderRadius: 5,
+                  display: "flex",
+                  textAlign: "center",
+                  justifyContent: "center",
+                }}
+                onClick={() => setIsOpenPreviewDialog(true)}              
+                >
+                <Typography
+                  variant="body2"
+                  style={{
+                    minWidth: 70,
+                    minHeight: 70,
+                    lineHeight: 1.8,
+                    color: "white",
+                    backgroundColor: "black",
+                    opacity: 0.7,
+                    borderRadius: 5,
+                    paddingTop: 5,
+                  }}
+                >
+                  <Box fontSize={11}>Xem</Box>
+                  <Box fontSize={11}>thêm 10</Box>
+                  <Box fontSize={11}>hình</Box>
+                </Typography>
+              </div>
+              <PreviewDialog isOpen={isOpenPreviewDialog} onCloseDialog={onCloseDialog} item={tile}/>
+            </Row>
+          </Col>
+
           <CardContent className={classes.details}>
             <Row>
               <Typography style={{ marginBottom: 10, flexDirection: "column" }}>
@@ -170,7 +260,11 @@ const ProductDetail = (props: any) => {
                       <Box fontSize={40}>{tile.gia}</Box>
                     </Typography>
                     <Typography>
-                      <Box fontSize={15} marginLeft={1.5} style={{textDecoration: "line-through"}}>
+                      <Box
+                        fontSize={15}
+                        marginLeft={1.5}
+                        style={{ textDecoration: "line-through" }}
+                      >
                         {tile.gia}
                       </Box>
                     </Typography>

@@ -1,29 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
+import { Avatar, Box, IconButton } from "@material-ui/core";
+import { grey } from "@material-ui/core/colors";
 import {
   createStyles,
-  fade,
   makeStyles,
-  Theme,
-  withStyles,
+  Theme
 } from "@material-ui/core/styles";
-import {
-  Typography,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  IconButton,
-  Button,
-} from "@material-ui/core";
-import { Box, Paper, Avatar, Grid } from "@material-ui/core";
-import { some } from "../../../../constants/constants";
-import { Col, Row } from "../../../common/Elements";
-import Product from "../product/Product";
-import AddBoxIcon from "@material-ui/icons/AddBox";
-import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
-import { grey } from "@material-ui/core/colors";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import React, { useRef } from "react";
+import { some } from "../../../../constants/constants";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,16 +30,26 @@ const useStyles = makeStyles((theme: Theme) =>
     next: {
       position: "absolute",
       right: 5,
-      top: "50%",
+      top: "40%",
     },
     prev: {
       position: "absolute",
       left: 5,
-      top: "50%",
+      top: "40%",
     },
     grey: {
       color: theme.palette.getContrastText(grey[50]),
       backgroundColor: grey[50],
+    },
+    img: {
+      width: "100%",
+      height: "100%",
+    },
+    boxImg: {
+      minWidth: 1300,
+      height: 400,
+      borderRadius: 10,
+      backgroundColor: "orange",
     },
   })
 );
@@ -140,7 +135,7 @@ const dataItems = [
     sao: 2,
   },
 ];
-const SliderProduct = (props: some) => {
+const SliderAds = (props: some) => {
   const classes = useStyles();
   const sliderRef = useRef<HTMLDivElement>(null);
 
@@ -173,7 +168,11 @@ const SliderProduct = (props: some) => {
       </Avatar>
       <div className={classes.slider} ref={sliderRef}>
         {dataItems.map((item: some, index: number) => {
-          return <Product key={index} data={item} />;
+          return (
+            <Box className={classes.boxImg}>
+              <img className={classes.img} src={item.img} alt={item.title} />
+            </Box>
+          );
         })}
       </div>
       <Avatar className={`${classes.grey} ${classes.next}`}>
@@ -184,4 +183,4 @@ const SliderProduct = (props: some) => {
     </div>
   );
 };
-export default SliderProduct;
+export default SliderAds;
