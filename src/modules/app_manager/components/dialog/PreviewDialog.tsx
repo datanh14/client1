@@ -140,11 +140,11 @@ const PreviewDialog: React.FC<RouteComponentProps<any> & Props> = (props) => {
             height: "100%",
           }}
         >
-          <Row>
+          <Box justifyContent="flex-end" display="flex">
             <IconButton aria-label="back" onClick={onCloseDialog}>
-              <CloseIcon fontSize="large" className={classes.grey} />
+              <CloseIcon fontSize="large" style={{color: "white"}} />
             </IconButton>
-          </Row>
+          </Box>
           <div className={classes.root}>
             <Avatar className={`${classes.grey} ${classes.prev}`}>
               <IconButton aria-label="prev">
