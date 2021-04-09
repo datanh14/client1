@@ -4,7 +4,7 @@ export const routes: some = {
   NOT_FOUND: "/not-found",
   HOME: "/",
   TRAFFIC: "/traffic",
-  DETAIL_CATEGORY: "/detail-category",
+  DETAIL_CATEGORY: "/detail-category/:id",
   ACCOUNT_MANAGEMENT: "/management/account",
   TRANSACTION_MANAGEMENT: "/management/transaction",
   WARE_MANAGEMENT: "/management/warehouse",

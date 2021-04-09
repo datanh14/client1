@@ -146,6 +146,17 @@
   "IDS_APP_MANAGEMENT": "Quản lý",
   "IDS_REFRESH_FILTER": "Refresh",
   "IDS_SEARCH": "Tìm kiếm",
-  "IDS_DASHBOARD":"Dashboard",
-  "IDS_CHAT_PHONE_LOCATION":"Đỉa chị"
+  "IDS_DASHBOARD": "Dashboard",
+  "IDS_CHAT_PHONE_LOCATION": "Đỉa chị",
+  "IDS_APP_LIST_PRODUCT": "DANH MỤC SẢN PHẨM",
+  "IDS_APP_DELIVERY_ADDRESS": "ĐỊA CHỈ NHẬN HÀNG",
+  "IDS_APP_VOTE": "ĐÁNH GIÁ",
+  "IDS_APP_VOTE_FROM_5_STARTS": "Từ 5 sao",
+  "IDS_APP_VOTE_FROM_4_STARTS": "Từ 4 sao",
+  "IDS_APP_VOTE_FROM_3_STARTS": "Từ 3 sao",
+  "IDS_APP_PRICE": "GIÁ",
+  "IDS_APP_CHOSE_PRICE": "Chọn khoảng giá",
+  "IDS_APP_APPLY": "Áp dụng",
+  "IDS_APP_BRAND": "THƯƠNG HIỆU"
+
 }

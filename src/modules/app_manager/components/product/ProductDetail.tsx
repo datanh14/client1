@@ -16,27 +16,29 @@ import {
   ValueAxis,
 } from "@devexpress/dx-react-chart-material-ui";
 import {
-  Typography,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  IconButton,
+  Avatar,
+  Box,
   Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Grid,
+  IconButton,
+  Typography
 } from "@material-ui/core";
-import { Box, Paper, Avatar, Grid } from "@material-ui/core";
-import { some } from "../../../../constants/constants";
-import Rating from "@material-ui/lab/Rating";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import StorefrontIcon from "@material-ui/icons/Storefront";
-import AddBoxIcon from "@material-ui/icons/AddBox";
-import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
+import AddBoxIcon from "@material-ui/icons/AddBox";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
+import ShareIcon from "@material-ui/icons/Share";
 import StarIcon from "@material-ui/icons/Star";
-import RemoveIcon from "@material-ui/icons/Remove";
+import StorefrontIcon from "@material-ui/icons/Storefront";
+import Rating from "@material-ui/lab/Rating";
+import React from "react";
 import { Col, Row } from "../../../common/Elements";
 import PreviewDialog from "../dialog/PreviewDialog";
 

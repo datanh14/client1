@@ -1,10 +1,9 @@
-import { Avatar, Paper } from "@material-ui/core";
+import { Avatar, Paper, Popper } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import Popper from "@material-ui/core/Popper";
 import {
   createStyles,
   fade,
@@ -38,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(1),
     },
     grow: {
-      flexGrow: 1,
+      // flexGrow: 1,
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -109,10 +108,17 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   console.log(profile);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [data, setData] = React.useState<some>();
+  const [data, setData] = React.useState<any>();
   const [anchorElMenu, setAnchorElMenu] = React.useState<HTMLElement | null>(
     null
   );
+  const [anchorElMenuAgent, setAnchorElMenuAgent] = React.useState(null);
+  const handleClickAgent = (event: any) => {
+    setAnchorElMenuAgent(event.currentTarget);
+  };
+  const handleCloseAgent = () => {
+    setAnchorElMenuAgent(null);
+  };
   const handlePopoverOpen = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
@@ -156,6 +162,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
       const res: some = await actionGetAllProduct();
       if (res?.code === SUCCESS_CODE) {
         setData(res);
+        console.log("res", res);
       } else {
       }
     } catch (error) {}
@@ -163,7 +170,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   React.useEffect(() => {
     fetchListCategory();
   }, []);
-  console.log(data);
+  console.log("data", data);
   const dataCategory = [
     {
       id: 1,
@@ -190,7 +197,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   };
 
   const gotoCart = (route: string) => props?.history?.push(route);
-  
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -278,8 +285,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
               aria-label="open drawer"
               aria-owns={open ? "mouse-over-popover" : undefined}
               aria-haspopup="true"
-              onMouseEnter={handlePopoverOpen}
-              onMouseLeave={handlePopoverClose}
+              onClick={handleClickAgent}
             >
               <Row>
                 <MenuIcon fontSize="large" />
@@ -303,8 +309,8 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                 </Col>
                 <Popper
                   id="mouse-over-popover"
-                  open={open}
-                  anchorEl={anchorElMenu}
+                  open={Boolean(anchorElMenuAgent)}
+                  anchorEl={anchorElMenuAgent}
                   placement="top-start"
                   disablePortal={true}
                   modifiers={{
@@ -317,13 +323,14 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                     },
                   }}
                 >
-                  <Paper onMouseLeave={handlePopoverClose}>
+                  <Paper>
                     {data?.category.childList.map(
                       (items: some, index: number) => {
                         return (
                           <MenuItem
                             key={index}
                             onClick={() => {
+                              handleCloseAgent();
                               gotoDetailCategory(items.id);
                             }}
                           >
@@ -397,7 +404,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
               aria-controls={menuId}
               aria-haspopup="true"
               color="inherit"
-              onClick = {() => {
+              onClick={() => {
                 gotoCart(routes.PRODUCT_CART);
               }}
             >

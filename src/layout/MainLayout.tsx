@@ -20,6 +20,7 @@ import { mainStyles } from "./styles";
 import ProductDetail from "../modules/app_manager/components/product/ProductDetail";
 import Cart from "../modules/app_manager/components/cart/Cart";
 import Footer from "../modules/app_manager/components/footer/Footer";
+import DetailCategory from "../modules/app_manager/detailCategory/DetailCategory";
 
 const SIDE_BAR_MENU: some[] = [
   {
@@ -32,13 +33,19 @@ const SIDE_BAR_MENU: some[] = [
     icon: <DashboardIcon />,
     name: "ProductDetail",
     route: routes.PRODUCT_DETAIL,
-    component: (id : string) => <ProductDetail productId={id} />,
+    component: (id: string) => <ProductDetail productId={id} />,
   },
   {
     icon: <DashboardIcon />,
     name: "Cart",
     route: routes.PRODUCT_CART,
     component: Cart,
+  },
+  {
+    icon: <DashboardIcon />,
+    name: "DetailCategory",
+    route: routes.DETAIL_CATEGORY,
+    component: DetailCategory,
   },
 ];
 function mapStateToProps(state: AppState) {
