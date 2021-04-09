@@ -32,6 +32,8 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: 50,
       marginRight: 50,
       transition: theme.transitions.create("transform"),
+      backgroundColor: "white",
+      marginBottom: 24,
     },
     grid: {
       display: "flex",
@@ -98,7 +100,6 @@ const Comment = (props: some) => {
                   fontSize={15}
                   marginLeft={1}
                   style={{
-                    borderRight: "1px solid #ededed",
                     alignItems: "center",
                     justifyContent: "center",
                     display: "flex",
