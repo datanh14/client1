@@ -324,7 +324,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                   }}
                 >
                   <Paper>
-                    {data?.category?.childList.map(
+                    {data?.category.childList.map(
                       (items: some, index: number) => {
                         return (
                           <MenuItem

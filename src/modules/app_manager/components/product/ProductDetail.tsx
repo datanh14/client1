@@ -1,44 +1,28 @@
-import React, { useState } from "react";
-import { Animation } from "@devexpress/dx-react-chart";
 import {
-  createStyles,
-  fade,
-  makeStyles,
-  Theme,
-  withStyles,
-} from "@material-ui/core/styles";
-import {
-  ArgumentAxis,
-  Chart,
-  LineSeries,
-  PieSeries,
-  Title,
-  ValueAxis,
-} from "@devexpress/dx-react-chart-material-ui";
-import {
-  Typography,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  IconButton,
+  Avatar,
+  Box,
   Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Grid,
+  IconButton,
+  Typography
 } from "@material-ui/core";
-import { Box, Paper, Avatar, Grid } from "@material-ui/core";
-import { some } from "../../../../constants/constants";
-import Rating from "@material-ui/lab/Rating";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import StorefrontIcon from "@material-ui/icons/Storefront";
-import AddBoxIcon from "@material-ui/icons/AddBox";
-import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
+import AddBoxIcon from "@material-ui/icons/AddBox";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
+import ShareIcon from "@material-ui/icons/Share";
 import StarIcon from "@material-ui/icons/Star";
-import RemoveIcon from "@material-ui/icons/Remove";
+import StorefrontIcon from "@material-ui/icons/Storefront";
+import Rating from "@material-ui/lab/Rating";
+import React from "react";
 import { Col, Row } from "../../../common/Elements";
-import PreviewDialog from "../dialog/PreviewDialog";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -53,25 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
       background: "white",
     },
     img: {
-      width: 400,
-      height: "100%",
-      borderRadius: 10,
-    },
-    imgSmall: {
-      width: 70,
-      height: 70,
-      marginRight: 10,
-      borderRadius: 5,
-      display: "flex",
-    },
-    imgSmallBorder: {
-      width: 70,
-      height: 70,
-      borderRadius: 5,
-      marginRight: 10,
-      borderStyle: "solid",
-      display: "flex",
-      borderWidth: 1,
+      width: "40%",
     },
     content: {
       display: "flex",
@@ -100,20 +66,9 @@ const useStyles = makeStyles((theme: Theme) =>
 const ProductDetail = (props: any) => {
   const { productId } = props;
   const classes = useStyles();
-  const [index, setIndex] = useState(0);
-  const [isOpenPreviewDialog, setIsOpenPreviewDialog] = React.useState(false);
-
   const tile = {
-    img: [
+    img:
       "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
-      "https://salt.tikicdn.com/cache/w444/ts/product/6d/fd/20/91181cd3d2b7483399017e8821f30d35.jpg",
-      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
-      "https://salt.tikicdn.com/cache/w444/ts/product/6d/fd/20/91181cd3d2b7483399017e8821f30d35.jpg",
-      "https://salt.tikicdn.com/cache/w444/ts/product/6d/fd/20/91181cd3d2b7483399017e8821f30d35.jpg",
-      "https://salt.tikicdn.com/cache/w444/ts/product/6d/fd/20/91181cd3d2b7483399017e8821f30d35.jpg",
-      "https://salt.tikicdn.com/cache/w444/ts/product/6d/fd/20/91181cd3d2b7483399017e8821f30d35.jpg",
-      "https://salt.tikicdn.com/cache/w444/ts/product/6d/fd/20/91181cd3d2b7483399017e8821f30d35.jpg",
-    ],
     title: "ok",
     gia: "1.000.000 ₫",
     dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
@@ -127,10 +82,7 @@ const ProductDetail = (props: any) => {
     console.info("You clicked a breadcrumb.");
   };
 
-  const onCloseDialog = () => {
-    setIsOpenPreviewDialog(false);
-  }
-    return (
+  return (
     <div className={classes.root}>
       <Breadcrumbs aria-label="breadcrumb">
         <Link color="inherit" href="/" onClick={handleClick}>
@@ -147,68 +99,11 @@ const ProductDetail = (props: any) => {
       </Breadcrumbs>
       <Card className={classes.grow}>
         <div className={classes.content}>
-          <Col style={{ maxWidth: 400 }}>
-            <img
-              className={classes.img}
-              src={tile.img[index]}
-              alt={tile.title}
-            />
-            <Row
-              style={{
-                marginLeft: 10,
-              }}
-            >
-              {tile.img.map(
-                (item: any, idx: number) =>
-                  idx < 4 && (
-                    <img
-                      className={
-                        index === idx
-                          ? classes.imgSmallBorder
-                          : classes.imgSmall
-                      }
-                      src={item}
-                      alt={tile.title}
-                      onClick={() => setIndex(idx)}
-                    />
-                  )
-              )}
-              <div
-                style={{
-                  backgroundImage: `url(${tile.img[4]})`,
-                  backgroundSize: "70px 70px",
-                  minWidth: 70,
-                  minHeight: 70,
-                  marginRight: 10,
-                  borderRadius: 5,
-                  display: "flex",
-                  textAlign: "center",
-                  justifyContent: "center",
-                }}
-                onClick={() => setIsOpenPreviewDialog(true)}              
-                >
-                <Typography
-                  variant="body2"
-                  style={{
-                    minWidth: 70,
-                    minHeight: 70,
-                    lineHeight: 1.8,
-                    color: "white",
-                    backgroundColor: "black",
-                    opacity: 0.7,
-                    borderRadius: 5,
-                    paddingTop: 5,
-                  }}
-                >
-                  <Box fontSize={11}>Xem</Box>
-                  <Box fontSize={11}>thêm 10</Box>
-                  <Box fontSize={11}>hình</Box>
-                </Typography>
-              </div>
-              <PreviewDialog isOpen={isOpenPreviewDialog} onCloseDialog={onCloseDialog} item={tile}/>
-            </Row>
-          </Col>
-
+          <CardMedia
+            className={classes.img}
+            image={tile.img}
+            title={tile.title}
+          />
           <CardContent className={classes.details}>
             <Row>
               <Typography style={{ marginBottom: 10, flexDirection: "column" }}>

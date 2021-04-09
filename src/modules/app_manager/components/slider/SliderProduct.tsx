@@ -29,11 +29,10 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
-      maxWidth: 1300,
-      marginLeft: 50,
-      marginRight: 50,
-      marginBottom: 24,
-      position: "relative",
+      maxWidth: 1000,
+      marginLeft: 73,
+      marginRight: 73,
+      position: "absolute",
       scrollBehavior: "smooth",
       transition: theme.transitions.create("transform"),
     },
