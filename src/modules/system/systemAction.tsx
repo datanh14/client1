@@ -23,6 +23,10 @@ export const actionValidateToken = () => {
 export const actionGetProfile = (params?: some) => {
   return api({ method: "get", url: "/csp/tickets/customer-info", params });
 };
-export const actionGetAllProduct = () => {
-  return api({ method: "get", url: "/Category/CategoryAllChildList" });
+export const actionGetAllProduct = (params?: some) => {
+  return api({
+    method: "get",
+    url: "/Category/CategoryChildList",
+    params,
+  });
 };
