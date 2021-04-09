@@ -19,6 +19,7 @@ import DefaultHelmet from "./DefaultHelmet";
 import { mainStyles } from "./styles";
 import ProductDetail from "../modules/app_manager/components/product/ProductDetail";
 import Cart from "../modules/app_manager/components/cart/Cart";
+import Footer from "../modules/app_manager/components/footer/Footer";
 import DetailCategory from "../modules/app_manager/detailCategory/DetailCategory";
 
 const SIDE_BAR_MENU: some[] = [
@@ -81,6 +82,7 @@ const MainLayout: React.FC<RouteComponentProps<any> & Props> = (props) => {
           </Switch>
         </React.Suspense>
       </main>
+      <Footer/>
     </PageWrapper>
   );
 };

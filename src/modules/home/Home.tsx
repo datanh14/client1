@@ -8,6 +8,8 @@ import { Row } from "../common/Elements";
 import { actionGetAllProduct } from "../system/systemAction";
 import Product from "../app_manager/components/product/Product";
 import Comment from "../app_manager/components/comments/Comment";
+import SliderProduct from "../app_manager/components/slider/SliderProduct";
+import SliderAds from "../app_manager/components/slider/SliderAds";
 
 const dataItems = [
   {
@@ -113,6 +115,8 @@ const Home = (props: some) => {
       </Row>
     </Box>
     <Comment />
+    <SliderProduct />
+    <SliderAds />
     </>
   );
 };
