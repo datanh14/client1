@@ -1,20 +1,4 @@
 import React, { useState } from "react";
-import { Animation } from "@devexpress/dx-react-chart";
-import {
-  createStyles,
-  fade,
-  makeStyles,
-  Theme,
-  withStyles,
-} from "@material-ui/core/styles";
-import {
-  ArgumentAxis,
-  Chart,
-  LineSeries,
-  PieSeries,
-  Title,
-  ValueAxis,
-} from "@devexpress/dx-react-chart-material-ui";
 import {
   Avatar,
   Box,
@@ -38,7 +22,6 @@ import ShareIcon from "@material-ui/icons/Share";
 import StarIcon from "@material-ui/icons/Star";
 import StorefrontIcon from "@material-ui/icons/Storefront";
 import Rating from "@material-ui/lab/Rating";
-import React from "react";
 import { Col, Row } from "../../../common/Elements";
 import PreviewDialog from "../dialog/PreviewDialog";
 
