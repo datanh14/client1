@@ -169,6 +169,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   React.useEffect(() => {
     fetchListCategory();
   }, []);
+  // console.log("data", data);
   console.log("data", data);
   const dataCategory = [
     {
@@ -192,7 +193,8 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
     props?.history?.push(route);
   };
   const gotoDetailCategory = (id: number) => {
-    props?.history?.push(`${routes.DETAIL_CATEGORY}${id}`);
+    props?.history?.push(`/`);
+    props?.history?.push(`detail-category/${id}`);
   };
 
   const gotoCart = (route: string) => props?.history?.push(route);
@@ -325,19 +327,22 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                   }}
                 >
                   <Paper onMouseLeave={handlePopoverClose}>
-                    {data?.message.map((items: some, index: number) => {
-                      return (
-                        <MenuItem
-                          key={index}
-                          onClick={() => {
-                            gotoDetailCategory(items.id);
-                            handlePopoverClose();
-                          }}
-                        >
-                          {items?.name}
-                        </MenuItem>
-                      );
-                    })}
+                    {data !== undefined &&
+                      data.message.childList.map(
+                        (items: some, index: number) => {
+                          return (
+                            <MenuItem
+                              key={index}
+                              onClick={() => {
+                                gotoDetailCategory(items.id);
+                                handlePopoverClose();
+                              }}
+                            >
+                              {items?.name}
+                            </MenuItem>
+                          );
+                        }
+                      )}
                   </Paper>
                 </Popper>
               </Row>

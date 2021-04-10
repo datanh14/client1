@@ -14,8 +14,9 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { connect } from "react-redux";
 import { useParams, withRouter } from "react-router-dom";
-import { some } from "../../../constants/constants";
+import { some, SUCCESS_CODE } from "../../../constants/constants";
 import { Col, Row } from "../../common/Elements";
+import { actionGetAllProduct } from "../../system/systemAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -54,9 +55,24 @@ const handleClick = () => {
 };
 const DetailCategory = (props: some) => {
   const intl = useIntl();
-  const id: string = useParams();
+  const id: some = useParams();
+  const [dataCategoryChild, setDataCategoryChild] = React.useState<any>();
   console.log("iđs", id);
   const classes = useStyles();
+  const fetchListCategory = async () => {
+    try {
+      const res: some = await actionGetAllProduct({ parentId: id.id });
+      if (res?.code === SUCCESS_CODE) {
+        setDataCategoryChild(res);
+        console.log("res", res);
+      } else {
+      }
+    } catch (error) {}
+  };
+  React.useEffect(() => {
+    fetchListCategory();
+  }, [id]);
+  console.log("datac", dataCategoryChild);
   return (
     <div style={{ marginTop: 30 }}>
       <Container style={{ display: "flex" }}>
@@ -68,11 +84,18 @@ const DetailCategory = (props: some) => {
             >
               {intl.formatMessage({ id: "IDS_APP_LIST_PRODUCT" })}
             </Typography>
-            {fakeDataListChild.map((data: some, i: number) => (
-              <Typography key={i} variant="body2" style={{ marginBottom: 8 }}>
-                {data.name}
-              </Typography>
-            ))}
+            {dataCategoryChild !== undefined &&
+              dataCategoryChild.message.childList.map(
+                (data: some, i: number) => (
+                  <Typography
+                    key={i}
+                    variant="body2"
+                    style={{ marginBottom: 8 }}
+                  >
+                    {data.name}
+                  </Typography>
+                )
+              )}
             <Divider />
             <Typography
               variant="body2"
@@ -170,7 +193,7 @@ const DetailCategory = (props: some) => {
         <Col style={{ flex: 3 }}>
           <Paper>
             <Typography variant="h6" style={{ padding: 10 }}>
-              Điện tử điện lanh
+              {dataCategoryChild?.message.name}
             </Typography>
           </Paper>
         </Col>

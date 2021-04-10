@@ -1,37 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-  createStyles,
-  fade,
-  makeStyles,
-  Theme,
-  withStyles,
-} from "@material-ui/core/styles";
-import {
-  Typography,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  IconButton,
-  Button,
-  ButtonGroup,
-  Collapse,
-} from "@material-ui/core";
-import { Box, Paper, Avatar, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import React from "react";
 import { some } from "../../../../constants/constants";
-import clsx from "clsx";
-import { Col, Row } from "../../../common/Elements";
-import Rating from "@material-ui/lab/Rating";
-import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import AssistantOutlinedIcon from "@material-ui/icons/AssistantOutlined";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import ReceiptIcon from "@material-ui/icons/Receipt";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import { blue, grey } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -66,12 +36,12 @@ const Footer = (props: some) => {
       <Grid
         container
         style={{
-          marginBottom: 20,
+          marginBottom: 0,
           backgroundColor: "white",
           padding: 20,
         }}
       >
-      Footer
+        Footer
       </Grid>
     </div>
   );
