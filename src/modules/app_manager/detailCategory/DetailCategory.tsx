@@ -16,7 +16,10 @@ import { connect } from "react-redux";
 import { useParams, withRouter } from "react-router-dom";
 import { some, SUCCESS_CODE } from "../../../constants/constants";
 import { Col, Row } from "../../common/Elements";
-import { actionGetAllProduct } from "../../system/systemAction";
+import {
+  actionGetAllProduct,
+  actionProductInChild,
+} from "../../system/systemAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,17 +42,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-const fakeDataListChild = [
-  { id: 1, name: "ađâS" },
-  { id: 2, name: "sađâsđâs" },
-  { id: 3, name: "đâsdsadsađá" },
-  { id: 4, name: "đâsdsadsađá" },
-  { id: 5, name: "đâsdsadsađá" },
-  { id: 6, name: "đâsdsadsađá" },
-  { id: 7, name: "đâsdsadsađá" },
-  { id: 8, name: "đâsdsadsađá" },
-  { id: 9, name: "đâsdsadsađá" },
-];
 const handleClick = () => {
   alert("You clicked the Chip."); // eslint-disable-line no-alert
 };
@@ -57,13 +49,29 @@ const DetailCategory = (props: some) => {
   const intl = useIntl();
   const id: some = useParams();
   const [dataCategoryChild, setDataCategoryChild] = React.useState<any>();
-  console.log("iđs", id);
+  const [dataListProductChild, setDataListProductChild] = React.useState<any>();
+  const [idProductChild, setIdProductChild] = React.useState<string>(id.id);
+  const [pageProduct, setPageProduct] = React.useState<number>(0);
+  const sizeProduct = 2;
   const classes = useStyles();
   const fetchListCategory = async () => {
     try {
       const res: some = await actionGetAllProduct({ parentId: id.id });
       if (res?.code === SUCCESS_CODE) {
         setDataCategoryChild(res);
+      } else {
+      }
+    } catch (error) {}
+  };
+  const fetchListProduct = async () => {
+    try {
+      const res: some = await actionProductInChild({
+        CategoryID: idProductChild,
+        page: pageProduct,
+        size: sizeProduct,
+      });
+      if (res?.code === SUCCESS_CODE) {
+        setDataListProductChild(res);
         console.log("res", res);
       } else {
       }
@@ -72,6 +80,9 @@ const DetailCategory = (props: some) => {
   React.useEffect(() => {
     fetchListCategory();
   }, [id]);
+  React.useEffect(() => {
+    fetchListProduct();
+  }, [idProductChild]);
   console.log("datac", dataCategoryChild);
   return (
     <div style={{ marginTop: 30 }}>

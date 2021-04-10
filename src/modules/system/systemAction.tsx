@@ -30,3 +30,10 @@ export const actionGetAllProduct = (params?: some) => {
     params,
   });
 };
+export const actionProductInChild = (params?: some) => {
+  return api({
+    method: "get",
+    url: "/Product/GetProductByCategoryIDbyRange",
+    params,
+  });
+};
