@@ -7,6 +7,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
+import Chip from "@material-ui/core/Chip";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Rating } from "@material-ui/lab";
 import React from "react";
@@ -15,8 +16,6 @@ import { connect } from "react-redux";
 import { useParams, withRouter } from "react-router-dom";
 import { some } from "../../../constants/constants";
 import { Col, Row } from "../../common/Elements";
-import Chip from "@material-ui/core/Chip";
-import FormControlTextField from "../../common/FormControlTextField";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -56,6 +55,7 @@ const handleClick = () => {
 const DetailCategory = (props: some) => {
   const intl = useIntl();
   const id: string = useParams();
+  console.log("iđs", id);
   const classes = useStyles();
   return (
     <div style={{ marginTop: 30 }}>

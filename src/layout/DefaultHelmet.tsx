@@ -119,15 +119,6 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const handleCloseAgent = () => {
     setAnchorElMenuAgent(null);
   };
-  const handlePopoverOpen = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => {
-    setAnchorElMenu(event.currentTarget);
-  };
-
-  const handlePopoverClose = () => {
-    setAnchorElMenu(null);
-  };
   const open = Boolean(anchorElMenu);
   const [
     mobileMoreAnchorEl,
@@ -193,7 +184,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
     props?.history?.push(route);
   };
   const gotoDetailCategory = (id: number) => {
-    props?.history?.push(`${routes.DETAIL_CATEGORY}/${id}`);
+    props?.history?.push(`${routes.DETAIL_CATEGORY}${id}`);
   };
 
   const gotoCart = (route: string) => props?.history?.push(route);
@@ -324,21 +315,19 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                   }}
                 >
                   <Paper>
-                    {data?.category?.childList.map(
-                      (items: some, index: number) => {
-                        return (
-                          <MenuItem
-                            key={index}
-                            onClick={() => {
-                              handleCloseAgent();
-                              gotoDetailCategory(items.id);
-                            }}
-                          >
-                            {items?.name}
-                          </MenuItem>
-                        );
-                      }
-                    )}
+                    {data?.message.map((items: some, index: number) => {
+                      return (
+                        <MenuItem
+                          key={index}
+                          onClick={() => {
+                            handleCloseAgent();
+                            gotoDetailCategory(items.id);
+                          }}
+                        >
+                          {items?.name}
+                        </MenuItem>
+                      );
+                    })}
                   </Paper>
                 </Popper>
               </Row>

@@ -30,10 +30,10 @@ const App: React.FC<RouteComponentProps<any> & Props> = (props) => {
         <Switch>
           <Route exact path={routes.LOGIN} component={Login} />
           <Route exact path={routes.NOT_FOUND} component={NotFound} />
-          <Route
+          {/* <Route
             path={`${routes.DETAIL_CATEGORY}/:id`}
             component={DetailCategory}
-          />
+          /> */}
           <Route path={"*"} component={MainLayout} />
         </Switch>
       </React.Suspense>
