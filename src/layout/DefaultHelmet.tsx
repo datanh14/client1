@@ -144,7 +144,15 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
+  const handlePopoverOpen = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    setAnchorElMenu(event.currentTarget);
+  };
 
+  const handlePopoverClose = () => {
+    setAnchorElMenu(null);
+  };
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
@@ -276,7 +284,9 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
               aria-label="open drawer"
               aria-owns={open ? "mouse-over-popover" : undefined}
               aria-haspopup="true"
-              onClick={handleClickAgent}
+              // onClick={handleClickAgent}
+              onMouseEnter={handlePopoverOpen}
+              onMouseLeave={handlePopoverClose}
             >
               <Row>
                 <MenuIcon fontSize="large" />
@@ -300,8 +310,8 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                 </Col>
                 <Popper
                   id="mouse-over-popover"
-                  open={Boolean(anchorElMenuAgent)}
-                  anchorEl={anchorElMenuAgent}
+                  open={open}
+                  anchorEl={anchorElMenu}
                   placement="top-start"
                   disablePortal={true}
                   modifiers={{
@@ -314,14 +324,14 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                     },
                   }}
                 >
-                  <Paper>
+                  <Paper onMouseLeave={handlePopoverClose}>
                     {data?.message.map((items: some, index: number) => {
                       return (
                         <MenuItem
                           key={index}
                           onClick={() => {
-                            handleCloseAgent();
                             gotoDetailCategory(items.id);
+                            handlePopoverClose();
                           }}
                         >
                           {items?.name}
