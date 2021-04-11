@@ -54,11 +54,13 @@ const DetailCategory = (props: some) => {
   const [pageProduct, setPageProduct] = React.useState<number>(0);
   const sizeProduct = 2;
   const classes = useStyles();
+  const [nameListProduct, setNameListProduct] = React.useState<string>();
   const fetchListCategory = async () => {
     try {
       const res: some = await actionGetAllProduct({ parentId: id.id });
       if (res?.code === SUCCESS_CODE) {
         setDataCategoryChild(res);
+        setNameListProduct(res?.message.name);
       } else {
       }
     } catch (error) {}
@@ -82,7 +84,7 @@ const DetailCategory = (props: some) => {
   }, [id]);
   React.useEffect(() => {
     fetchListProduct();
-  }, [id]);
+  }, [id, idProductChild]);
   console.log("datac", dataCategoryChild);
   return (
     <div style={{ marginTop: 30 }}>
@@ -99,9 +101,13 @@ const DetailCategory = (props: some) => {
               dataCategoryChild.message.childList.map(
                 (data: some, i: number) => (
                   <Typography
+                    onClick={() => {
+                      setIdProductChild(data.id);
+                      setNameListProduct(data.name);
+                    }}
                     key={i}
                     variant="body2"
-                    style={{ marginBottom: 8 }}
+                    style={{ marginBottom: 8, cursor: "pointer" }}
                   >
                     {data.name}
                   </Typography>
@@ -204,7 +210,7 @@ const DetailCategory = (props: some) => {
         <Col style={{ flex: 3 }}>
           <Paper>
             <Typography variant="h6" style={{ padding: 10 }}>
-              {dataCategoryChild?.message.name}
+              {nameListProduct}
             </Typography>
           </Paper>
         </Col>
