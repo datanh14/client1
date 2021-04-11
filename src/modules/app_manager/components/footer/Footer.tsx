@@ -7,6 +7,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
+      marginBottom: 0,
+      backgroundColor: "white",
     },
     grid: {
       display: "flex",
@@ -33,16 +35,7 @@ const Footer = (props: some) => {
   };
   return (
     <div className={classes.root}>
-      <Grid
-        container
-        style={{
-          marginBottom: 0,
-          backgroundColor: "white",
-          padding: 20,
-        }}
-      >
-        Footer
-      </Grid>
+      <Grid container>Footer</Grid>
     </div>
   );
 };
