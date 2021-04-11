@@ -13,6 +13,7 @@ import "./App.scss";
 import { ACCESS_TOKEN, UUID } from "./constants/constants";
 import { routes } from "./constants/routes";
 import MainLayout from "./layout/MainLayout";
+import Register from "./modules/auth/register/pages/Register";
 import LoadingIcon from "./modules/common/LoadingIcon";
 import Login from "./modules/login/Login";
 import { AppState } from "./modules/rootReducer";
@@ -52,6 +53,7 @@ const App: React.FC<RouteComponentProps<any> & Props> = (props) => {
             path={`${routes.DETAIL_CATEGORY}/:id`}
             component={DetailCategory}
           /> */}
+          <Route exact path={routes.REGISTER} component={Register} />
           <Route path={"*"} component={MainLayout} />
         </Switch>
       </React.Suspense>

@@ -42,3 +42,6 @@ export const actionProductById = (params?: some) => {
     params,
   });
 };
+export const actionRegister = (data: some) => {
+  return api({ method: "post", url: "/api/authenticate/register", data });
+};

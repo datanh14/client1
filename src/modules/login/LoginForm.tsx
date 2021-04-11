@@ -4,7 +4,7 @@ import { Action } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 import { Typography } from "@material-ui/core";
 import { useForm, Controller } from "react-hook-form";
-import { withRouter, RouteComponentProps } from "react-router-dom";
+import { withRouter, RouteComponentProps, Link } from "react-router-dom";
 // import * as yup from 'yup';
 import { Col, Row, snackbarSetting } from "../../modules/common/Elements";
 import FormControlTextField from "../../modules/common/FormControlTextField";
@@ -12,7 +12,7 @@ import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
 import LoadingButton from "../../modules/common/LoadingButton";
 // import { BLUE_500, BLUE_NAVY } from 'assets/theme/colors';
-import { BLUE_NAVY } from "../../assets/theme/colors";
+import { BLUE_500, BLUE_NAVY } from "../../assets/theme/colors";
 import { routes } from "../../constants/routes";
 import {
   actionLogin,
@@ -153,6 +153,11 @@ const LoginForm: React.FC<RouteComponentProps<any> & Props> = (props) => {
             <FormattedMessage id="IDS_SIGN_UP_NOW" />
           </Typography>
         </Row> */}
+        <Link to={{ pathname: routes.REGISTER }}>
+          <Typography variant="body2" style={{ color: BLUE_500 }}>
+            <FormattedMessage id="IDS_SIGN_UP_NOW" />
+          </Typography>
+        </Link>
       </Col>
     </form>
   );
