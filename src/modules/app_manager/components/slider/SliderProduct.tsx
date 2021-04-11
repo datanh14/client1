@@ -37,8 +37,8 @@ const useStyles = makeStyles((theme: Theme) =>
       zIndex: 3,
     },
     grey: {
-      color: theme.palette.getContrastText(grey[50]),
-      backgroundColor: grey[50],
+      color: theme.palette.getContrastText(grey[200]),
+      backgroundColor: grey[200],
     },
   })
 );

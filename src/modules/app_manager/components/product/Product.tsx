@@ -6,9 +6,9 @@ import { withRouter } from "react-router-dom";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      minWidth: 230,
+      minWidth: 234.5,
       minHeight: 326,
-      maxWidth: 230,
+      maxWidth: 234.5,
       maxHeight: 326,
       padding: 10,
       zIndex: 1,
@@ -16,9 +16,9 @@ const useStyles = makeStyles((theme: Theme) =>
       transition: theme.transitions.create("transform"),
     },
     rootHover: {
-      minWidth: 230,
+      minWidth: 234.5,
       minHeight: 326,
-      maxWidth: 230,
+      maxWidth: 234.5,
       maxHeight: 326,
       padding: 10,
       zIndex: 2,
