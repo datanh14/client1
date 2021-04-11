@@ -1,37 +1,27 @@
-import React, { useState, useEffect, useRef } from "react";
+import {
+  Box, Button,
+  ButtonGroup, CardContent,
+
+
+
+
+  Collapse, Grid, IconButton, Typography
+} from "@material-ui/core";
 import {
   createStyles,
-  fade,
+
   makeStyles,
-  Theme,
-  withStyles,
+  Theme
 } from "@material-ui/core/styles";
-import {
-  Typography,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  IconButton,
-  Button,
-  ButtonGroup,
-  Collapse,
-} from "@material-ui/core";
-import { Box, Paper, Avatar, Grid } from "@material-ui/core";
-import { some } from "../../../../constants/constants";
-import clsx from "clsx";
-import { Col, Row } from "../../../common/Elements";
-import Rating from "@material-ui/lab/Rating";
-import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import AssistantOutlinedIcon from "@material-ui/icons/AssistantOutlined";
 import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import ReceiptIcon from "@material-ui/icons/Receipt";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import { blue, grey } from "@material-ui/core/colors";
+import ReceiptIcon from "@material-ui/icons/Receipt";
+import RemoveIcon from "@material-ui/icons/Remove";
+import clsx from "clsx";
+import React from "react";
+import { some } from "../../../../constants/constants";
+import { Row } from "../../../common/Elements";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

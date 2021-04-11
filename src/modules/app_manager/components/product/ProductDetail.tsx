@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Avatar,
   Box,
@@ -6,10 +5,9 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardMedia,
   Grid,
   IconButton,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
@@ -22,6 +20,7 @@ import ShareIcon from "@material-ui/icons/Share";
 import StarIcon from "@material-ui/icons/Star";
 import StorefrontIcon from "@material-ui/icons/Storefront";
 import Rating from "@material-ui/lab/Rating";
+import React, { useState } from "react";
 import { Col, Row } from "../../../common/Elements";
 import PreviewDialog from "../dialog/PreviewDialog";
 
@@ -114,8 +113,8 @@ const ProductDetail = (props: any) => {
 
   const onCloseDialog = () => {
     setIsOpenPreviewDialog(false);
-  }
-    return (
+  };
+  return (
     <div className={classes.root}>
       <Breadcrumbs aria-label="breadcrumb">
         <Link color="inherit" href="/" onClick={handleClick}>
@@ -170,8 +169,8 @@ const ProductDetail = (props: any) => {
                   textAlign: "center",
                   justifyContent: "center",
                 }}
-                onClick={() => setIsOpenPreviewDialog(true)}              
-                >
+                onClick={() => setIsOpenPreviewDialog(true)}
+              >
                 <Typography
                   variant="body2"
                   style={{
@@ -190,7 +189,11 @@ const ProductDetail = (props: any) => {
                   <Box fontSize={11}>hình</Box>
                 </Typography>
               </div>
-              <PreviewDialog isOpen={isOpenPreviewDialog} onCloseDialog={onCloseDialog} item={tile}/>
+              <PreviewDialog
+                isOpen={isOpenPreviewDialog}
+                onCloseDialog={onCloseDialog}
+                item={tile}
+              />
             </Row>
           </Col>
 

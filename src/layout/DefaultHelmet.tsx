@@ -8,7 +8,7 @@ import {
   createStyles,
   fade,
   makeStyles,
-  Theme,
+  Theme
 } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -23,7 +23,6 @@ import { ACCESS_TOKEN, some, SUCCESS_CODE } from "../constants/constants";
 import { routes } from "../constants/routes";
 import { Col, Row } from "../modules/common/Elements";
 import { actionGetAllProduct } from "../modules/system/systemAction";
-import Helmet from "react-helmet";
 
 interface Props {
   readonly profile?: some;
@@ -275,7 +274,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
             className={classes.title}
             variant="h6"
             noWrap
-            style={{ marginRight: 10, width: 150, userSelect: "none", }}
+            style={{ marginRight: 10, width: 150, cursor: "pointer" }}
             onClick={() => {
               props?.history?.push(`/`);
             }}

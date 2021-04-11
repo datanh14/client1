@@ -211,7 +211,7 @@ const DetailCategory = (props: some) => {
         </Col>
         <Col style={{ flex: 3 }}>
           <Paper>
-            <Typography variant="h6" style={{ padding: 10 }}>
+            <Typography variant="h6" style={{ padding: "10px 20px" }}>
               {nameListProduct}
             </Typography>
             <SliderAds />

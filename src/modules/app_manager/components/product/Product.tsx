@@ -1,16 +1,8 @@
 import { Box } from "@material-ui/core";
-import Paper from "@material-ui/core/Paper";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Rating from "@material-ui/lab/Rating";
-import { routes } from "../../../../constants/routes";
-import { RouteComponentProps, withRouter } from "react-router-dom";
-import React, { useState, useEffect, useRef } from "react";
-import {
-  createStyles,
-  fade,
-  makeStyles,
-  Theme,
-  withStyles,
-} from "@material-ui/core/styles";
+import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -30,7 +22,8 @@ const useStyles = makeStyles((theme: Theme) =>
       maxHeight: 326,
       padding: 10,
       zIndex: 2,
-      boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+      boxShadow:
+        "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
       elevation: 10,
       backgroundColor: "white",
       transition: theme.transitions.create("transform"),
@@ -43,8 +36,10 @@ const Product = (props: any) => {
   const classes = useStyles();
   const { data } = props;
   const [isHover, setIsHover] = useState(false);
-  const gotoAction = (route: string) =>
+  const gotoAction = (route: string) => {
+    props?.history?.push(`/`);
     props?.history?.push(`product-detail/${route}`);
+  };
   return (
     <>
       <div

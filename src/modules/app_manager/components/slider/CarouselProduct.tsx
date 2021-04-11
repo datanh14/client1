@@ -113,7 +113,7 @@ const CarouselProduct = (props: some) => {
     if (sliderRef.current) {
       const slide = sliderRef.current;
       let idx = index < 1 ? 0 : index - 1;
-      slide.scrollLeft = slide.offsetWidth * (idx);
+      slide.scrollLeft = slide.offsetWidth * idx;
       if (slide.scrollLeft < 0) {
         slide.scrollLeft = slide.scrollWidth;
         setIndex(0);
@@ -127,7 +127,7 @@ const CarouselProduct = (props: some) => {
     if (sliderRef.current) {
       const slide = sliderRef.current;
       let idx = index > dataItems.length - 1 ? 0 : index + 1;
-      slide.scrollLeft = slide.offsetWidth * (idx);
+      slide.scrollLeft = slide.offsetWidth * idx;
       if (slide.scrollLeft >= slide.scrollWidth - slide.offsetWidth) {
         slide.scrollLeft = 0;
         setIndex(0);
@@ -141,9 +141,9 @@ const CarouselProduct = (props: some) => {
     setIndex(idx);
     if (sliderRef.current) {
       const slide = sliderRef.current;
-      slide.scrollLeft = slide.offsetWidth * (idx);
+      slide.scrollLeft = slide.offsetWidth * idx;
     }
-  }
+  };
   return (
     <div className={classes.root}>
       <Avatar className={`${classes.grey} ${classes.prev}`}>

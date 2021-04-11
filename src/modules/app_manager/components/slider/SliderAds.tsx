@@ -1,10 +1,6 @@
 import { Avatar, Box, IconButton } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
-import {
-  createStyles,
-  makeStyles,
-  Theme
-} from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import React, { useRef } from "react";

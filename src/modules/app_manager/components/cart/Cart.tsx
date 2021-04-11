@@ -1,26 +1,12 @@
 // import { FormattedMessage } from 'react-intl';
-import React, { useState, useEffect, useRef } from "react";
-import {
-  createStyles,
-  fade,
-  makeStyles,
-  Theme,
-  withStyles,
-} from "@material-ui/core/styles";
+import { Box, Button, Grid, Typography } from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import {
-  Typography,
-  Box,
-  Paper,
-  Avatar,
-  Grid,
-  Button,
-} from "@material-ui/core";
 import { some } from "../../../../constants/constants";
-import { Col, Row } from "../../../common/Elements";
+import { Row } from "../../../common/Elements";
 import ProductCart from "./ProductCart";
-import Comment from "../comments/Comment";
 
 const dataItems = [
   {

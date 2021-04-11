@@ -1,29 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-  createStyles,
-  fade,
-  makeStyles,
-  Theme,
-  withStyles,
-} from "@material-ui/core/styles";
-import {
-  Typography,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  IconButton,
-  Button,
-} from "@material-ui/core";
-import { Box, Paper, Avatar, Grid } from "@material-ui/core";
-import { some } from "../../../../constants/constants";
-import { Col, Row } from "../../../common/Elements";
-import Product from "../product/Product";
-import AddBoxIcon from "@material-ui/icons/AddBox";
-import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
+import { Avatar, IconButton } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import React, { useRef } from "react";
+import { some } from "../../../../constants/constants";
+import Product from "../product/Product";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
