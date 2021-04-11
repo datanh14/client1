@@ -1,14 +1,11 @@
 import { Avatar, Box, IconButton } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
-import {
-  createStyles,
-  makeStyles,
-  Theme
-} from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import React, { useRef } from "react";
 import { some } from "../../../../constants/constants";
+import { Row } from "../../../common/Elements";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -48,6 +45,20 @@ const useStyles = makeStyles((theme: Theme) =>
       height: 300,
       borderRadius: 10,
       backgroundColor: "orange",
+    },
+    boxSmall: {
+      backgroundColor: "rgba(242, 241, 241, 0.66)",
+      borderRadius: "50%",
+      width: 15,
+      height: 15,
+      margin: 5,
+    },
+    boxSmallClick: {
+      backgroundColor: "#ff9800",
+      borderRadius: "50%",
+      width: 15,
+      height: 15,
+      margin: 5,
     },
   })
 );
@@ -93,29 +104,46 @@ const dataItems = [
     sao: 2,
   },
 ];
-const SliderAds = (props: some) => {
+const CarouselProduct = (props: some) => {
   const classes = useStyles();
   const sliderRef = useRef<HTMLDivElement>(null);
+  const [index, setIndex] = React.useState(0);
 
   const handlePrevClick = () => {
     if (sliderRef.current) {
       const slide = sliderRef.current;
-      slide.scrollLeft -= slide.offsetWidth;
+      let idx = index < 1 ? 0 : index - 1;
+      slide.scrollLeft = slide.offsetWidth * (idx);
       if (slide.scrollLeft < 0) {
         slide.scrollLeft = slide.scrollWidth;
+        setIndex(0);
+        return;
       }
+      setIndex(idx);
     }
   };
 
   const handleNextClick = () => {
     if (sliderRef.current) {
       const slide = sliderRef.current;
-      slide.scrollLeft += slide.offsetWidth;
+      let idx = index > dataItems.length - 1 ? 0 : index + 1;
+      slide.scrollLeft = slide.offsetWidth * (idx);
       if (slide.scrollLeft >= slide.scrollWidth - slide.offsetWidth) {
         slide.scrollLeft = 0;
+        setIndex(0);
+        return;
       }
+      setIndex(idx);
     }
   };
+
+  const onClickBox = (idx: number) => {
+    setIndex(idx);
+    if (sliderRef.current) {
+      const slide = sliderRef.current;
+      slide.scrollLeft = slide.offsetWidth * (idx);
+    }
+  }
   return (
     <div className={classes.root}>
       <Avatar className={`${classes.grey} ${classes.prev}`}>
@@ -137,7 +165,25 @@ const SliderAds = (props: some) => {
           <NavigateNextIcon onClick={handleNextClick} />
         </IconButton>
       </Avatar>
+      <Row
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop: 50,
+          position: "absolute",
+          bottom: 10,
+          width: "100%",
+        }}
+      >
+        {dataItems.map((it: any, idx: number) => (
+          <Box
+            className={index === idx ? classes.boxSmallClick : classes.boxSmall}
+            onClick={() => onClickBox(idx)}
+          ></Box>
+        ))}
+      </Row>
     </div>
   );
 };
-export default SliderAds;
+export default CarouselProduct;
