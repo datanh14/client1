@@ -51,18 +51,16 @@ const Home = (props: some) => {
           style={{
             width: "100%",
           }}
-        >
-          <CarouselProduct />
-        </Row>
+        ></Row>
         <Container maxWidth="xl">
+          <CarouselProduct />
           <Row
             style={{
               display: "flex",
               flexWrap: "wrap",
-              justifyContent:"center",
+              justifyContent: "center",
               margin: "0 auto",
               width: "100%",
-
             }}
           >
             {dataListProduct !== undefined &&
@@ -72,11 +70,9 @@ const Home = (props: some) => {
                 }
               )}
           </Row>
+          <SliderProduct />
         </Container>
       </Box>
-      <Comment />
-      <SliderProduct />
-      <SliderAds />
     </>
   );
 };

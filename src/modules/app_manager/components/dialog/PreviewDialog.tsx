@@ -11,6 +11,7 @@ import { some } from "../../../../constants/constants";
 import { Row } from "../../../common/Elements";
 
 interface Props {
+  key: string,
   isOpen: boolean;
   onCloseDialog(): void;
   item: some;
@@ -77,7 +78,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const PreviewDialog: React.FC<RouteComponentProps<any> & Props> = (props) => {
-  const { isOpen, onCloseDialog, item } = props;
+  const { key, isOpen, onCloseDialog, item } = props;
   const sliderRef = useRef<HTMLDivElement>(null);
   const classes = useStyles();
   const [index, setIndex] = React.useState(0);
@@ -148,10 +149,10 @@ const PreviewDialog: React.FC<RouteComponentProps<any> & Props> = (props) => {
               </IconButton>
             </Avatar>
             <div className={classes.slider} ref={sliderRef}>
-              {item.img.map((it: any, index: number) => {
+              {item.images.map((it: any, index: number) => {
                 return (
                   <Box className={classes.boxImg}>
-                    <img className={classes.img} src={it} alt={item.title} />
+                    <img className={classes.img} src={it} alt={item.name} />
                   </Box>
                 );
               })}
@@ -170,13 +171,13 @@ const PreviewDialog: React.FC<RouteComponentProps<any> & Props> = (props) => {
               marginTop: 50,
             }}
           >
-            {item.img.map((it: any, idx: number) => (
+            {item.images.map((it: any, idx: number) => (
               <img
                 className={
                   index === idx ? classes.imgSmallBorder : classes.imgSmall
                 }
                 src={it}
-                alt={item.title}
+                alt={item.name}
                 onClick={() => onClickImg(idx)}
               />
             ))}

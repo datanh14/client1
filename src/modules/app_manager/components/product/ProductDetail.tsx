@@ -21,7 +21,10 @@ import StarIcon from "@material-ui/icons/Star";
 import StorefrontIcon from "@material-ui/icons/Storefront";
 import Rating from "@material-ui/lab/Rating";
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import { some, SUCCESS_CODE } from "../../../../constants/constants";
 import { Col, Row } from "../../../common/Elements";
+import { actionProductById } from "../../../system/systemAction";
 import PreviewDialog from "../dialog/PreviewDialog";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -38,8 +41,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     img: {
       width: 400,
-      height: "100%",
-      borderRadius: 10,
+      height: 400,
+      margin: 10,
     },
     imgSmall: {
       width: 70,
@@ -84,8 +87,28 @@ const useStyles = makeStyles((theme: Theme) =>
 const ProductDetail = (props: any) => {
   const { productId } = props;
   const classes = useStyles();
+  const id: some = useParams();
   const [index, setIndex] = useState(0);
   const [isOpenPreviewDialog, setIsOpenPreviewDialog] = React.useState(false);
+  const [idProduct, setIdProduct] = React.useState<string>(id.id);
+  const [dataListProduct, setDataListProduct] = React.useState<any>();
+
+  const fetchListProduct = async () => {
+    try {
+      const res: some = await actionProductById({
+        ProductID: idProduct,
+      });
+      if (res?.code === SUCCESS_CODE) {
+        setDataListProduct(res);
+        console.log("idProduct", res);
+      } else {
+      }
+    } catch (error) {}
+  };
+
+  React.useEffect(() => {
+    fetchListProduct();
+  }, [idProduct]);
 
   const tile = {
     img: [
@@ -129,309 +152,318 @@ const ProductDetail = (props: any) => {
         </Link>
         <Typography color="textPrimary">Breadcrumb</Typography>
       </Breadcrumbs>
-      <Card className={classes.grow}>
-        <div className={classes.content}>
-          <Col style={{ maxWidth: 400 }}>
-            <img
-              className={classes.img}
-              src={tile.img[index]}
-              alt={tile.title}
-            />
-            <Row
-              style={{
-                marginLeft: 10,
-              }}
-            >
-              {tile.img.map(
-                (item: any, idx: number) =>
-                  idx < 4 && (
-                    <img
-                      className={
-                        index === idx
-                          ? classes.imgSmallBorder
-                          : classes.imgSmall
-                      }
-                      src={item}
-                      alt={tile.title}
-                      onClick={() => setIndex(idx)}
-                    />
-                  )
-              )}
-              <div
-                style={{
-                  backgroundImage: `url(${tile.img[4]})`,
-                  backgroundSize: "70px 70px",
-                  minWidth: 70,
-                  minHeight: 70,
-                  marginRight: 10,
-                  borderRadius: 5,
-                  display: "flex",
-                  textAlign: "center",
-                  justifyContent: "center",
-                }}
-                onClick={() => setIsOpenPreviewDialog(true)}
-              >
-                <Typography
-                  variant="body2"
-                  style={{
-                    minWidth: 70,
-                    minHeight: 70,
-                    lineHeight: 1.8,
-                    color: "white",
-                    backgroundColor: "black",
-                    opacity: 0.7,
-                    borderRadius: 5,
-                    paddingTop: 5,
-                  }}
-                >
-                  <Box fontSize={11}>Xem</Box>
-                  <Box fontSize={11}>thêm 10</Box>
-                  <Box fontSize={11}>hình</Box>
-                </Typography>
-              </div>
-              <PreviewDialog
-                isOpen={isOpenPreviewDialog}
-                onCloseDialog={onCloseDialog}
-                item={tile}
+      {dataListProduct !== undefined && (
+        <Card className={classes.grow}>
+          <div className={classes.content}>
+            <Col style={{ maxWidth: 400 }}>
+              <img
+                className={classes.img}
+                src={dataListProduct?.message.images[index]}
+                alt={dataListProduct?.message.name}
               />
-            </Row>
-          </Col>
-
-          <CardContent className={classes.details}>
-            <Row>
-              <Typography style={{ marginBottom: 10, flexDirection: "column" }}>
-                <Box
-                  lineHeight={1.2}
-                  textAlign="left"
-                  fontSize={30}
-                  marginBottom={2}
-                >
-                  {productId.match.params.id}
-                </Box>
-                <Rating
-                  name="half-rating-read"
-                  defaultValue={2.5}
-                  precision={0.5}
-                  readOnly
-                />
-              </Typography>
-              <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                  <FavoriteIcon />
-                </IconButton>
-                <IconButton aria-label="share">
-                  <ShareIcon />
-                </IconButton>
-              </CardActions>
-            </Row>
-            <Row style={{ flex: 1 }}>
-              <Col
+              <Row
                 style={{
-                  flex: 2,
-                  marginRight: 10,
+                  marginLeft: 10,
                 }}
               >
+                {dataListProduct?.message.images.map(
+                  (item: any, idx: number) =>
+                    idx < 4 && (
+                      <img
+                        className={
+                          index === idx
+                            ? classes.imgSmallBorder
+                            : classes.imgSmall
+                        }
+                        src={item}
+                        alt={dataListProduct?.message.name}
+                        onClick={() => setIndex(idx)}
+                      />
+                    )
+                )}
+                {dataListProduct?.message.images.length >= 4 && (
+                  <div
+                    style={{
+                      backgroundImage: `url(${dataListProduct?.message.images[4]})`,
+                      backgroundSize: "70px 70px",
+                      minWidth: 70,
+                      minHeight: 70,
+                      marginRight: 10,
+                      borderRadius: 5,
+                      display: "flex",
+                      textAlign: "center",
+                      justifyContent: "center",
+                    }}
+                    onClick={() => setIsOpenPreviewDialog(true)}
+                  >
+                    <Typography
+                      variant="body2"
+                      style={{
+                        minWidth: 70,
+                        minHeight: 70,
+                        lineHeight: 1.8,
+                        color: "white",
+                        backgroundColor: "black",
+                        opacity: 0.7,
+                        borderRadius: 5,
+                        paddingTop: 5,
+                      }}
+                    >
+                      <Box fontSize={11}>Xem</Box>
+                      <Box fontSize={11}>thêm 10</Box>
+                      <Box fontSize={11}>hình</Box>
+                    </Typography>
+                  </div>
+                )}
+
+                <PreviewDialog
+                  key={dataListProduct?.message.id}
+                  isOpen={isOpenPreviewDialog}
+                  onCloseDialog={onCloseDialog}
+                  item={dataListProduct?.message}
+                />
+              </Row>
+            </Col>
+
+            <CardContent className={classes.details}>
+              <Row>
+                <Typography
+                  style={{ flexDirection: "column" }}
+                >
+                  <Box
+                    lineHeight={1.2}
+                    textAlign="left"
+                    fontSize={30}
+                    marginBottom={2}
+                  >
+                    {dataListProduct?.message.name}
+                  </Box>
+                  <Rating
+                    name="half-rating-read"
+                    defaultValue={dataListProduct?.message.ratingsCount}
+                    precision={0.5}
+                    readOnly
+                  />
+                </Typography>
+                <CardActions disableSpacing>
+                  <IconButton aria-label="add to favorites">
+                    <FavoriteIcon />
+                  </IconButton>
+                  <IconButton aria-label="share">
+                    <ShareIcon />
+                  </IconButton>
+                </CardActions>
+              </Row>
+              <Row style={{ flex: 1 }}>
                 <Col
                   style={{
-                    padding: 15,
-                    marginTop: 10,
-                    backgroundColor: "#f5f5f5",
-                    borderRadius: 5,
+                    flex: 2,
+                    marginRight: 10,
                   }}
                 >
-                  <Row
+                  <Col
                     style={{
-                      marginBottom: 10,
+                      padding: 15,
+                      backgroundColor: "#f5f5f5",
+                      borderRadius: 5,
                     }}
                   >
+                    <Row
+                      style={{
+                        marginBottom: 10,
+                      }}
+                    >
+                      <Typography>
+                        <Box fontSize={40}>
+                          {dataListProduct?.message.price}
+                        </Box>
+                      </Typography>
+                      <Typography>
+                        <Box
+                          fontSize={15}
+                          marginLeft={1.5}
+                          style={{ textDecoration: "line-through" }}
+                        >
+                          {dataListProduct?.message.price}
+                        </Box>
+                      </Typography>
+                      <Typography>
+                        <Box
+                          style={{
+                            maxWidth: 45,
+                            maxHeight: 30,
+                            padding: 10,
+                            marginLeft: 10,
+                            textAlign: "center",
+                            borderRadius: 5,
+                            backgroundColor: "#ff424e",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            display: "flex",
+                          }}
+                        >
+                          {tile.pt}
+                        </Box>
+                      </Typography>
+                    </Row>
                     <Typography>
-                      <Box fontSize={40}>{tile.gia}</Box>
-                    </Typography>
-                    <Typography>
-                      <Box
-                        fontSize={15}
-                        marginLeft={1.5}
-                        style={{ textDecoration: "line-through" }}
-                      >
-                        {tile.gia}
+                      <Box fontWeight="fontWeightBold" fontSize={15}>
+                        Hoàn tiền 15% tối đa 600k/tháng
                       </Box>
                     </Typography>
-                    <Typography>
-                      <Box
-                        style={{
-                          maxWidth: 45,
-                          maxHeight: 30,
-                          padding: 10,
-                          marginLeft: 10,
-                          textAlign: "center",
-                          borderRadius: 5,
-                          backgroundColor: "#ff424e",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          display: "flex",
-                        }}
-                      >
-                        {tile.pt}
-                      </Box>
-                    </Typography>
-                  </Row>
+                  </Col>
                   <Typography>
-                    <Box fontWeight="fontWeightBold" fontSize={15}>
-                      Hoàn tiền 15% tối đa 600k/tháng
+                    <Box
+                      style={{
+                        padding: 10,
+                        marginTop: 10,
+                        borderTop: "1px solid #ededed",
+                        borderBottom: "1px solid #ededed",
+                      }}
+                    >
+                      Bạn hãy NHẬP ĐỊA CHỈ nhận hàng để được dự báo thời gian &
+                      chi phí giao hàng một cách chính xác nhất.
                     </Box>
                   </Typography>
-                </Col>
-                <Typography>
-                  <Box
-                    style={{
-                      padding: 10,
-                      marginTop: 10,
-                      borderTop: "1px solid #ededed",
-                      borderBottom: "1px solid #ededed",
-                    }}
-                  >
-                    Bạn hãy NHẬP ĐỊA CHỈ nhận hàng để được dự báo thời gian &
-                    chi phí giao hàng một cách chính xác nhất.
-                  </Box>
-                </Typography>
-                <Box>
-                  <Row>
-                    <IconButton aria-label="remove">
-                      <IndeterminateCheckBoxIcon style={{ color: "#eb4034" }} />
-                    </IconButton>
+                  <Box>
+                    <Row>
+                      <IconButton aria-label="remove">
+                        <IndeterminateCheckBoxIcon
+                          style={{ color: "#eb4034" }}
+                        />
+                      </IconButton>
+                      <Typography>
+                        <Box
+                          fontWeight="fontWeightBold"
+                          fontSize={15}
+                          padding={1}
+                        >
+                          1
+                        </Box>
+                      </Typography>
+                      <IconButton aria-label="add">
+                        <AddBoxIcon style={{ color: "#eb4034" }} />
+                      </IconButton>
+                    </Row>
                     <Typography>
-                      <Box
-                        fontWeight="fontWeightBold"
-                        fontSize={15}
-                        padding={1}
-                      >
-                        2
-                      </Box>
-                    </Typography>
-                    <IconButton aria-label="add">
-                      <AddBoxIcon style={{ color: "#eb4034" }} />
-                    </IconButton>
-                  </Row>
-                  <Typography>
-                    <Button
-                      style={{
-                        width: "50%",
-                        textAlign: "center",
-                        padding: 10,
-                        color: "#ffffff",
-                        backgroundColor: "#eb4034",
-                        borderRadius: 5,
-                        marginTop: 10,
-                        fontSize: 15,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Thêm vào giỏ hàng
-                    </Button>
-                  </Typography>
-                </Box>
-              </Col>
-              <Col style={{ flex: 1 }}>
-                <Box border={0.1} borderRadius={10} borderColor="#ededed">
-                  <Row>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="https://img.icons8.com/color/48/000000/shop.png"
-                      style={{
-                        marginTop: 10,
-                        marginLeft: 20,
-                        marginRight: 20,
-                      }}
-                    />
-                    <Typography>
-                      <Box
+                      <Button
                         style={{
+                          width: "50%",
+                          textAlign: "center",
                           padding: 10,
+                          color: "#ffffff",
+                          backgroundColor: "#eb4034",
+                          borderRadius: 5,
                           marginTop: 10,
+                          fontSize: 15,
+                          fontWeight: "bold",
                         }}
                       >
-                        Shop vai lon shop
-                      </Box>
+                        Thêm vào giỏ hàng
+                      </Button>
                     </Typography>
-                  </Row>
-                  <Grid
-                    container
-                    style={{
-                      marginBottom: 20,
-                    }}
-                  >
+                  </Box>
+                </Col>
+                <Col style={{ flex: 1 }}>
+                  <Box border={0.1} borderRadius={10} borderColor="#ededed">
+                    <Row>
+                      <Avatar
+                        alt="Remy Sharp"
+                        src="https://img.icons8.com/color/48/000000/shop.png"
+                        style={{
+                          marginTop: 10,
+                          marginLeft: 20,
+                          marginRight: 20,
+                        }}
+                      />
+                      <Typography>
+                        <Box
+                          style={{
+                            padding: 10,
+                            marginTop: 10,
+                          }}
+                        >
+                          {dataListProduct?.message.store.name}
+                        </Box>
+                      </Typography>
+                    </Row>
                     <Grid
-                      item
-                      xs={12}
-                      sm={6}
-                      className={classes.grid}
+                      container
                       style={{
-                        borderRight: "1px solid #ededed",
+                        marginBottom: 20,
                       }}
                     >
-                      <Typography>
-                        <Box fontWeight="fontWeightBold" fontSize={15}>
-                          4.5 / 5.0
-                        </Box>
-                      </Typography>
-                      <StarIcon style={{ color: "#ffea00" }} />
-                    </Grid>
-                    <Grid
-                      item
-                      xs={12}
-                      sm={6}
-                      className={classes.grid}
-                      style={{
-                        borderLeft: "1px solid #ededed",
-                      }}
-                    >
-                      <Typography>
-                        <Box fontWeight="fontWeightBold" fontSize={15}>
-                          188
-                        </Box>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={6} className={classes.grid}>
-                      <Typography>
-                        <Box fontWeight="fontWeightBold" fontSize={15}>
-                          188
-                        </Box>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={6} className={classes.grid}>
-                      <Typography>
-                        <Box fontWeight="fontWeightBold" fontSize={15}>
+                      <Grid
+                        item
+                        xs={12}
+                        sm={6}
+                        className={classes.grid}
+                        style={{
+                          borderRight: "1px solid #ededed",
+                        }}
+                      >
+                        <Typography>
+                          <Box fontSize={15}>
+                            {dataListProduct?.message.store.star} / 5.0
+                          </Box>
+                        </Typography>
+                        <StarIcon style={{ color: "#ffea00", height: 20, width: 20,marginLeft:2, }} />
+                      </Grid>
+                      <Grid
+                        item
+                        xs={12}
+                        sm={6}
+                        className={classes.grid}
+                        style={{
+                          borderLeft: "1px solid #ededed",
+                        }}
+                      >
+                        <Typography>
+                          <Box fontSize={15}>
+                            {dataListProduct?.message.store.ratingsCount}
+                          </Box>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12} sm={6} className={classes.grid}>
+                        <Typography>
+                          <Box fontSize={15}>
+                            {dataListProduct?.message.store.followerCount}
+                          </Box>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12} sm={6} className={classes.grid}>
+                        <Typography>
+                          <Box fontSize={15}>Theo dõi</Box>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12} sm={6} className={classes.grid}>
+                        <Button
+                          variant="outlined"
+                          color="default"
+                          className={classes.button}
+                          startIcon={<StorefrontIcon />}
+                        >
+                          Xem shop
+                        </Button>
+                      </Grid>
+                      <Grid item xs={12} sm={6} className={classes.grid}>
+                        <Button
+                          variant="outlined"
+                          color="default"
+                          className={classes.button}
+                          startIcon={<AddIcon />}
+                        >
                           Theo dõi
-                        </Box>
-                      </Typography>
+                        </Button>
+                      </Grid>
                     </Grid>
-                    <Grid item xs={12} sm={6} className={classes.grid}>
-                      <Button
-                        variant="outlined"
-                        color="default"
-                        className={classes.button}
-                        startIcon={<StorefrontIcon />}
-                      >
-                        Xem shop
-                      </Button>
-                    </Grid>
-                    <Grid item xs={12} sm={6} className={classes.grid}>
-                      <Button
-                        variant="outlined"
-                        color="default"
-                        className={classes.button}
-                        startIcon={<AddIcon />}
-                      >
-                        Theo dõi
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Col>
-            </Row>
-          </CardContent>
-        </div>
-      </Card>
+                  </Box>
+                </Col>
+              </Row>
+            </CardContent>
+          </div>
+        </Card>
+      )}
     </div>
   );
 };
