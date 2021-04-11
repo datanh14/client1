@@ -21,6 +21,7 @@ import ProductDetail from "../modules/app_manager/components/product/ProductDeta
 import Cart from "../modules/app_manager/components/cart/Cart";
 import Footer from "../modules/app_manager/components/footer/Footer";
 import DetailCategory from "../modules/app_manager/detailCategory/DetailCategory";
+import profilePage from "../modules/profile/profilePage";
 
 const SIDE_BAR_MENU: some[] = [
   {
@@ -47,6 +48,12 @@ const SIDE_BAR_MENU: some[] = [
     route: routes.DETAIL_CATEGORY,
     component: DetailCategory,
   },
+  {
+    icon: <DashboardIcon />,
+    name: "ProfilePage",
+    route: routes.PROFILEPAGE,
+    component: profilePage,
+  }
 ];
 function mapStateToProps(state: AppState) {
   return {

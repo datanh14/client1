@@ -24,6 +24,7 @@ import { routes } from "../constants/routes";
 import { Col, Row } from "../modules/common/Elements";
 import { actionGetAllProduct } from "../modules/system/systemAction";
 import Helmet from "react-helmet";
+import Profile from "../modules/profile/profilePage";
 
 interface Props {
   readonly profile?: some;
@@ -198,7 +199,10 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   };
 
   const gotoCart = (route: string) => props?.history?.push(route);
-
+  const gotoProfile = (route: string) => {
+    props?.history?.push(`/`);
+    props?.history?.push(`profile-page`);
+  };
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -210,7 +214,13 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem
+        onClick={() => {
+          gotoProfile(routes.PROFILEPAGE);
+        }}
+      >
+        Profile
+      </MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       {islogin ? (
         <MenuItem
@@ -252,7 +262,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p>profile</p>
       </MenuItem>
       <MenuItem>
         <IconButton
