@@ -20,8 +20,6 @@ import {
   actionGetAllProduct,
   actionProductInChild,
 } from "../../system/systemAction";
-import Product from "../components/product/Product";
-import SliderAds from "../components/slider/SliderAds";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -214,21 +212,6 @@ const DetailCategory = (props: some) => {
             <Typography variant="h6" style={{ padding: 10 }}>
               {nameListProduct}
             </Typography>
-            <SliderAds />
-            <Row
-              style={{
-                flexWrap: "wrap",
-                margin: "0 auto",
-                width: "100%",
-              }}
-            >
-              {dataListProductChild !== undefined &&
-                dataListProductChild.message.productsList.map(
-                  (item: some, index: number) => {
-                    return <Product key={index} data={item} />;
-                  }
-                )}
-            </Row>
           </Paper>
         </Col>
       </Container>
