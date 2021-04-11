@@ -46,11 +46,13 @@ const useStyles = makeStyles((theme: Theme) =>
       position: "absolute",
       right: 5,
       top: "50%",
+      zIndex: 2,
     },
     prev: {
       position: "absolute",
       left: 5,
       top: "50%",
+      zIndex: 2,
     },
     grey: {
       color: theme.palette.getContrastText(grey[50]),

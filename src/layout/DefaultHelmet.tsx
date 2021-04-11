@@ -275,7 +275,10 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
             className={classes.title}
             variant="h6"
             noWrap
-            style={{ marginRight: 10, width: 150 }}
+            style={{ marginRight: 10, width: 150, userSelect: "none", }}
+            onClick={() => {
+              props?.history?.push(`/`);
+            }}
           >
             Team Đụt
           </Typography>
@@ -326,6 +329,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                       boundariesElement: "scrollParent",
                     },
                   }}
+                  style={{zIndex: 3,}}
                 >
                   <Paper onMouseLeave={handlePopoverClose}>
                     {data !== undefined &&
