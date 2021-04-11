@@ -11,4 +11,5 @@ export const routes: some = {
   PRODUCT_MANAGEMENT: "/management/product",
   PRODUCT_DETAIL: "/product-detail/:id",
   PRODUCT_CART: "/cart",
+  PROFILEPAGE: "/profile-page"
 };
