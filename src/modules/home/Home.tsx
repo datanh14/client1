@@ -10,6 +10,7 @@ import Product from "../app_manager/components/product/Product";
 import Comment from "../app_manager/components/comments/Comment";
 import SliderProduct from "../app_manager/components/slider/SliderProduct";
 import SliderAds from "../app_manager/components/slider/SliderAds";
+import CarouselProduct from "../app_manager/components/slider/CarouselProduct";
 
 const dataItems = [
   {
@@ -96,27 +97,29 @@ const dataItems = [
 const Home = (props: some) => {
   return (
     <>
-    <Box style={{ padding: 24, width: "100%" }}>
-      <Row
-        style={{
-          width: "100%",
-        }}
-      ></Row>
-      <Row
-        style={{
-          flexWrap: "wrap",
-          margin: "0 auto",
-          width: "100%",
-        }}
-      >
-        {dataItems.map((item: some, index: number) => {
-          return <Product key={index} data={item} />;
-        })}
-      </Row>
-    </Box>
-    <Comment />
-    <SliderProduct />
-    <SliderAds />
+      <Box style={{ padding: 24, width: "100%" }}>
+        <Row
+          style={{
+            width: "100%",
+          }}
+        >
+          <CarouselProduct />
+        </Row>
+        <Row
+          style={{
+            flexWrap: "wrap",
+            margin: "0 auto",
+            width: "100%",
+          }}
+        >
+          {dataItems.map((item: some, index: number) => {
+            return <Product key={index} data={item} />;
+          })}
+        </Row>
+      </Box>
+      <Comment />
+      <SliderProduct />
+      <SliderAds />
     </>
   );
 };
