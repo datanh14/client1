@@ -14,7 +14,9 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
-      maxWidth: "100%",
+      maxWidth: 1300,
+      marginLeft: 50,
+      marginRight: 50,
       marginBottom: 24,
       position: "relative",
       scrollBehavior: "smooth",
@@ -44,8 +46,8 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "100%",
     },
     boxImg: {
-      minWidth: "100%",
-      height: 300,
+      minWidth: 1300,
+      height: 400,
       borderRadius: 10,
       backgroundColor: "orange",
     },
@@ -56,7 +58,7 @@ const dataItems = [
     sale: true,
     id: 1,
     img:
-      "https://salt.tikicdn.com/ts/banner/06/af/22/c5783f6d2c935633f21659b64e6af628.jpg",
+      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
     title: "ok",
     gia: "100d",
     dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
@@ -66,7 +68,7 @@ const dataItems = [
     sale: true,
     id: 2,
     img:
-      "https://salt.tikicdn.com/ts/banner/06/af/22/c1aec3dd9d1a316783a4c5d1bbffdf58.jpg",
+      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
     title: "ok",
     gia: "100d",
     dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
@@ -76,7 +78,7 @@ const dataItems = [
     sale: true,
     id: 3,
     img:
-      "https://salt.tikicdn.com/ts/banner/94/24/36/805d8a739056734bb60e82bdfd9a76ff.jpg",
+      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
     title: "ok",
     gia: "100d",
     dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
@@ -86,7 +88,47 @@ const dataItems = [
     sale: false,
     id: 4,
     img:
-      "https://salt.tikicdn.com/ts/banner/c7/1e/29/cad2cd9b123bf09897e902400910d4cb.jpg",
+      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
+    title: "ok",
+    gia: "100d",
+    dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
+    sao: 2,
+  },
+  {
+    sale: false,
+    id: 5,
+    img:
+      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
+    title: "ok",
+    gia: "100d",
+    dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
+    sao: 2,
+  },
+  {
+    sale: false,
+    id: 6,
+    img:
+      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
+    title: "ok",
+    gia: "100d",
+    dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
+    sao: 2,
+  },
+  {
+    sale: false,
+    id: 7,
+    img:
+      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
+    title: "ok",
+    gia: "100d",
+    dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
+    sao: 2,
+  },
+  {
+    sale: false,
+    id: 8,
+    img:
+      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
     title: "ok",
     gia: "100d",
     dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
@@ -99,6 +141,7 @@ const SliderAds = (props: some) => {
 
   const handlePrevClick = () => {
     if (sliderRef.current) {
+      console.log("prev");
       const slide = sliderRef.current;
       slide.scrollLeft -= slide.offsetWidth;
       if (slide.scrollLeft < 0) {
