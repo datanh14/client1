@@ -37,3 +37,11 @@ export const actionProductInChild = (params?: some) => {
     params,
   });
 };
+
+export const actionProductById = (params?: some) => {
+  return api({
+    method: "get",
+    url: "/Product/GetProductByID",
+    params,
+  });
+};

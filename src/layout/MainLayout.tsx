@@ -33,7 +33,7 @@ const SIDE_BAR_MENU: some[] = [
     icon: <DashboardIcon />,
     name: "ProductDetail",
     route: routes.PRODUCT_DETAIL,
-    component: (id: string) => <ProductDetail productId={id} />,
+    component: ProductDetail,
   },
   {
     icon: <DashboardIcon />,
