@@ -8,7 +8,7 @@ import {
   createStyles,
   fade,
   makeStyles,
-  Theme,
+  Theme
 } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -285,7 +285,10 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
             className={classes.title}
             variant="h6"
             noWrap
-            style={{ marginRight: 10, width: 150 }}
+            style={{ marginRight: 10, width: 150, cursor: "pointer" }}
+            onClick={() => {
+              props?.history?.push(`/`);
+            }}
           >
             Team Đụt
           </Typography>
@@ -321,6 +324,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                   </Typography>
                 </Col>
                 <Popper
+                  style={{ zIndex: 4 }}
                   id="mouse-over-popover"
                   open={open}
                   anchorEl={anchorElMenu}

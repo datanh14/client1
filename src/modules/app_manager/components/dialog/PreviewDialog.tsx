@@ -1,18 +1,14 @@
 import { Avatar, Box, IconButton } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
 import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import CloseIcon from "@material-ui/icons/Close";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import React, { useRef } from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { some } from "../../../../constants/constants";
 import { Row } from "../../../common/Elements";
-import CloseIcon from "@material-ui/icons/Close";
 
 interface Props {
   isOpen: boolean;
@@ -90,7 +86,7 @@ const PreviewDialog: React.FC<RouteComponentProps<any> & Props> = (props) => {
     if (sliderRef.current) {
       const slide = sliderRef.current;
       let idx = index < 1 ? 0 : index - 1;
-      slide.scrollLeft = slide.offsetWidth * (idx);
+      slide.scrollLeft = slide.offsetWidth * idx;
       if (slide.scrollLeft < 0) {
         slide.scrollLeft = slide.scrollWidth;
         setIndex(0);
@@ -104,7 +100,7 @@ const PreviewDialog: React.FC<RouteComponentProps<any> & Props> = (props) => {
     if (sliderRef.current) {
       const slide = sliderRef.current;
       let idx = index > item.img.length - 1 ? 0 : index + 1;
-      slide.scrollLeft = slide.offsetWidth * (idx);
+      slide.scrollLeft = slide.offsetWidth * idx;
       if (slide.scrollLeft >= slide.scrollWidth - slide.offsetWidth) {
         slide.scrollLeft = 0;
         setIndex(0);
@@ -118,9 +114,9 @@ const PreviewDialog: React.FC<RouteComponentProps<any> & Props> = (props) => {
     setIndex(idx);
     if (sliderRef.current) {
       const slide = sliderRef.current;
-      slide.scrollLeft = slide.offsetWidth * (idx);
+      slide.scrollLeft = slide.offsetWidth * idx;
     }
-  }
+  };
   return (
     <>
       <Dialog
@@ -142,7 +138,7 @@ const PreviewDialog: React.FC<RouteComponentProps<any> & Props> = (props) => {
         >
           <Box justifyContent="flex-end" display="flex">
             <IconButton aria-label="back" onClick={onCloseDialog}>
-              <CloseIcon fontSize="large" style={{color: "white"}} />
+              <CloseIcon fontSize="large" style={{ color: "white" }} />
             </IconButton>
           </Box>
           <div className={classes.root}>

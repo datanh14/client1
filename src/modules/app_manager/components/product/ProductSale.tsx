@@ -1,21 +1,9 @@
-import React from "react";
-import { Animation } from "@devexpress/dx-react-chart";
-import {
-  ArgumentAxis,
-  Chart,
-  LineSeries,
-  PieSeries,
-  Title,
-  ValueAxis,
-} from "@devexpress/dx-react-chart-material-ui";
-import { Typography } from "@material-ui/core";
-import Paper from "@material-ui/core/Paper";
 import { Box } from "@material-ui/core";
-import { some } from "../../../../constants/constants";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import Rating from "@material-ui/lab/Rating";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
+import Paper from "@material-ui/core/Paper";
+import { withStyles } from "@material-ui/core/styles";
+import React from "react";
+import { some } from "../../../../constants/constants";
 
 interface Props {
   item: some;
@@ -72,13 +60,18 @@ const ProductSale = (props: any) => {
         />
         <h2> {tile.gia} </h2>
         <Box display="flex" alignItems="flex-start">
-          <Box position="absolute" zIndex="tooltip" left="20%" style={{
-                marginTop:-15
-              }} >
+          <Box
+            position="absolute"
+            zIndex="tooltip"
+            left="20%"
+            style={{
+              marginTop: -15,
+            }}
+          >
             <img
               style={{
                 width: 30,
-                height:30,
+                height: 30,
               }}
               src="https://frontend.tikicdn.com/_desktop-next/static/img/fire_icon.svg"
             />

@@ -1,29 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-  createStyles,
-  fade,
-  makeStyles,
-  Theme,
-  withStyles,
-} from "@material-ui/core/styles";
-import {
-  Typography,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  IconButton,
-  Button,
-} from "@material-ui/core";
-import { Box, Paper, Avatar, Grid } from "@material-ui/core";
+import { Avatar, Box, Button, Grid, Typography } from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import AssistantOutlinedIcon from "@material-ui/icons/AssistantOutlined";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
+import Rating from "@material-ui/lab/Rating";
+import React from "react";
 import { some } from "../../../../constants/constants";
 import { Col, Row } from "../../../common/Elements";
-import Rating from "@material-ui/lab/Rating";
-import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import AssistantOutlinedIcon from "@material-ui/icons/AssistantOutlined";
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import { blue, grey } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -179,7 +163,12 @@ const Comment = (props: some) => {
                 name="half-rating-read"
                 defaultValue={2.5}
                 precision={0.5}
-                emptyIcon={<StarBorderIcon fontSize="inherit" style={{color: "#ffc107"}} />}
+                emptyIcon={
+                  <StarBorderIcon
+                    fontSize="inherit"
+                    style={{ color: "#ffc107" }}
+                  />
+                }
                 readOnly
               />
               <Typography>

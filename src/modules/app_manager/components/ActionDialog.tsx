@@ -1,11 +1,11 @@
-import { Button, IconButton, Typography } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { ReactComponent as IconEdit } from '../../../assets/icons/ic_edit.svg';
-import { BLUE_NAVY } from '../../../assets/theme/colors';
-import { some } from '../../../constants/constants';
-import ConfirmDialog from '../../common/ConfirmDialog';
+import { Button, IconButton, Typography } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage } from "react-intl";
+import { RouteComponentProps, withRouter } from "react-router-dom";
+import { ReactComponent as IconEdit } from "../../../assets/icons/ic_edit.svg";
+import { BLUE_NAVY } from "../../../assets/theme/colors";
+import { some } from "../../../constants/constants";
+import ConfirmDialog from "../../common/ConfirmDialog";
 
 interface Props {
   item: some;
