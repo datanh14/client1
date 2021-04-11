@@ -311,6 +311,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                   </Typography>
                 </Col>
                 <Popper
+                  style={{ zIndex: 4 }}
                   id="mouse-over-popover"
                   open={open}
                   anchorEl={anchorElMenu}
