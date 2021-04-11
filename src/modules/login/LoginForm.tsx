@@ -1,26 +1,32 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { Action } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { Typography } from '@material-ui/core';
-import { useForm, Controller } from 'react-hook-form';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import React from "react";
+import { useDispatch } from "react-redux";
+import { Action } from "redux";
+import { ThunkDispatch } from "redux-thunk";
+import { Typography } from "@material-ui/core";
+import { useForm, Controller } from "react-hook-form";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 // import * as yup from 'yup';
-import { Col, Row, snackbarSetting } from '../../modules/common/Elements';
-import FormControlTextField from '../../modules/common/FormControlTextField';
-import { useSnackbar } from 'notistack';
-import { FormattedMessage, useIntl } from 'react-intl';
-import LoadingButton from '../../modules/common/LoadingButton';
+import { Col, Row, snackbarSetting } from "../../modules/common/Elements";
+import FormControlTextField from "../../modules/common/FormControlTextField";
+import { useSnackbar } from "notistack";
+import { FormattedMessage, useIntl } from "react-intl";
+import LoadingButton from "../../modules/common/LoadingButton";
 // import { BLUE_500, BLUE_NAVY } from 'assets/theme/colors';
-import { BLUE_NAVY } from '../../assets/theme/colors';
-import { routes } from '../../constants/routes';
+import { BLUE_NAVY } from "../../assets/theme/colors";
+import { routes } from "../../constants/routes";
 import {
   actionLogin,
   actionUpdateProfile,
-} from '../../modules/system/systemAction';
-import { ACCESS_TOKEN, some, SUCCESS_CODE } from '../../constants/constants';
-import { AppState } from '../../modules/rootReducer';
-import { isEmpty } from '../../utils/helpers/helpers';
+} from "../../modules/system/systemAction";
+import {
+  ACCESS_TOKEN,
+  ACCOUNTS,
+  some,
+  SUCCESS_CODE,
+} from "../../constants/constants";
+import { AppState } from "../../modules/rootReducer";
+import { isEmpty } from "../../utils/helpers/helpers";
+import JSONbig from "json-bigint";
 
 interface Props {}
 const LoginForm: React.FC<RouteComponentProps<any> & Props> = (props) => {
@@ -30,7 +36,7 @@ const LoginForm: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const [loading, setLoading] = React.useState(false);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { handleSubmit, control } = useForm({
-    defaultValues: { account: '', password: '' },
+    defaultValues: { account: "", password: "" },
   });
 
   const onSubmit = async (data: any) => {
@@ -38,8 +44,8 @@ const LoginForm: React.FC<RouteComponentProps<any> & Props> = (props) => {
       setLoading(true);
       const res: some = await actionLogin({ ...data });
       if (res?.code === SUCCESS_CODE) {
-        localStorage.setItem(ACCESS_TOKEN, res?.data?.loginToken);
-        // const { data } = await actionGetEmployeesInfo();
+        localStorage.setItem(ACCESS_TOKEN, res?.token);
+        localStorage.setItem(ACCOUNTS, JSONbig.stringify(res?.userInfo));
         if (!isEmpty(data)) {
           // dispatch(actionSetStatus(data?.status));
           dispatch(actionUpdateProfile(data));
@@ -47,14 +53,14 @@ const LoginForm: React.FC<RouteComponentProps<any> & Props> = (props) => {
         } else {
           localStorage.removeItem(ACCESS_TOKEN);
           enqueueSnackbar(
-            'Bạn không có quyền truy cập hệ thống!',
-            snackbarSetting((key) => closeSnackbar(key), { color: 'error' })
+            "Bạn không có quyền truy cập hệ thống!",
+            snackbarSetting((key) => closeSnackbar(key), { color: "error" })
           );
         }
       } else {
         enqueueSnackbar(
           res?.message,
-          snackbarSetting((key) => closeSnackbar(key), { color: 'error' })
+          snackbarSetting((key) => closeSnackbar(key), { color: "error" })
         );
       }
     } catch (error) {
@@ -68,18 +74,18 @@ const LoginForm: React.FC<RouteComponentProps<any> & Props> = (props) => {
       style={{ width: 500 }}
       autoComplete="none"
     >
-      <Col style={{ padding: '36px 30px' }}>
-        <Typography variant="body1" style={{ fontWeight: 'bold' }}>
+      <Col style={{ padding: "36px 30px" }}>
+        <Typography variant="body1" style={{ fontWeight: "bold" }}>
           <FormattedMessage id="IDS_LOGIN_SYSTEM" />
         </Typography>
         <Controller
           as={React.forwardRef((itemProps: any, ref) => (
             <FormControlTextField
               {...itemProps}
-              formControlStyle={{ width: '100%', marginTop: 16 }}
+              formControlStyle={{ width: "100%", marginTop: 16 }}
               label={<FormattedMessage id="IDS_USERNAME" />}
-              placeholder={intl.formatMessage({ id: 'IDS_ENTER_USERNAME' })}
-              inputProps={{ maxLength: 50, autoComplete: 'none' }}
+              placeholder={intl.formatMessage({ id: "IDS_ENTER_USERNAME" })}
+              inputProps={{ maxLength: 50, autoComplete: "none" }}
               optional
               inputRef={ref}
             />
@@ -91,10 +97,10 @@ const LoginForm: React.FC<RouteComponentProps<any> & Props> = (props) => {
           as={React.forwardRef((itemProps: any, ref) => (
             <FormControlTextField
               {...itemProps}
-              formControlStyle={{ width: '100%', marginTop: 12 }}
+              formControlStyle={{ width: "100%", marginTop: 12 }}
               label={<FormattedMessage id="IDS_PASSWORD" />}
-              placeholder={intl.formatMessage({ id: 'IDS_ENTER_PASSWORD' })}
-              inputProps={{ maxLength: 20, autoComplete: 'none' }}
+              placeholder={intl.formatMessage({ id: "IDS_ENTER_PASSWORD" })}
+              inputProps={{ maxLength: 20, autoComplete: "none" }}
               type="password"
               optional
               inputRef={ref}
@@ -115,11 +121,11 @@ const LoginForm: React.FC<RouteComponentProps<any> & Props> = (props) => {
             <FormattedMessage id="IDS_SAVE_INFO" />
           </Typography>
         </Row> */}
-        <Row style={{ marginTop: '18px', justifyContent: 'space-between' }}>
+        <Row style={{ marginTop: "18px", justifyContent: "space-between" }}>
           <LoadingButton
             style={{
               minWidth: 120,
-              width: '100%',
+              width: "100%",
               height: 36,
               background: BLUE_NAVY,
             }}
