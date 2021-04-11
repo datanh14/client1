@@ -82,7 +82,7 @@ const DetailCategory = (props: some) => {
   }, [id]);
   React.useEffect(() => {
     fetchListProduct();
-  }, [idProductChild]);
+  }, [id]);
   console.log("datac", dataCategoryChild);
   return (
     <div style={{ marginTop: 30 }}>

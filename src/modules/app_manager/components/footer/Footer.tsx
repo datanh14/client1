@@ -36,6 +36,7 @@ const Footer = (props: some) => {
       <Grid
         container
         style={{
+          marginTop: 10,
           marginBottom: 0,
           backgroundColor: "white",
           padding: 20,
