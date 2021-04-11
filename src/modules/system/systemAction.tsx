@@ -20,9 +20,6 @@ export const actionLogin = (data: some) => {
 export const actionValidateToken = () => {
   return api({ method: "get", url: "/account/validateAccessToken" });
 };
-export const actionGetProfile = (params?: some) => {
-  return api({ method: "get", url: "/csp/tickets/customer-info", params });
-};
 export const actionGetAllProduct = (params?: some) => {
   return api({
     method: "get",
