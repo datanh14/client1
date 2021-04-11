@@ -285,7 +285,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
             className={classes.title}
             variant="h6"
             noWrap
-            style={{ marginRight: 10, width: 150, cursor: "pointer" }}
+            style={{ marginRight: 10, width: 150, cursor: "pointer", color:"white" }}
             onClick={() => {
               props?.history?.push(`/`);
             }}
