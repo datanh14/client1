@@ -34,7 +34,7 @@ const Footer = (props: some) => {
     pt: "-26%",
   };
   return (
-    <div className={classes.root}>
+    <div className={classes.root}>  
       <Grid container>Footer</Grid>
     </div>
   );

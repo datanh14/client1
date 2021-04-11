@@ -329,7 +329,6 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                       boundariesElement: "scrollParent",
                     },
                   }}
-                  style={{zIndex: 3,}}
                 >
                   <Paper onMouseLeave={handlePopoverClose}>
                     {data !== undefined &&
