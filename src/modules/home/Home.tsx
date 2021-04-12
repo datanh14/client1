@@ -1,5 +1,5 @@
 // import { FormattedMessage } from 'react-intl';
-import { Box, Container } from "@material-ui/core";
+import { Box, Button, Container } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -14,8 +14,9 @@ import { actionProductInChild } from "../system/systemAction";
 
 const Home = (props: some) => {
   const [dataListProduct, setDataListProduct] = React.useState<any>();
-  const [pageProduct, setPageProduct] = React.useState<number>(0);
-  const sizeProduct = 20;
+  const [data, setData] = React.useState<any[]>([]);
+  const [pageProduct, setPageProduct] = React.useState<number>(1);
+  const sizeProduct = 5;
 
   const fetchListProduct = async () => {
     try {
@@ -26,6 +27,7 @@ const Home = (props: some) => {
       });
       if (res?.code === SUCCESS_CODE) {
         setDataListProduct(res);
+        setData((data) => [...data,...res.message.productsList])
         console.log("res", res);
       } else {
       }
@@ -34,7 +36,11 @@ const Home = (props: some) => {
 
   React.useEffect(() => {
     fetchListProduct();
-  }, []);
+  }, [pageProduct]);
+
+  const handleClickMore = () => {
+    setPageProduct((pageProduct) => pageProduct + 1);
+  }
 
   console.log(dataListProduct);
   return (
@@ -58,18 +64,32 @@ const Home = (props: some) => {
             style={{
               display: "flex",
               flexWrap: "wrap",
-              justifyContent: "center",
+              justifyContent: "flex-start",
               margin: "0 auto",
               width: "100%",
             }}
           >
-            {dataListProduct !== undefined &&
-              dataListProduct.message.productsList.map(
+            {data !== undefined &&
+              data.map(
                 (item: some, index: number) => {
                   return <Product key={index} data={item} />;
                 }
               )}
           </Row>
+          <Row
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: 24,
+            }}
+          >
+            <Button variant="outlined" color="primary" onClick={handleClickMore}>
+              Xem thêm
+            </Button>
+          </Row>
+
           <SliderProduct />
         </Container>
       </Box>
