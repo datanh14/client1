@@ -29,7 +29,7 @@ import { routes } from "../constants/routes";
 import { Col, Row } from "../modules/common/Elements";
 import { actionGetAllProduct } from "../modules/system/systemAction";
 import Helmet from "react-helmet";
-import Profile from "../modules/profile/profilePage";
+import ProfilePage from "../modules/profile/profilePage";
 
 interface Props {
   readonly profile?: some;
@@ -207,7 +207,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const gotoCart = (route: string) => props?.history?.push(route);
   const gotoProfile = (route: string) => {
     props?.history?.push(`/`);
-    props?.history?.push(`profile-page`);
+    props?.history?.push(`customer`);
   };
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -222,7 +222,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
     >
       <MenuItem
         onClick={() => {
-          gotoProfile(routes.PROFILEPAGE);
+          gotoProfile(routes.CUSTOMER);
         }}
       >
         Profile

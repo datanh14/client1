@@ -50,10 +50,10 @@ const SIDE_BAR_MENU: some[] = [
   },
   {
     icon: <DashboardIcon />,
-    name: "ProfilePage",
-    route: routes.PROFILEPAGE,
+    name: "Customer",
+    route: routes.CUSTOMER,
     component: profilePage,
-  }
+  },
 ];
 function mapStateToProps(state: AppState) {
   return {
@@ -65,7 +65,7 @@ interface Props extends ReturnType<typeof mapStateToProps> {}
 const MainLayout: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const { profile } = props;
   const classes = mainStyles();
-
+  console.log("prf", profile);
   return (
     <PageWrapper style={{ background: GREY_100 }}>
       <DefaultHelmet profile={profile} />
@@ -89,7 +89,7 @@ const MainLayout: React.FC<RouteComponentProps<any> & Props> = (props) => {
           </Switch>
         </React.Suspense>
       </main>
-      <Footer/>
+      <Footer />
     </PageWrapper>
   );
 };
