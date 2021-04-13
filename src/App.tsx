@@ -20,6 +20,7 @@ const DetailCategory = React.lazy(
 function mapStateToProps(state: AppState) {
   return {
     profile: state.system.profile,
+    
   };
 }
 interface Props extends ReturnType<typeof mapStateToProps> {}

@@ -37,3 +37,9 @@ export const actionProductInChild = (params?: some) => {
     params,
   });
 };
+export const actionGetUserById = (params:some)=> {
+  return api({
+    method: "get",
+    url: `/user/GetUserByUserID`,params,
+  });
+};
