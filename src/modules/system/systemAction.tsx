@@ -20,9 +20,6 @@ export const actionLogin = (data: some) => {
 export const actionValidateToken = () => {
   return api({ method: "get", url: "/account/validateAccessToken" });
 };
-export const actionGetProfile = (params?: some) => {
-  return api({ method: "get", url: "/csp/tickets/customer-info", params });
-};
 export const actionGetAllProduct = (params?: some) => {
   return api({
     method: "get",
@@ -37,9 +34,14 @@ export const actionProductInChild = (params?: some) => {
     params,
   });
 };
-export const actionGetUserById = (params:some)=> {
+
+export const actionProductById = (params?: some) => {
   return api({
     method: "get",
-    url: `/user/GetUserByUserID`,params,
+    url: "/Product/GetProductByID",
+    params,
   });
+};
+export const actionRegister = (data: some) => {
+  return api({ method: "post", url: "/api/authenticate/register", data });
 };

@@ -8,7 +8,7 @@ import {
   createStyles,
   fade,
   makeStyles,
-  Theme
+  Theme,
 } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -19,7 +19,12 @@ import SearchIcon from "@material-ui/icons/Search";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import React, { useEffect } from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { ACCESS_TOKEN, some, SUCCESS_CODE } from "../constants/constants";
+import {
+  ACCESS_TOKEN,
+  ACCOUNTS,
+  some,
+  SUCCESS_CODE,
+} from "../constants/constants";
 import { routes } from "../constants/routes";
 import { Col, Row } from "../modules/common/Elements";
 import { actionGetAllProduct } from "../modules/system/systemAction";
@@ -191,6 +196,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
 
   const handleMenuLogout = (route: string) => {
     localStorage.removeItem(ACCESS_TOKEN);
+    localStorage.removeItem(ACCOUNTS);
     props?.history?.push(route);
   };
   const gotoDetailCategory = (id: number) => {
@@ -285,7 +291,12 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
             className={classes.title}
             variant="h6"
             noWrap
-            style={{ marginRight: 10, width: 150, cursor: "pointer", color:"white" }}
+            style={{
+              marginRight: 10,
+              width: 150,
+              cursor: "pointer",
+              color: "white",
+            }}
             onClick={() => {
               props?.history?.push(`/`);
             }}

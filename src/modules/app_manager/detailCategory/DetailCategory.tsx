@@ -133,15 +133,15 @@ const DetailCategory = (props: some) => {
             <Typography variant="body2">
               {intl.formatMessage({ id: "IDS_APP_VOTE_FROM_5_STARTS" })}
             </Typography>
-            <Rating value={5} size="small" />
+            <Rating value={5} size="small" readOnly />
             <Typography variant="body2">
               {intl.formatMessage({ id: "IDS_APP_VOTE_FROM_4_STARTS" })}
             </Typography>
-            <Rating value={4} size="small" />
+            <Rating value={4} size="small" readOnly />
             <Typography variant="body2">
               {intl.formatMessage({ id: "IDS_APP_VOTE_FROM_3_STARTS" })}
             </Typography>
-            <Rating value={3} size="small" />
+            <Rating value={3} size="small" readOnly />
             <Divider />
             <Typography
               variant="body2"

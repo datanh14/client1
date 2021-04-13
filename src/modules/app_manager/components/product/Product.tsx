@@ -1,4 +1,4 @@
-import { Box } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Rating from "@material-ui/lab/Rating";
 import React, { useState } from "react";
@@ -6,9 +6,9 @@ import { withRouter } from "react-router-dom";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      minWidth: 230,
+      minWidth: 234.5,
       minHeight: 326,
-      maxWidth: 230,
+      maxWidth: 234.5,
       maxHeight: 326,
       padding: 10,
       zIndex: 1,
@@ -16,9 +16,9 @@ const useStyles = makeStyles((theme: Theme) =>
       transition: theme.transitions.create("transform"),
     },
     rootHover: {
-      minWidth: 230,
+      minWidth: 234.5,
       minHeight: 326,
-      maxWidth: 230,
+      maxWidth: 234.5,
       maxHeight: 326,
       padding: 10,
       zIndex: 2,
@@ -45,7 +45,7 @@ const Product = (props: any) => {
       <div
         className={isHover ? classes.rootHover : classes.root}
         onClick={() => {
-          gotoAction(data.dir);
+          gotoAction(data.id);
         }}
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
@@ -56,32 +56,42 @@ const Product = (props: any) => {
             marginRight: 18,
             marginLeft: 18,
           }}
-          src={data.img}
-          alt={data.title}
+          src={data.image ? data.images[0] : data.images}
+          alt={data.name}
         />
-        <p style={{ fontSize: 13 }}>{data.dir}</p>
+        <Typography
+          variant="body2"
+          style={{
+            fontSize: 13,
+            marginBottom: 5,
+          }}
+        >
+          <Box>{data.name}</Box>
+        </Typography>
         <Rating
           name="customized-10"
-          defaultValue={data.sao}
+          defaultValue={data.ratingsCount}
           max={5}
           size="small"
+          readOnly={true}
         />
         <Box
           display="flex"
           alignItems="flex-start"
           style={{
-            marginTop: 10,
+            marginTop: 5,
           }}
         >
-          <Box
+          <Typography
+            variant="body2"
             style={{
-              maxHeight: 30,
               alignItems: "center",
               display: "flex",
             }}
           >
-            <h2> {data.gia} </h2>
-          </Box>
+            <Box fontSize={17}>{data.price} ₫</Box>
+          </Typography>
+
           {data.sale && (
             <Box
               style={{
@@ -89,11 +99,12 @@ const Product = (props: any) => {
                 maxHeight: 30,
                 marginLeft: 20,
                 textAlign: "center",
-                borderRadius: 5,
+                borderRadius: 2,
                 backgroundColor: "#ff424e",
                 alignItems: "center",
                 justifyContent: "center",
                 display: "flex",
+                padding: 2,
               }}
             >
               <p>-13%</p>

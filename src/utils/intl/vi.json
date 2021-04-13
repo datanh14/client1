@@ -157,6 +157,30 @@
   "IDS_APP_PRICE": "GIÁ",
   "IDS_APP_CHOSE_PRICE": "Chọn khoảng giá",
   "IDS_APP_APPLY": "Áp dụng",
-  "IDS_APP_BRAND": "THƯƠNG HIỆU"
+  "IDS_APP_BRAND": "THƯƠNG HIỆU",
+  "IDS_REGISTER_NEW": "Đăng ký tài khoản mới",
+  "IDS_AUTH_REGISTER_SUCCESS_NOTE": "Đăng ký tài khoản mới thành công. Bạn vui lòng kiểm tra email và xác nhận.",
+  "IDS_AUTH_UPDATE_PASSWORD_SUCCESS_NOTE": "Liên kết để cập nhật mật khẩu đã được gửi đến email",
+  "IDS_AUTH_UPDATE_PASSWORD_SUCCESS_NOTE2": "Bạn cần kiểm tra và thực hiện tiếp các bước.",
+  "IDS_CHAT_CHANGE_PASSWORD": "Đổi mật khẩu",
+  "IDS_CHAT_CHANGE_PASSWORD_SUCCESS": "Đổi mật khẩu thành công",
+  "IDS_CHAT_SIGNIN_AGAIN": "Đăng nhập lại",
+  "IDS_CHAT_CHANG_PASSWORD_SUCCESS_NOTE": "Cập nhật mật khẩu thành công. Nhấn nút bên dưới để tiến hành đăng nhập lại vào hệ thống",
+  "IDS_NEW_PASSWORD": "Mật khẩu mới",
+  "IDS_CONFIRM_PASSWORD": "Nhập lại mật khẩu",
+  "IDS_CONFIRM_NEW_PASSWORD": "Nhập lại mật khẩu mới",
+  "IDS_FIRST_NAME": "Tên",
+  "IDS_ENTER_FIRST_NAME": "Nhập tên",
+  "IDS_LAST_NAME": "Họ",
+  "IDS_ENTER_LAST_NAME": "Nhập Họ",
+  "IDS_CHAT_ENTER_PHONE_NUMBER": "Nhập số điện thoại",
+  "IDS_AUTH_ALREADY_HAD_ACCOUNT": "Bạn đã có tài khoản?",
+  "IDS_AUTH_REGISTER_SUCCESS": "Đăng ký thành công",
+  "IDS_AUTH_SIGNIN_NOW": "Đăng nhập ngay",
+  "IDS_REGISTER": "Đăng ký tài khoản",
+  "IDS_AUTH_ACCOUNT": "Tài khoản",
+  "IDS_AUTH_ENTER_ACCOUNT": "Nhập tài khoản",
+  "IDS_RADIO_GROUP_GENGER":"Giới tính"
+
 
 }

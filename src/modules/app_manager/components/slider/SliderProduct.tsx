@@ -11,9 +11,9 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
-      maxWidth: 1300,
-      marginLeft: 50,
-      marginRight: 50,
+      maxWidth: "100%",
+      height: 326,
+      marginTop: 24,
       marginBottom: 24,
       position: "relative",
       scrollBehavior: "smooth",
@@ -28,17 +28,17 @@ const useStyles = makeStyles((theme: Theme) =>
       position: "absolute",
       right: 5,
       top: "50%",
-      zIndex: 2,
+      zIndex: 3,
     },
     prev: {
       position: "absolute",
       left: 5,
       top: "50%",
-      zIndex: 2,
+      zIndex: 3,
     },
     grey: {
-      color: theme.palette.getContrastText(grey[50]),
-      backgroundColor: grey[50],
+      color: theme.palette.getContrastText(grey[200]),
+      backgroundColor: grey[200],
     },
   })
 );
@@ -46,81 +46,81 @@ const dataItems = [
   {
     sale: true,
     id: 1,
-    img:
-      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
+    images:
+      ["https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg"],
     title: "ok",
-    gia: "100d",
-    dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
+    price: "100d",
+    name: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
     sao: 2,
   },
   {
     sale: true,
     id: 2,
-    img:
-      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
+    images:
+      ["https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg"],
     title: "ok",
-    gia: "100d",
-    dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
+    price: "100d",
+    name: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
     sao: 2,
   },
   {
     sale: true,
     id: 3,
-    img:
-      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
+    images:
+      ["https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg"],
     title: "ok",
-    gia: "100d",
-    dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
+    price: "100d",
+    name: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
     sao: 2,
   },
   {
-    sale: false,
+    sale: true,
     id: 4,
-    img:
-      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
+    images:
+      ["https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg"],
     title: "ok",
-    gia: "100d",
-    dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
+    price: "100d",
+    name: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
     sao: 2,
   },
   {
-    sale: false,
+    sale: true,
     id: 5,
-    img:
-      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
+    images:
+      ["https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg"],
     title: "ok",
-    gia: "100d",
-    dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
+    price: "100d",
+    name: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
     sao: 2,
   },
   {
-    sale: false,
+    sale: true,
     id: 6,
-    img:
-      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
+    images:
+      ["https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg"],
     title: "ok",
-    gia: "100d",
-    dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
+    price: "100d",
+    name: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
     sao: 2,
   },
   {
-    sale: false,
+    sale: true,
     id: 7,
-    img:
-      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
+    images:
+      ["https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg"],
     title: "ok",
-    gia: "100d",
-    dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
+    price: "100d",
+    name: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
     sao: 2,
   },
   {
-    sale: false,
+    sale: true,
     id: 8,
-    img:
-      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
+    images:
+      ["https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg"],
     title: "ok",
-    gia: "100d",
-    dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
+    price: "100d",
+    name: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
     sao: 2,
   },
 ];
