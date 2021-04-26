@@ -3,6 +3,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Rating from "@material-ui/lab/Rating";
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
+import { formatter } from "../../../../utils/helpers/helpers";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -53,6 +54,7 @@ const Product = (props: any) => {
         <img
           style={{
             width: "80%",
+            height: 187.6,
             marginRight: 18,
             marginLeft: 18,
           }}
@@ -64,6 +66,11 @@ const Product = (props: any) => {
           style={{
             fontSize: 13,
             marginBottom: 5,
+            display: '-webkit-box',
+            WebkitBoxOrient: 'vertical',
+            WebkitLineClamp: 2,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
           }}
         >
           <Box>{data.name}</Box>
@@ -89,7 +96,7 @@ const Product = (props: any) => {
               display: "flex",
             }}
           >
-            <Box fontSize={17}>{data.price} ₫</Box>
+            <Box fontSize={17}>{formatter(data.price)}</Box>
           </Typography>
 
           {data.sale && (

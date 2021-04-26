@@ -85,3 +85,11 @@ export const showNotificationSocket = (item: some) => {
     }
   });
 };
+
+export const formatter = (money: number) => {
+   var f = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+  });
+  return f.format(money);
+}; 

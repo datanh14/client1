@@ -37,9 +37,10 @@ const App: React.FC<RouteComponentProps<any> & Props> = (props) => {
     }
     if (localStorage.getItem(ACCESS_TOKEN)) {
       // fetchEmployeesInfo();
-    } else {
-      goToLogin();
-    }
+    } 
+    // else {
+    //   goToLogin();
+    // }
   };
   React.useEffect(() => {
     fetchDeviceId(); //eslint-disable-next-line

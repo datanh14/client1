@@ -1,18 +1,14 @@
 import {
-  Box, Button,
-  ButtonGroup, CardContent,
-
-
-
-
-  Collapse, Grid, IconButton, Typography
+  Box,
+  Button,
+  ButtonGroup,
+  CardContent,
+  Collapse,
+  Grid,
+  IconButton,
+  Typography,
 } from "@material-ui/core";
-import {
-  createStyles,
-
-  makeStyles,
-  Theme
-} from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
@@ -21,7 +17,9 @@ import RemoveIcon from "@material-ui/icons/Remove";
 import clsx from "clsx";
 import React from "react";
 import { some } from "../../../../constants/constants";
-import { Row } from "../../../common/Elements";
+import { formatter } from "../../../../utils/helpers/helpers";
+import { Col, Row } from "../../../common/Elements";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -63,208 +61,260 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-const Comment = (props: some) => {
+interface Props {
+  index: number;
+  data: some;
+  changeCount(index: number, count: number): void;
+  handleDeleteProductByCart(index: number): void;
+}
+
+const ProductCart: React.FC<RouteComponentProps<some> & Props> = (props) => {
+  const { index, data, changeCount, handleDeleteProductByCart } = props;
   const classes = useStyles();
-  const [count, setCount] = React.useState(1);
+  const [count, setCount] = React.useState(data?.count);
   const [expanded, setExpanded] = React.useState(false);
+  const [isBuyInDay, setIsBuyInDay] = React.useState(false);
+  const [isSale, setIsSale] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const data = {
-    img:
-      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
-    title: "ok",
-    gia: "100d",
-    dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
-    sao: 2,
-    pt: "-26%",
+  const gotoAction = (route: string) => {
+    // props?.history?.push(`/`);
+    props?.history?.push(`product-detail/${route}`);
   };
+
   return (
     <div className={classes.root}>
-      <Grid
-        container
-        style={{
-          marginBottom: 20,
-          backgroundColor: "white",
-          padding: 20,
-        }}
-      >
-        <Grid item xs={12}>
-          <Typography>
-            <Box
-              fontWeight="fontWeightBold"
-              fontSize={15}
-              paddingRight={1}
-              style={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              Cửa hàng ABC
-              <NavigateNextIcon
-                className={classes.iconSmall}
-                style={{
-                  marginLeft: 5,
-                }}
-              />
-            </Box>
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Row>
+      {data !== undefined && (
+        <Grid
+          container
+          style={{
+            marginBottom: 20,
+            backgroundColor: "white",
+            padding: 20,
+          }}
+        >
+          <Grid item xs={12}>
             <Typography>
               <Box
                 fontWeight="fontWeightBold"
                 fontSize={15}
-                marginRight={1}
-                paddingRight={1}
+                marginBottom={1}
                 style={{
-                  color: "#ff9800",
-                  alignItems: "center",
-                  justifyContent: "center",
                   display: "flex",
+                  alignItems: "center",
                 }}
               >
-                <ReceiptIcon
+                {data?.store?.name}
+                <NavigateNextIcon
                   className={classes.iconSmall}
                   style={{
-                    color: "#ff9800",
-                    marginRight: 5,
+                    marginLeft: 5,
                   }}
                 />
-                Bạn được giảm giá 46k
               </Box>
             </Typography>
-            <IconButton
-              className={clsx(classes.expand, {
-                [classes.expandOpen]: expanded,
-              })}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </IconButton>
-          </Row>
-        </Grid>
-        <Grid item xs={12}>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <Typography paragraph>
-                Heat 1/2 cup of the broth in a pot until simmering, add saffron
-              </Typography>
-            </CardContent>
-          </Collapse>
-        </Grid>
-        <Grid item xs={12} sm={2}>
-          <img
+          </Grid>
+          {isSale && (
+            <Grid item xs={12}>
+              <Row>
+                <Typography>
+                  <Box
+                    fontWeight="fontWeightBold"
+                    fontSize={15}
+                    marginRight={1}
+                    paddingRight={1}
+                    style={{
+                      color: "#ff9800",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      display: "flex",
+                    }}
+                  >
+                    <ReceiptIcon
+                      className={classes.iconSmall}
+                      style={{
+                        color: "#ff9800",
+                        marginRight: 5,
+                      }}
+                    />
+                    Bạn được giảm giá 46k
+                  </Box>
+                </Typography>
+                <IconButton
+                  className={clsx(classes.expand, {
+                    [classes.expandOpen]: expanded,
+                  })}
+                  onClick={handleExpandClick}
+                  aria-expanded={expanded}
+                  aria-label="show more"
+                >
+                  <ExpandMoreIcon />
+                </IconButton>
+              </Row>
+            </Grid>
+          )}
+
+          <Grid item xs={12}>
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+              <CardContent>
+                <Typography paragraph>
+                  Heat 1/2 cup of the broth in a pot until simmering, add
+                  saffron
+                </Typography>
+              </CardContent>
+            </Collapse>
+          </Grid>
+          <Grid item xs={12} sm={2}>
+            <img
+              style={{
+                width: "100%",
+                borderRadius: 10,
+                cursor: "pointer",
+              }}
+              src={data?.images ? data?.images[0] : ""}
+              alt={data?.name}
+              onClick={() => {
+                gotoAction(data?.id);
+              }}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            sm={6}
             style={{
-              width: "100%",
-              borderRadius: 10,
+              paddingLeft: 10,
+              paddingRight: 10,
             }}
-            src={data.img}
-            alt={data.title}
-          />
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          style={{
-            paddingLeft: 10,
-            paddingRight: 10,
-          }}
-        >
-          <Typography>
-            <Box
-              fontSize={15}
-              padding={1}
-              style={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              Set 1 Giỏ Quà Đậm Đà Tình Thân nước mắm tôm biển bình gốm đỏ 60N
-              và cá cơm vàng ruột đỏ bình gốm vàng 60N
-            </Box>
-          </Typography>
-          <Typography>
-            <Box
-              fontWeight="fontWeightBold"
-              fontSize={15}
-              padding={1}
-              style={{
-                color: "green",
-                display: "flex",
-              }}
-            >
-              GIAO TRONG NGÀY
-            </Box>
-          </Typography>
-          <Row>
-            <Button color="secondary">Xóa</Button>
-            <Button color="secondary">Để dành mua sau</Button>
-          </Row>
-        </Grid>
-        <Grid container xs={12} sm={2} spacing={1}>
-          <Typography>
-            <Box paddingTop={1} fontWeight="fontWeightBold" fontSize={17}>
-              {data.gia}
-            </Box>
+          >
+            <Typography>
+              <Box
+                fontSize={14}
+                padding={1}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  cursor: "pointer",
+                  maxWidth: 400,
+                }}
+                onClick={() => {
+                  gotoAction(data?.id);
+                }}
+              >
+                {data?.name}
+              </Box>
+            </Typography>
+            {isBuyInDay && (
+              <Typography>
+                <Box
+                  fontWeight="fontWeightBold"
+                  fontSize={14}
+                  padding={1}
+                  style={{
+                    color: "green",
+                    display: "flex",
+                  }}
+                >
+                  GIAO TRONG NGÀY
+                </Box>
+              </Typography>
+            )}
             <Row>
-              <Typography>
-                <Box
-                  fontSize={15}
-                  style={{
-                    textDecoration: "line-through",
-                    borderRight: "1px solid #ededed",
-                    paddingRight: 20,
-                  }}
-                >
-                  {data.gia}
-                </Box>
-              </Typography>
-              <Typography>
-                <Box
-                  style={{
-                    marginLeft: 20,
-                  }}
-                >
-                  {data.pt}
-                </Box>
-              </Typography>
+              <Button
+                color="secondary"
+                onClick={() => {
+                  handleDeleteProductByCart(index);
+                }}
+              >
+                Xóa
+              </Button>
+              <Button color="secondary">Để dành mua sau</Button>
             </Row>
-          </Typography>
-        </Grid>
-        <Grid item xs={12} sm={2}>
-          <Box paddingTop={2}>
-            <ButtonGroup>
-              <Button
-                aria-label="reduce"
-                size="small"
-                onClick={() => {
-                  setCount(Math.max(count - 1, 0));
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <Col>
+              <Typography
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  alignItems: "center",
                 }}
               >
-                <RemoveIcon fontSize="small" />
-              </Button>
-              <Button size="small">{count}</Button>
-              <Button
-                aria-label="increase"
-                size="small"
-                onClick={() => {
-                  setCount(count + 1);
+                <Box paddingTop={1} fontWeight="bold" fontSize={15}>
+                  {formatter(
+                    data?.price + (data?.price * data?.discount) / 100
+                  )}
+                </Box>
+              </Typography>
+              <Row
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  alignItems: "center",
                 }}
               >
-                <AddIcon fontSize="small" />
-              </Button>
-            </ButtonGroup>
-          </Box>
+                <Typography>
+                  <Box
+                    fontSize={12}
+                    style={{
+                      textDecoration: "line-through",
+                      borderRight: "1px solid #ededed",
+                      paddingRight: 10,
+                    }}
+                  >
+                    {formatter(data?.price)}
+                  </Box>
+                </Typography>
+                <Typography>
+                  <Box
+                    fontSize={12}
+                    style={{
+                      marginLeft: 8,
+                    }}
+                  >
+                    {data?.discount}%
+                  </Box>
+                </Typography>
+              </Row>
+              <Box
+                paddingTop={2}
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                }}
+              >
+                <ButtonGroup size="small">
+                  <Button
+                    aria-label="reduce"
+                    onClick={() => {
+                      setCount(Math.max(count - 1, 1));
+                      changeCount(index, Math.max(count - 1, 1));
+                    }}
+                  >
+                    <RemoveIcon fontSize="small" />
+                  </Button>
+                  <Button size="small">{count}</Button>
+                  <Button
+                    aria-label="increase"
+                    size="small"
+                    onClick={() => {
+                      setCount(count + 1);
+                      changeCount(index, count + 1);
+                    }}
+                  >
+                    <AddIcon fontSize="small" />
+                  </Button>
+                </ButtonGroup>
+              </Box>
+            </Col>
+          </Grid>
         </Grid>
-      </Grid>
+      )}
     </div>
   );
 };
-export default Comment;
+export default withRouter(ProductCart);

@@ -21,6 +21,8 @@ import {
 import {
   ACCESS_TOKEN,
   ACCOUNTS,
+  ACCOUNTS_ID,
+  GET_CART_LOCAL_STORAGE,
   some,
   SUCCESS_CODE,
 } from "../../constants/constants";
@@ -46,6 +48,8 @@ const LoginForm: React.FC<RouteComponentProps<any> & Props> = (props) => {
       if (res?.code === SUCCESS_CODE) {
         localStorage.setItem(ACCESS_TOKEN, res?.token);
         localStorage.setItem(ACCOUNTS, JSONbig.stringify(res?.userInfo));
+        localStorage.setItem(ACCOUNTS_ID, res?.userInfo?.id);
+        localStorage.setItem(GET_CART_LOCAL_STORAGE, "false");
         if (!isEmpty(data)) {
           // dispatch(actionSetStatus(data?.status));
           dispatch(actionUpdateProfile(data));

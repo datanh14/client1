@@ -22,6 +22,8 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import {
   ACCESS_TOKEN,
   ACCOUNTS,
+  ACCOUNTS_ID,
+  CART_LOCAL_STORAGE,
   some,
   SUCCESS_CODE,
 } from "../constants/constants";
@@ -197,6 +199,8 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const handleMenuLogout = (route: string) => {
     localStorage.removeItem(ACCESS_TOKEN);
     localStorage.removeItem(ACCOUNTS);
+    localStorage.removeItem(ACCOUNTS_ID);
+    localStorage.removeItem(CART_LOCAL_STORAGE);
     props?.history?.push(route);
   };
   const gotoDetailCategory = (id: number) => {
