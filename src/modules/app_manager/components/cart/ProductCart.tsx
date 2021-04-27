@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
-      maxWidth: 900,
       transition: theme.transitions.create("transform"),
     },
     grid: {
