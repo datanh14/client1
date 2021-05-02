@@ -28,7 +28,6 @@ const Home = (props: some) => {
       if (res?.code === SUCCESS_CODE) {
         setDataListProduct(res);
         setData((data) => [...data,...res.message.productsList])
-        console.log("res", res);
       } else {
       }
     } catch (error) {}
@@ -42,7 +41,6 @@ const Home = (props: some) => {
     setPageProduct((pageProduct) => pageProduct + 1);
   }
 
-  console.log(dataListProduct);
   return (
     <>
       <Box

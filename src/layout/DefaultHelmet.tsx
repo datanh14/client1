@@ -111,7 +111,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const { profile } = props;
-  console.log(profile);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [data, setData] = React.useState<any>();
@@ -167,7 +166,6 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
       const res: some = await actionGetAllProduct();
       if (res?.code === SUCCESS_CODE) {
         setData(res);
-        console.log("res", res);
       } else {
       }
     } catch (error) {}
@@ -176,7 +174,6 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
     fetchListCategory();
   }, []);
   // console.log("data", data);
-  console.log("data", data);
   const dataCategory = [
     {
       id: 1,

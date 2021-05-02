@@ -5,12 +5,15 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { AppState } from "../rootReducer";
 
+
 const ChangeAdressComponent = lazy(() => import("./ChangeAdressPage"));
 const CouponComponent = lazy(() => import("./CouponPage"));
 const NotificationComponent = lazy(() => import("./NotificationPage"));
 const OrderManagementComponent = lazy(() => import("./OrderManagementPage"));
 const ProfileComponent = lazy(() => import("./ProfilePage_1"));
 const AdressComponent = lazy(() => import("./AdressPage"));
+const AddAdressComponent = lazy(() => import("./AddArdessPage"));
+const  PaymentCardPageComponent = lazy(() => import("./PaymentCardPage"));
 function mapStateToProps(state: AppState) {
   return {
     profile: state.system.profile,
@@ -28,11 +31,17 @@ const ProfilePage: React.FC<RouteComponentProps<any> & Props> = (props) => {
           <Route path="/customer/address">
             <AdressComponent />
           </Route>
-          <Route path="/customer/address/create">
+          <Route path="/customer/paymentcard">
+            <PaymentCardPageComponent />
+          </Route>
+          <Route path="/customer/create">
             <ChangeAdressComponent />
           </Route>
           <Route path="/customer/coupons">
             <CouponComponent />
+          </Route>
+          <Route path="/customer/add">
+            <AddAdressComponent />
           </Route>
           <Route path="/customer/notification">
             <NotificationComponent />

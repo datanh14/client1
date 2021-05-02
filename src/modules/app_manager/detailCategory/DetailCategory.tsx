@@ -76,7 +76,6 @@ const DetailCategory = (props: some) => {
       });
       if (res?.code === SUCCESS_CODE) {
         setDataListProductChild(res);
-        console.log("res", res);
       } else {
       }
     } catch (error) {}
@@ -87,7 +86,6 @@ const DetailCategory = (props: some) => {
   React.useEffect(() => {
     fetchListProduct();
   }, [id, idProductChild]);
-  console.log("datac", dataCategoryChild);
   return (
     <div style={{ marginTop: 30 }}>
       <Container style={{ display: "flex" }}>

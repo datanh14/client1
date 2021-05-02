@@ -101,6 +101,7 @@ const ProductDetail = (props: any) => {
       if (res?.code === SUCCESS_CODE) {
         setDataListProduct(res);
         console.log("idProduct", res);
+        // setDataListProduct(res);
       } else {
       }
     } catch (error) {}
