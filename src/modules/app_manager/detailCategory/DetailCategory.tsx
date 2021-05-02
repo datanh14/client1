@@ -53,7 +53,7 @@ const DetailCategory = (props: some) => {
   const [dataCategoryChild, setDataCategoryChild] = React.useState<any>();
   const [dataListProductChild, setDataListProductChild] = React.useState<any>();
   const [idProductChild, setIdProductChild] = React.useState<string>(id.id);
-  const [pageProduct, setPageProduct] = React.useState<number>(0);
+  const [pageProduct, setPageProduct] = React.useState<number>(1);
   const sizeProduct = 2;
   const classes = useStyles();
   const [nameListProduct, setNameListProduct] = React.useState<string>();

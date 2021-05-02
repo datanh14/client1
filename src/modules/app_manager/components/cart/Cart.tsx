@@ -73,7 +73,7 @@ const Cart = (props: some) => {
       { ...temp },
       ...cart.slice(index + 1),
     ];
-    //fetchAddProductToCart(temp);
+    fetchAddProductToCart(temp);
     setCart(listProductInCart);
     localStorage.setItem(
       CART_LOCAL_STORAGE,
@@ -155,7 +155,7 @@ const Cart = (props: some) => {
 
   React.useEffect(() => {
     handleBill();
-    addAllProductToCart();
+    // addAllProductToCart();
   }, [cart]);
 
   React.useEffect(() => {
