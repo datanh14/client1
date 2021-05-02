@@ -13,15 +13,21 @@ import {
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 import "antd/dist/antd.css";
-import React from "react";
-import { NavLink, useLocation} from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { ACCOUNTS, some } from "../../../constants/constants";
+import JSONbig from "json-bigint";
 
 const { Sider } = Layout;
 const SubMenu = () => {
   const location = useLocation();
   const pathname = location.pathname;
   const pathnameDefault = [pathname];
-  console.log(location);
+  const [users, setUsers] = useState<some>(
+    JSONbig.parse(localStorage.getItem(ACCOUNTS) || "{}")
+  );
+  console.log("ACCOUNTS", typeof users);
+
   return (
     <>
       <Layout>
@@ -32,16 +38,16 @@ const SubMenu = () => {
               defaultSelectedKeys={pathnameDefault}
               style={{ height: "100%", borderRight: 0 }}
             >
-              <Menu.Item key="/customer/account/edit">
+              <Menu.Item key={`/customer/account/edit`}>
                 {" "}
-                <NavLink to="/customer/account/edit">
+                <NavLink to={`/customer/account/edit`}>
                   <UserOutlined />
                   Thông tin tài khoản
                 </NavLink>
               </Menu.Item>
-              <Menu.Item key="/customer/notification">
+              <Menu.Item key={`/customer/notification`}>
                 {" "}
-                <NavLink to="/customer/notification">
+                <NavLink to={`/customer/notification`}>
                   <NotificationOutlined />
                   Thông báo của tôi
                 </NavLink>
@@ -54,17 +60,19 @@ const SubMenu = () => {
                   Quản lý đơn hàng
                 </NavLink>
               </Menu.Item>
-              <Menu.Item key="/customer/address">
+              <Menu.Item key={`/customer/address`}>
                 {" "}
-                <NavLink to="/customer/address">
+                <NavLink to={`/customer/address`}>
                   <EnvironmentOutlined />
                   Sổ địa chỉ
                 </NavLink>
               </Menu.Item>
-              <Menu.Item key="5">
+              <Menu.Item key={`/customer/paymentcard`}>
                 {" "}
-                <CreditCardOutlined />
-                Thông tin thanh toán
+                <NavLink to={`/customer/paymentcard`}>
+                  <CreditCardOutlined />
+                  Thông tin thanh toán
+                </NavLink>
               </Menu.Item>
               <Menu.Item key="6">
                 {" "}

@@ -130,7 +130,6 @@ const SliderProduct = (props: some) => {
 
   const handlePrevClick = () => {
     if (sliderRef.current) {
-      console.log("prev");
       const slide = sliderRef.current;
       slide.scrollLeft -= slide.offsetWidth;
       if (slide.scrollLeft < 0) {

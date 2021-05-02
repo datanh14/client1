@@ -65,7 +65,6 @@ interface Props extends ReturnType<typeof mapStateToProps> {}
 const MainLayout: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const { profile } = props;
   const classes = mainStyles();
-  console.log("prf", profile);
   return (
     <PageWrapper style={{ background: GREY_100 }}>
       <DefaultHelmet profile={profile} />
