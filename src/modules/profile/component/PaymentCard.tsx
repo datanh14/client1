@@ -1,8 +1,6 @@
+import { ExclamationCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Card, Layout, Popover, Space } from "antd";
 import React from "react";
-import { Space, Card, Popover, Button } from "antd";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { Layout, Menu, Breadcrumb } from 'antd';
-import { PlusOutlined } from "@ant-design/icons";
 const { Header, Content, Footer } = Layout;
 const content = (
   <div>
@@ -13,14 +11,20 @@ const content = (
 
 const PaymentCard = () => {
   return (
-    <Content style={{ margin: '25px 25px', padding: '50px 50px', backgroundColor:'white' }}>
-         <Space direction="horizontal">
+    <Content
+      style={{
+        margin: "25px 25px",
+        padding: "50px 50px",
+        backgroundColor: "white",
+      }}
+    >
+      <Space direction='horizontal'>
         <Card
-          title="Momo"
+          title='Momo'
           style={{ width: 300 }}
           extra={
-            <a href="gg">
-              <Popover content={content} title="THanh toan bang vi MOMO">
+            <a href='gg'>
+              <Popover content={content} title='THanh toan bang vi MOMO'>
                 {" "}
                 <ExclamationCircleOutlined />
               </Popover>
@@ -30,18 +34,20 @@ const PaymentCard = () => {
           <p>Số điện thoại: 02121028</p>
           <p>Card content</p>
         </Card>
-        <Card title="ZaloPay" style={{ width: 300 }}>
+        <Card title='ZaloPay' style={{ width: 300 }}>
           <p>Card content</p>
           <p>Card content</p>
         </Card>
-            
       </Space>
-      <Button type="dashed" size="large" style={{width: '100%', marginTop: '10px'}} >
-                  <PlusOutlined />
-                  Thêm phương thức thanh toán
-                </Button>
+      <Button
+        type='dashed'
+        size='large'
+        style={{ width: "100%", marginTop: "10px" }}
+      >
+        <PlusOutlined />
+        Thêm phương thức thanh toán
+      </Button>
     </Content>
-    )
-     
-}
+  );
+};
 export default PaymentCard;

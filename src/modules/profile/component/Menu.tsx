@@ -13,28 +13,23 @@ import {
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 import "antd/dist/antd.css";
+import JSONbig from "json-bigint";
 import React, { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { ACCOUNTS, some } from "../../../constants/constants";
-import JSONbig from "json-bigint";
 
 const { Sider } = Layout;
 const SubMenu = () => {
   const location = useLocation();
   const pathname = location.pathname;
   const pathnameDefault = [pathname];
-  const [users, setUsers] = useState<some>(
-    JSONbig.parse(localStorage.getItem(ACCOUNTS) || "{}")
-  );
-  console.log("ACCOUNTS", typeof users);
-
   return (
     <>
       <Layout>
         <Layout>
-          <Sider width={250} className="site-layout-background">
+          <Sider width={250} className='site-layout-background'>
             <Menu
-              mode="inline"
+              mode='inline'
               defaultSelectedKeys={pathnameDefault}
               style={{ height: "100%", borderRight: 0 }}
             >
@@ -53,9 +48,9 @@ const SubMenu = () => {
                 </NavLink>
               </Menu.Item>
 
-              <Menu.Item key="/sales/order/history">
+              <Menu.Item key='/sales/order/history'>
                 {" "}
-                <NavLink to="/sales/order/history">
+                <NavLink to='/sales/order/history'>
                   <FormOutlined />
                   Quản lý đơn hàng
                 </NavLink>
@@ -74,32 +69,32 @@ const SubMenu = () => {
                   Thông tin thanh toán
                 </NavLink>
               </Menu.Item>
-              <Menu.Item key="6">
+              <Menu.Item key='6'>
                 {" "}
                 <StarOutlined />
                 Nhận xét của tôi
               </Menu.Item>
-              <Menu.Item key="7">
+              <Menu.Item key='7'>
                 {" "}
                 <EyeOutlined />
                 Sản phẩm đã xem
               </Menu.Item>
-              <Menu.Item key="8">
+              <Menu.Item key='8'>
                 {" "}
                 <HeartOutlined />
                 Sản phẩm ưu thích
               </Menu.Item>
-              <Menu.Item key="9">
+              <Menu.Item key='9'>
                 {" "}
                 <ShoppingCartOutlined />
                 Sản phẩm mua sau
               </Menu.Item>
-              <Menu.Item key="10">
+              <Menu.Item key='10'>
                 <QuestionCircleOutlined />
                 Hỏi đáp
               </Menu.Item>
-              <Menu.Item key="/customer/coupons">
-                <NavLink to="/customer/coupons">
+              <Menu.Item key='/customer/coupons'>
+                <NavLink to='/customer/coupons'>
                   <DollarCircleOutlined />
                   Mã giảm giá
                 </NavLink>

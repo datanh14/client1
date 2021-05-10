@@ -5,14 +5,6 @@ import { ACCESS_TOKEN, some, UUID } from "../../constants/constants";
 import { configs } from "./config";
 import { isEmpty } from "./helpers";
 
-const currentTime = new Date().getTime();
-
-// const AppHash = Buffer.from(
-//   sha256(
-//     `${currentTime / 1000 - ((currentTime / 1000) % 300)}:${configs().APP_KEY}`
-//   ),
-//   "hex"
-// ).toString("base64");
 const request = axios.create({
   baseURL: configs().BASE_URL,
   headers: {
