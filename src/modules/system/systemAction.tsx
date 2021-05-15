@@ -51,6 +51,14 @@ export const actionGetAllProductInCart = (params?: some) => {
   });
 };
 
+export const actionGetAddressByUser = (params?: some) => {
+  return api({
+    method: "get",
+    url: "/Address/GetAddressByUser",
+    params,
+  });
+};
+
 export const actionAddProductToCart = (data: some) => {
   return api({
     method: "post",
@@ -63,6 +71,22 @@ export const actionDeleteProductFromCart = (params?: some) => {
   return api({
     method: "delete",
     url: "/Cart/DeleteFromCart",
+    params,
+  });
+};
+
+export const actionChangeDefaultAddress = (data: string) => {
+  return api({
+    method: "post",
+    url: "/Address/ChangeDefaultAddress",
+    data
+  });
+};
+
+export const actionConfirmPayment = (params?: some) => {
+  return api({
+    method: "get",
+    url: "/Cart/ConfirmPayment",
     params,
   });
 };

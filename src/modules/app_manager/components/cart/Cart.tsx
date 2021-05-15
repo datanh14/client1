@@ -5,6 +5,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import {
+  ACCOUNTS,
   ACCOUNTS_ID,
   CART_LOCAL_STORAGE,
   GET_CART_LOCAL_STORAGE,
@@ -20,7 +21,10 @@ import {
   actionAddProductToCart,
   actionDeleteProductFromCart,
   actionGetAllProductInCart,
+  actionGetAddressByUser,
+  actionConfirmPayment,
 } from "../../../system/systemAction";
+import DialogChangeAddress from "./DialogChangeAddress";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,12 +49,20 @@ const Cart = (props: some) => {
   const [cart, setCart] = React.useState<some[]>(
     JSONbig.parse(localStorage.getItem(CART_LOCAL_STORAGE) || "[]")
   );
+  const [profile, setProfile] = React.useState<some>(
+    JSONbig.parse(localStorage.getItem(ACCOUNTS) || "{}")
+  );
   const [bill, setBill] = React.useState(0);
-  const [isGetAll, setIsGetAll] = React.useState(localStorage.getItem(GET_CART_LOCAL_STORAGE));
+  const [isGetAll, setIsGetAll] = React.useState(
+    localStorage.getItem(GET_CART_LOCAL_STORAGE)
+  );
   const [countProduct, setCountProduct] = React.useState(0);
   const [userID, setUserID] = React.useState(
     localStorage.getItem(ACCOUNTS_ID) || ""
   );
+  const [address, setAddress] = React.useState<some>({});
+  const [listAddress, setListAddress] = React.useState<some[]>([]);
+  const [indexDefaut, setIndexDefaut] = React.useState(-1);
 
   const handleBill = () => {
     var sum = 0;
@@ -58,7 +70,7 @@ const Cart = (props: some) => {
     cart &&
       cart.map((item: some, index: number) => {
         sum =
-          sum + (item.price + (item.price * item.discount) / 100) * item.count;
+          sum + (item.price - (item.price * item.discount) / 100) * item.count;
         count = count + item.count;
       });
     setBill(sum);
@@ -93,7 +105,6 @@ const Cart = (props: some) => {
   };
 
   const fetchAllProductInCart = async () => {
-    addAllProductToCart();
     try {
       const res: some = await actionGetAllProductInCart({
         buyerID: userID,
@@ -107,12 +118,8 @@ const Cart = (props: some) => {
             });
           setCart([...temp]);
           setIsGetAll("true");
-          localStorage.setItem(GET_CART_LOCAL_STORAGE,"true");
-          localStorage.setItem(
-            CART_LOCAL_STORAGE,
-            JSONbig.stringify(temp)
-          );
-          console.log("fetchAllProductInCart", isGetAll);
+          localStorage.setItem(GET_CART_LOCAL_STORAGE, "true");
+          localStorage.setItem(CART_LOCAL_STORAGE, JSONbig.stringify(temp));
         }
       } else {
       }
@@ -133,11 +140,18 @@ const Cart = (props: some) => {
     } catch (error) {}
   };
 
-  const addAllProductToCart = () => {
-    console.log("fetchAllProductInCart addall")
-    cart && cart.map((item:some,index:number) => {
-      fetchAddProductToCart(item);
-    })
+  const addAllProductToCartFromLocal = () => {
+    if (isGetAll === "false") {
+      cart &&
+        cart.map((item: some, index: number) => {
+          fetchAddProductToCart(item);
+        });
+    }
+  };
+
+  const addAllProductToCart= () => {
+    addAllProductToCartFromLocal();
+    fetchAllProductInCart();
   }
 
   const fetchDeleteProductFromCart = async (data: some) => {
@@ -153,6 +167,45 @@ const Cart = (props: some) => {
     } catch (error) {}
   };
 
+  const fetchGetAddressByUser = async () => {
+    try {
+      const res: some = await actionGetAddressByUser({
+        UserID: userID,
+      });
+      if (res?.code === SUCCESS_CODE) {
+        if (res?.message) {
+          setListAddress(res?.message);
+          res?.message.map((item: some, index: number) => {
+            if (item?.isDefault === 1) {
+              setAddress(item);
+              setIndexDefaut(index);
+              return;
+            }
+          });
+        }
+      } else {
+      }
+    } catch (error) {}
+  };
+
+  const fetchConfirmPayment = async () => {
+    try {
+      const res: some = await actionConfirmPayment({
+        userID: userID,
+        addressID: address?.id,
+      });
+      if (res?.code === SUCCESS_CODE) {
+        localStorage.removeItem(CART_LOCAL_STORAGE);
+        setCart(JSONbig.parse("[]"));
+      } else {
+      }
+    } catch (error) {}
+  };
+
+  const handleClickChangeAddress = () => {
+    fetchGetAddressByUser();
+  };
+
   React.useEffect(() => {
     handleBill();
     // addAllProductToCart();
@@ -160,7 +213,8 @@ const Cart = (props: some) => {
 
   React.useEffect(() => {
     setUserID(localStorage.getItem(ACCOUNTS_ID) || "");
-    fetchAllProductInCart();
+    addAllProductToCart();
+    fetchGetAddressByUser();
   }, []);
 
   return (
@@ -198,216 +252,236 @@ const Cart = (props: some) => {
         </Typography>
       </Row>
       {cart.length !== 0 ? (
-        <Grid container>
-          <Grid item xs={12} sm={8}>
-            <Box style={{ paddingLeft: 24, paddingRight: 24, width: "100%" }}>
-              <Row
-                style={{
-                  width: "100%",
-                }}
-              ></Row>
-              <Row
-                style={{
-                  flexWrap: "wrap",
-                  margin: "0 auto",
-                  width: "100%",
-                }}
-              >
-                {cart.map((item: some, index: number) => {
-                  return (
-                    <ProductCart
-                      key={index}
-                      index={index}
-                      data={item}
-                      changeCount={changeCount}
-                      handleDeleteProductByCart={handleDeleteProductByCart}
-                    />
-                  );
-                })}
-              </Row>
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm={4} style={{ paddingRight: 24, width: "100%" }}>
-            <Grid item xs={12} className={classes.grid}>
+        address && (
+          <Grid container>
+            <Grid item xs={12} sm={8}>
+              <Box style={{ paddingLeft: 24, paddingRight: 24, width: "100%" }}>
+                <Row
+                  style={{
+                    width: "100%",
+                  }}
+                ></Row>
+                <Row
+                  style={{
+                    flexWrap: "wrap",
+                    margin: "0 auto",
+                    width: "100%",
+                  }}
+                >
+                  {cart.map((item: some, index: number) => {
+                    return (
+                      <ProductCart
+                        key={index}
+                        index={index}
+                        data={item}
+                        changeCount={changeCount}
+                        handleDeleteProductByCart={handleDeleteProductByCart}
+                      />
+                    );
+                  })}
+                </Row>
+              </Box>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={4}
+              style={{ paddingRight: 24, width: "100%" }}
+            >
               <Grid item xs={12} className={classes.grid}>
-                <Row>
-                  <Box flexGrow={1}>
+                <Grid item xs={12} className={classes.grid}>
+                  <Row>
+                    <Box flexGrow={1}>
+                      <Typography>
+                        <Box
+                          fontWeight="fontWeightBold"
+                          fontSize={15}
+                          marginRight={1}
+                          paddingRight={1}
+                          style={{
+                            color: "#ff9800",
+                          }}
+                        >
+                          Địa chỉ nhận hàng
+                        </Box>
+                      </Typography>
+                    </Box>
+                    <Box>
+                      {indexDefaut !== -1 && (
+                        <DialogChangeAddress
+                          indexDefaut={indexDefaut}
+                          item={listAddress || []}
+                          fetchData={handleClickChangeAddress}
+                        />
+                      )}
+                    </Box>
+                  </Row>
+                </Grid>
+
+                <Grid item xs={12} className={classes.grid}>
+                  <Row>
                     <Typography>
                       <Box
                         fontWeight="fontWeightBold"
                         fontSize={15}
-                        marginRight={1}
-                        paddingRight={1}
                         style={{
-                          color: "#ff9800",
+                          borderRight: "1px solid #ededed",
+                          paddingRight: 20,
                         }}
                       >
-                        Địa chỉ nhận hàng
+                        {profile?.firstName + " " + profile?.lastName}
                       </Box>
                     </Typography>
-                  </Box>
-                  <Box>
-                    <Button color="secondary">Thay đổi</Button>
-                  </Box>
-                </Row>
-              </Grid>
-
-              <Grid item xs={12} className={classes.grid}>
-                <Row>
+                    <Typography>
+                      <Box
+                        fontWeight="fontWeightBold"
+                        style={{
+                          marginLeft: 20,
+                        }}
+                      >
+                        {address ? address?.phone : ""}
+                      </Box>
+                    </Typography>
+                  </Row>
+                </Grid>
+                <Grid item xs={12} className={classes.grid}>
                   <Typography>
                     <Box
-                      fontWeight="fontWeightBold"
-                      fontSize={15}
+                      fontSize={14}
+                      marginRight={1}
+                      paddingRight={1}
                       style={{
-                        borderRight: "1px solid #ededed",
-                        paddingRight: 20,
+                        color: "#9e9e9e",
+                        paddingBottom: 10,
                       }}
                     >
-                      Nguyễn Văn PƠhong
+                      {address
+                        ? address?.address +
+                          ", " +
+                          address?.district?.districtName +
+                          ", " +
+                          address?.city?.cityName
+                        : ""}
                     </Box>
                   </Typography>
-                  <Typography>
-                    <Box
-                      fontWeight="fontWeightBold"
-                      style={{
-                        marginLeft: 20,
-                      }}
-                    >
-                      0588898568
-                    </Box>
-                  </Typography>
-                </Row>
+                </Grid>
               </Grid>
-              <Grid item xs={12} className={classes.grid}>
-                <Typography>
-                  <Box
-                    fontSize={14}
-                    marginRight={1}
-                    paddingRight={1}
-                    style={{
-                      color: "#9e9e9e",
-                      paddingBottom: 10,
-                    }}
-                  >
-                    Ngõ 26 Doãn Kế Thiện, Phường Mai Dịch, Quận Cầu Giấy, Hà Nội
-                  </Box>
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              className={classes.grid}
-              style={{
-                marginTop: 24,
-              }}
-            >
-              <Grid item xs={12} className={classes.grid}>
-                <Row
-                  className={classes.rowMoney}
-                  style={{
-                    borderBottom: "1px solid #ededed",
-                    paddingBottom: 20,
-                  }}
-                >
-                  <Box flexGrow={1}>
-                    <Typography>
-                      <Box
-                        fontSize={17}
-                        marginRight={1}
-                        paddingRight={1}
-                        style={{
-                          color: "#9e9e9e",
-                        }}
-                      >
-                        Tạm tính
-                      </Box>
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Typography>
-                      <Box
-                        fontSize={17}
-                        marginRight={1}
-                        paddingRight={1}
-                        style={{}}
-                      >
-                        {formatter(bill)}
-                      </Box>
-                    </Typography>
-                  </Box>
-                </Row>
-              </Grid>
-              <Grid item xs={12} className={classes.grid}>
-                <Row className={classes.rowMoney}>
-                  <Box flexGrow={1}>
-                    <Typography>
-                      <Box
-                        fontSize={17}
-                        marginRight={1}
-                        paddingRight={1}
-                        style={{
-                          color: "#9e9e9e",
-                        }}
-                      >
-                        Thành tiền
-                      </Box>
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Typography>
-                      <Box
-                        fontSize={25}
-                        marginRight={1}
-                        paddingRight={1}
-                        alignItems="flex-end"
-                        style={{
-                          color: "#d50000",
-                          textAlign: "end",
-                        }}
-                      >
-                        {formatter(bill)}
-                      </Box>
-                      <Box
-                        fontSize={10}
-                        marginRight={1}
-                        paddingRight={1}
-                        style={{
-                          color: "#9e9e9e",
-                        }}
-                      >
-                        (Đã bao gồm thuế VAT nếu có)
-                      </Box>
-                    </Typography>
-                  </Box>
-                </Row>
-              </Grid>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              style={{
-                marginTop: 24,
-              }}
-            >
-              <Button
-                variant="contained"
+              <Grid
+                item
+                xs={12}
+                className={classes.grid}
                 style={{
-                  width: "100%",
-                  textAlign: "center",
-                  padding: 10,
-                  color: "#ffffff",
-                  backgroundColor: "#eb4034",
-                  borderRadius: 5,
-                  fontSize: 17,
-                  fontWeight: "bold",
+                  marginTop: 24,
                 }}
               >
-                Tiến hành đặt hàng
-              </Button>
+                <Grid item xs={12} className={classes.grid}>
+                  <Row
+                    className={classes.rowMoney}
+                    style={{
+                      borderBottom: "1px solid #ededed",
+                      paddingBottom: 20,
+                    }}
+                  >
+                    <Box flexGrow={1}>
+                      <Typography>
+                        <Box
+                          fontSize={17}
+                          marginRight={1}
+                          paddingRight={1}
+                          style={{
+                            color: "#9e9e9e",
+                          }}
+                        >
+                          Tạm tính
+                        </Box>
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography>
+                        <Box
+                          fontSize={17}
+                          marginRight={1}
+                          paddingRight={1}
+                          style={{}}
+                        >
+                          {formatter(bill)}
+                        </Box>
+                      </Typography>
+                    </Box>
+                  </Row>
+                </Grid>
+                <Grid item xs={12} className={classes.grid}>
+                  <Row className={classes.rowMoney}>
+                    <Box flexGrow={1}>
+                      <Typography>
+                        <Box
+                          fontSize={17}
+                          marginRight={1}
+                          paddingRight={1}
+                          style={{
+                            color: "#9e9e9e",
+                          }}
+                        >
+                          Thành tiền
+                        </Box>
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography>
+                        <Box
+                          fontSize={25}
+                          marginRight={1}
+                          paddingRight={1}
+                          alignItems="flex-end"
+                          style={{
+                            color: "#d50000",
+                            textAlign: "end",
+                          }}
+                        >
+                          {formatter(bill)}
+                        </Box>
+                        <Box
+                          fontSize={10}
+                          marginRight={1}
+                          paddingRight={1}
+                          style={{
+                            color: "#9e9e9e",
+                          }}
+                        >
+                          (Đã bao gồm thuế VAT nếu có)
+                        </Box>
+                      </Typography>
+                    </Box>
+                  </Row>
+                </Grid>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                style={{
+                  marginTop: 24,
+                }}
+              >
+                <Button
+                  variant="contained"
+                  style={{
+                    width: "100%",
+                    textAlign: "center",
+                    padding: 10,
+                    color: "#ffffff",
+                    backgroundColor: "#eb4034",
+                    borderRadius: 5,
+                    fontSize: 17,
+                    fontWeight: "bold",
+                  }}
+                  onClick={fetchConfirmPayment}
+                >
+                  Tiến hành đặt hàng
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        )
       ) : (
         <EmptyCart />
       )}

@@ -244,7 +244,7 @@ const ProductCart: React.FC<RouteComponentProps<some> & Props> = (props) => {
               >
                 <Box paddingTop={1} fontWeight="bold" fontSize={15}>
                   {formatter(
-                    data?.price + (data?.price * data?.discount) / 100
+                    data?.price - (data?.price * data?.discount) / 100
                   )}
                 </Box>
               </Typography>

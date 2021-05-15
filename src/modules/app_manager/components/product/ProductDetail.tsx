@@ -318,7 +318,7 @@ const ProductDetail = (props: any) => {
                       <Typography>
                         <Box fontSize={40}>
                           {formatter(
-                            dataProduct?.message.price +
+                            dataProduct?.message.price -
                               (dataProduct?.message.price *
                                 dataProduct?.message.discount) /
                                 100
