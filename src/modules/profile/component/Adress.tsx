@@ -8,6 +8,7 @@ import JSONbig from "json-bigint";
 import { useState } from "react";
 import { ACCOUNTS } from "../../../constants/constants";
 import { PlusOutlined } from "@ant-design/icons";
+import { Content } from "antd/lib/layout/layout";
 
 const Adress = (props: any) => {
   const [dataUser, setDataUser] = useState<some>(
@@ -15,7 +16,7 @@ const Adress = (props: any) => {
   );
   console.log("113", dataUser.firstName);
   console.log(setDataUser);
- 
+
   const [dataAdressUser, setDataAdressUser] = React.useState<any>();
   React.useEffect(() => {
     const fetchUserId = async () => {
@@ -29,9 +30,16 @@ const Adress = (props: any) => {
     };
     fetchUserId();
   }, []);
-  console.log("aaa", dataAdressUser)
+  console.log("aaa", dataAdressUser);
   return (
-    <>
+    <Content
+      style={{
+        margin: "25px 25px",
+        padding: "50px 50px",
+        backgroundColor: "white",
+        height: "500px",
+      }}
+    >
       {dataAdressUser?.message?.map((val: some, index: number) => (
         <div key={index}>
           <Row style={{ borderBottom: "1px solid" }}>
@@ -41,7 +49,7 @@ const Adress = (props: any) => {
                 title={dataUser?.firstName + " " + dataUser.lastName}
               >
                 <Descriptions.Item label="Địa chỉ" span={12}>
-                  {val?.district?.districtName+"/"+val?.city?.cityName}
+                  {val?.district?.districtName + "/" + val?.city?.cityName}
                 </Descriptions.Item>
 
                 <Descriptions.Item label="Số điện thoại" span={12}>
@@ -59,18 +67,17 @@ const Adress = (props: any) => {
       ))}
       <NavLink to="/customer/add">
         <Row style={{ paddingTop: "10px" }}>
-            <Form>
-              <Form.Item
-              >
-                <Button type="dashed" size="large" style={{width: "100%"}}>
-                  <PlusOutlined />
-                  Thêm địa chỉ
-                </Button>
-              </Form.Item>
-            </Form>
+          <Form>
+            <Form.Item>
+              <Button type="dashed" size="large" style={{ width: "100%" }}>
+                <PlusOutlined />
+                Thêm địa chỉ
+              </Button>
+            </Form.Item>
+          </Form>
         </Row>
       </NavLink>
-    </>
+    </Content>
   );
 };
 export default Adress;

@@ -3,10 +3,10 @@ import "antd/dist/antd.css";
 import { Form, Input, Button, Select } from "antd";
 import JSONbig from "json-bigint";
 import { ACCOUNTS, some, SUCCESS_CODE } from "../../../constants/constants";
-import axios from "axios";
-import { actionChangeLocation } from "../../system/systemAction";
-import { useSnackbar } from "notistack";
-import { snackbarSetting } from "../../common/Elements";
+// import axios from "axios";
+// import { actionChangeLocation } from "../../system/systemAction";
+// import { useSnackbar } from "notistack";
+// import { snackbarSetting } from "../../common/Elements";
 import { getCity } from "../api/AdressUser";
 const ChangeAdress = () => {
   const [city, setCity] = React.useState<any>();
@@ -89,7 +89,7 @@ const ChangeAdress = () => {
   console.log(data);
   const submit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    fetch("http://vuanhlk14-001-site1.itempurl.com/Address/AddAddressForUser", {
+    fetch("https://tiki-test-1.herokuapp.com/Address/ChangeDefaultAddress", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data }),
@@ -122,7 +122,7 @@ const ChangeAdress = () => {
           onChange={onChangePhone}
         />
       </Form.Item>
-      <Form.Item label="Tỉnh/Thành Phố">
+      {/* <Form.Item label="Tỉnh/Thành Phố">
         <Select
           placeholder="Chọn Tỉnh/Thành Phố"
           onSearch={onSearch}
@@ -153,7 +153,7 @@ const ChangeAdress = () => {
         >
           <Select.Option value="jack">Jack</Select.Option>
         </Select>
-      </Form.Item>
+      </Form.Item> */}
       <Form.Item label="Địa chỉ">
         <Input
           placeholder="Nhập Địa chỉ"

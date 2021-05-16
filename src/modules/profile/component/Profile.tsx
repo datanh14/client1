@@ -7,7 +7,6 @@ import "antd/dist/antd.css";
 import JSONbig from "json-bigint";
 import { ACCOUNTS, some } from "../../../constants/constants";
 import moment, { Moment } from "moment";
-
 const { Content } = Layout;
 const Profile = () => {
   // let id:{} = useParams();
@@ -47,13 +46,13 @@ const Profile = () => {
   };
   console.log("dt", dataUser);
   return (
-    <Layout style={{ padding: "12px 12px 12px" }}>
       <Content
         className="site-layout-background"
         style={{
-          padding: 24,
-          margin: 0,
-          minHeight: 280,
+          margin: "25px 25px",
+          padding: "50px 50px",
+          backgroundColor: "white",
+          height: "500px",
         }}
       >
         <Form
@@ -99,7 +98,6 @@ const Profile = () => {
           </Form.Item>
         </Form>
       </Content>
-    </Layout>
   );
 };
 export default Profile;
