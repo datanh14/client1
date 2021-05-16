@@ -91,6 +91,14 @@ export const actionConfirmPayment = (params?: some) => {
   });
 };
 
+export const actionAddStoreByUser = (data: any) => {
+  return api({
+    method: "post",
+    url: "/Store/AddStoreByUser",
+    data
+  });
+};
+
 export const actionRegister = (data: some) => {
   return api({ method: "post", url: "/api/authenticate/register", data });
 };

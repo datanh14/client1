@@ -6,6 +6,7 @@ import JSONbig from "json-bigint";
 import moment from "moment";
 import React, { useState } from "react";
 import { ACCOUNTS, some } from "../../../constants/constants";
+import DialogSignUpToStore from "./DialogSignUpToStore";
 
 const { Content } = Layout;
 const Profile = () => {
@@ -89,6 +90,7 @@ const Profile = () => {
             <Button type='primary' shape='round' size='large'>
               Xác nhận
             </Button>
+            <DialogSignUpToStore item={dataUser}/>
           </Form.Item>
         </Form>
       </Content>

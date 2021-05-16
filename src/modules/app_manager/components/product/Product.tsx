@@ -3,6 +3,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Rating from "@material-ui/lab/Rating";
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
+import { WIDTH_PRODUCT } from "../../../../constants/constants";
 import { formatter } from "../../../../utils/helpers/helpers";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,6 +38,29 @@ const Product = (props: any) => {
   const classes = useStyles();
   const { data } = props;
   const [isHover, setIsHover] = useState(false);
+  const [width, setWidth] = useState(parseInt(localStorage.getItem(WIDTH_PRODUCT) || "234.5"));
+  const [ productStyle, setProductStyle ] = useState<any>({
+    minWidth: width,
+    minHeight: 326,
+    maxWidth: width,
+    maxHeight: 326,
+    padding: 10,
+    zIndex: 1,
+    backgroundColor: "white",
+  });
+  const [ productHoverStyle, setProductHoverStyle] = useState<any>({
+    minWidth: width,
+    minHeight: 326,
+    maxWidth: width,
+    maxHeight: 326,
+    padding: 10,
+    zIndex: 2,
+    boxShadow:
+      "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+    elevation: 10,
+    backgroundColor: "white",
+    overflow: "hidden",
+  });
   const gotoAction = (route: string) => {
     props?.history?.push(`/`);
     props?.history?.push(`product-detail/${route}`);
@@ -44,10 +68,10 @@ const Product = (props: any) => {
   return (
     <>
       <div
-        className={isHover ? classes.rootHover : classes.root}
         onClick={() => {
           gotoAction(data.id);
         }}
+        style={isHover ? productHoverStyle : productStyle}
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
       >
