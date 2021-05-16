@@ -99,6 +99,14 @@ export const actionAddStoreByUser = (data: any) => {
   });
 };
 
+export const actionDeleteAllCart = (data: any) => {
+  return api({
+    method: "delete",
+    url: "/Cart/DeleteAllCart",
+    data
+  });
+};
+
 export const actionRegister = (data: some) => {
   return api({ method: "post", url: "/api/authenticate/register", data });
 };

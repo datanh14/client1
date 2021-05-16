@@ -70,6 +70,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [data, setData] = React.useState<any>();
+  const [userProfile, setUserProfile] = React.useState<some>(profile || {});
   const [anchorElMenu, setAnchorElMenu] = React.useState<HTMLElement | null>(
     null
   );
@@ -85,12 +86,12 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
     mobileMoreAnchorEl,
     setMobileMoreAnchorEl,
   ] = React.useState<null | HTMLElement>(null);
-  const [islogin, setLogin] = React.useState(profile?.account !== undefined);
+  const [islogin, setLogin] = React.useState(userProfile?.account !== undefined);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   useEffect(() => {
-    setLogin(profile?.account !== undefined); // eslint-disable-next-line
+    setLogin(userProfile?.account !== undefined); // eslint-disable-next-line
   }, []);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -129,8 +130,16 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   React.useEffect(() => {
     fetchListCategory();
   }, []);
+  const reset = () => {
+    setUserProfile({});
+    setAnchorEl(null);
+    setAnchorElMenu(null);
+    setLogin(false);
+  };
+
   const handleMenuLogin = (route: string) => props?.history?.push(route);
   const handleMenuLogout = (route: string) => {
+    reset();
     localStorage.removeItem(ACCESS_TOKEN);
     localStorage.removeItem(ACCOUNTS);
     localStorage.removeItem(ACCOUNTS_ID);
@@ -169,7 +178,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
       {islogin ? (
         <MenuItem
           onClick={() => {
-            handleMenuLogout(routes.LOGIN);
+            handleMenuLogout(routes.HOME);
           }}
         >
           Logout
@@ -343,7 +352,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                       style={{ fontSize: 10, paddingBottom: 10 }}
                       variant='body2'
                     >
-                      {profile?.account}
+                      {userProfile?.account}
                     </Typography>
                   </Col>
                 </Row>

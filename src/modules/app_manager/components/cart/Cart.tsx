@@ -23,6 +23,7 @@ import {
   actionGetAllProductInCart,
   actionGetAddressByUser,
   actionConfirmPayment,
+  actionDeleteAllCart,
 } from "../../../system/systemAction";
 import DialogChangeAddress from "./DialogChangeAddress";
 
@@ -140,6 +141,16 @@ const Cart = (props: some) => {
     } catch (error) {}
   };
 
+  const fetchDeleteAllCart = async (id: string) => {
+    try {
+      const res: some = await actionDeleteAllCart(JSON.stringify(id));
+      if (res?.code === SUCCESS_CODE) {
+        // 
+      } else {
+      }
+    } catch (error) {}
+  };
+
   const addAllProductToCartFromLocal = () => {
     if (isGetAll === "false") {
       cart &&
@@ -151,7 +162,12 @@ const Cart = (props: some) => {
 
   const addAllProductToCart= () => {
     addAllProductToCartFromLocal();
-    fetchAllProductInCart();
+    console.log("cart.length",cart.length);
+    if (cart.length === 0) {
+      fetchAllProductInCart();
+    }  else {
+      fetchDeleteAllCart(userID);
+    }
   }
 
   const fetchDeleteProductFromCart = async (data: some) => {
