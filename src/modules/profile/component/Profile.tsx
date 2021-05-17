@@ -9,8 +9,6 @@ import { Button, DatePicker, Form, Input, Layout, Radio } from "antd";
 import "antd/dist/antd.css";
 // import { some, SUCCESS_CODE } from "../../../constants/constants";
 import JSONbig from "json-bigint";
-import moment from "moment";
-import React, { useState } from "react";
 import { ACCOUNTS, some } from "../../../constants/constants";
 <<<<<<< HEAD
 import moment, { Moment } from "moment";
@@ -83,7 +81,7 @@ const Profile = () => {
 =======
 >>>>>>> develop
   return (
-    <div>
+    <>
       <Content
         className='site-layout-background'
         style={{
@@ -126,7 +124,7 @@ const Profile = () => {
           <Form.Item label="Ngày sinh">
 =======
           <Form.Item label='Giới tính'>
-            <Radio.Group onChange={onChange} defaultValue={dataUser.gender}>
+            <Radio.Group onChange={onchange} defaultValue={dataUser.gender}>
               <Radio value='M'>Nam</Radio>
               <Radio value='F'>Nữ</Radio>
             </Radio.Group>
@@ -193,14 +191,14 @@ const Profile = () => {
           <Form.Item label="Giới tính">
             <Radio.Group
               onChange={onChangeGender}
-              defaultValue={dataUser.gender}
+              defaultValue={DataCue.gender}
             >
               <Radio value="M">Nam</Radio>
               <Radio value="F">Nữ</Radio>
             </Radio.Group>
           </Form.Item>
           <Form.Item label="Ngày sinh">
-            <DatePicker defaultValue={moment(dataUser.dateOfBirth)} />
+            <DatePicker defaultValue={moment(DataCue.dateOfBirth)} />
           </Form.Item>
           <Form.Item
             name={["user", "email"]}
@@ -240,7 +238,7 @@ const Profile = () => {
           </Form.Item>
         </Form>
       </Modal>
-    </div>
+      </>
   );
 };
 export default Profile;
