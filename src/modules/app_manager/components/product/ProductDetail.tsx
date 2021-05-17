@@ -7,6 +7,7 @@ import {
   CardContent,
   Grid,
   IconButton,
+  Paper,
   Typography,
 } from "@material-ui/core";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
@@ -33,6 +34,7 @@ import { actionAddProductToCart, actionProductById } from "../../../system/syste
 import PreviewDialog from "../dialog/PreviewDialog";
 import { formatter } from "../../../../utils/helpers/helpers";
 import JSONbig from "json-bigint";
+import parse from 'html-react-parser';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -115,7 +117,7 @@ const ProductDetail = (props: any) => {
         // setDataListProduct(res);
       } else {
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const fetchAddProductToCart = async (data: some) => {
@@ -129,7 +131,7 @@ const ProductDetail = (props: any) => {
         console.log("actionAddProductToCart");
       } else {
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   React.useEffect(() => {
@@ -151,33 +153,33 @@ const ProductDetail = (props: any) => {
     var check = false;
     var listProductInCart: some[] = JSONbig.parse(localStorage.getItem(CART_LOCAL_STORAGE) || '[]');
     if (listProductInCart === []) {
-      listProductInCart = [...listProductInCart, { ...dataProduct?.message, "count":count }];
-      fetchAddProductToCart({ ...dataProduct?.message, "count":count });
+      listProductInCart = [...listProductInCart, { ...dataProduct?.message, "count": count }];
+      fetchAddProductToCart({ ...dataProduct?.message, "count": count });
     } else {
-      listProductInCart.map((item: some, index:number) => {
-          if (item.id === dataProduct?.message?.id) {
-            check = true;
-            listProductInCart = [...listProductInCart.slice(0,index), { ...dataProduct?.message, "count":count + item.count }, ...listProductInCart.slice(index + 1)];
-            fetchAddProductToCart({ ...dataProduct?.message, "count":count + item.count });
-          }
+      listProductInCart.map((item: some, index: number) => {
+        if (item.id === dataProduct?.message?.id) {
+          check = true;
+          listProductInCart = [...listProductInCart.slice(0, index), { ...dataProduct?.message, "count": count + item.count }, ...listProductInCart.slice(index + 1)];
+          fetchAddProductToCart({ ...dataProduct?.message, "count": count + item.count });
+        }
       });
     }
     if (!check) {
-      listProductInCart = [...listProductInCart, { ...dataProduct?.message, "count":count }];
-      fetchAddProductToCart({ ...dataProduct?.message, "count":count });
-    } 
+      listProductInCart = [...listProductInCart, { ...dataProduct?.message, "count": count }];
+      fetchAddProductToCart({ ...dataProduct?.message, "count": count });
+    }
     localStorage.setItem(
       CART_LOCAL_STORAGE,
       JSONbig.stringify(listProductInCart)
     );
-    console.log("listProductInCart",listProductInCart);
+    console.log("listProductInCart", listProductInCart);
   };
 
   const onCloseDialog = () => {
     setIsOpenPreviewDialog(false);
   };
   return (
-    <div className={classes.root}>
+    <div className={classes.root} >
       <Breadcrumbs aria-label="breadcrumb">
         <Link color="inherit" href="/" onClick={handleClick}>
           Material-UI
@@ -192,97 +194,103 @@ const ProductDetail = (props: any) => {
         <Typography color="textPrimary">Breadcrumb</Typography>
       </Breadcrumbs>
       {dataProduct !== undefined && (
-        <Card className={classes.grow}>
-          <div className={classes.content}>
-            <Col style={{ maxWidth: 400 }}>
-              <img
-                className={classes.img}
-                src={dataProduct?.message.images[index]}
-                alt={dataProduct?.message.name}
-              />
-              <Row
-                style={{
-                  marginLeft: 10,
-                  marginBottom: 10,
-                }}
-              >
-                {dataProduct?.message.images.map(
-                  (item: any, idx: number) =>
-                    idx < 4 && (
-                      <img
-                        className={
-                          index === idx
-                            ? classes.imgSmallBorder
-                            : classes.imgSmall
-                        }
-                        src={item}
-                        alt={dataProduct?.message.name}
-                        onClick={() => setIndex(idx)}
-                      />
-                    )
-                )}
-                {dataProduct?.message.images.length >= 4 && (
-                  <div
-                    style={{
-                      backgroundImage: `url(${dataProduct?.message.images[4]})`,
-                      backgroundSize: "70px 70px",
-                      minWidth: 70,
-                      minHeight: 70,
-                      marginRight: 10,
-                      borderRadius: 5,
-                      display: "flex",
-                      textAlign: "center",
-                      justifyContent: "center",
-                    }}
-                    onClick={() => setIsOpenPreviewDialog(true)}
-                  >
-                    <Typography
-                      variant="body2"
+        <Col>
+          <Grid container className={classes.grow} direction="row"
+            justify="flex-start">
+            <Grid item xs={3}>
+              <Col style={{ maxWidth: 400 }}>
+                <img
+                  className={classes.img}
+                  src={dataProduct?.message.images[index]}
+                  alt={dataProduct?.message.name}
+                />
+                <Row
+                  style={{
+                    marginLeft: 10,
+                    marginBottom: 10,
+                  }}
+                >
+                  {dataProduct?.message.images.map(
+                    (item: any, idx: number) =>
+                      idx < 4 && (
+                        <img
+                          className={
+                            index === idx
+                              ? classes.imgSmallBorder
+                              : classes.imgSmall
+                          }
+                          src={item}
+                          alt={dataProduct?.message.name}
+                          onClick={() => setIndex(idx)}
+                        />
+                      )
+                  )}
+                  {dataProduct?.message.images.length >= 4 && (
+                    <div
                       style={{
+                        backgroundImage: `url(${dataProduct?.message.images[4]})`,
+                        backgroundSize: "70px 70px",
                         minWidth: 70,
                         minHeight: 70,
-                        lineHeight: 1.8,
-                        color: "white",
-                        backgroundColor: "black",
-                        opacity: 0.7,
+                        marginRight: 10,
                         borderRadius: 5,
-                        paddingTop: 5,
+                        display: "flex",
+                        textAlign: "center",
+                        justifyContent: "center",
                       }}
+                      onClick={() => setIsOpenPreviewDialog(true)}
                     >
-                      <Box fontSize={11}>Xem</Box>
-                      <Box fontSize={11}>thêm 10</Box>
-                      <Box fontSize={11}>hình</Box>
-                    </Typography>
-                  </div>
-                )}
+                      <Typography
+                        variant="body2"
+                        style={{
+                          minWidth: 70,
+                          minHeight: 70,
+                          lineHeight: 1.8,
+                          color: "white",
+                          backgroundColor: "black",
+                          opacity: 0.7,
+                          borderRadius: 5,
+                          paddingTop: 5,
+                        }}
+                      >
+                        <Box fontSize={11}>Xem</Box>
+                        <Box fontSize={11}>thêm 10</Box>
+                        <Box fontSize={11}>hình</Box>
+                      </Typography>
+                    </div>
+                  )}
 
-                <PreviewDialog
-                  key={dataProduct?.message.id}
-                  isOpen={isOpenPreviewDialog}
-                  onCloseDialog={onCloseDialog}
-                  item={dataProduct?.message}
-                />
-              </Row>
-            </Col>
-
-            <CardContent className={classes.details}>
-              <Row>
-                <Typography style={{ flexDirection: "column" }}>
-                  <Box
-                    lineHeight={1.2}
-                    textAlign="left"
-                    fontSize={30}
-                    marginBottom={2}
-                  >
-                    {dataProduct?.message.name}
-                  </Box>
-                  <Rating
-                    name="half-rating-read"
-                    defaultValue={dataProduct?.message.ratingsCount}
-                    precision={0.5}
-                    readOnly
+                  <PreviewDialog
+                    key={dataProduct?.message.id}
+                    isOpen={isOpenPreviewDialog}
+                    onCloseDialog={onCloseDialog}
+                    item={dataProduct?.message}
                   />
-                </Typography>
+                </Row>
+              </Col>
+            </Grid>
+            <Grid container xs={9}>
+              <Grid item xs={8} style={{ flex: 1, alignContent: "center" }}>
+                <Row>
+                  <Typography style={{ flexDirection: "column" }}>
+                    <Box
+                      lineHeight={1.2}
+                      textAlign="left"
+                      fontSize={30}
+                      marginBottom={2}
+                    >
+                      {dataProduct?.message.name}
+                    </Box>
+                    <Rating
+                      name="half-rating-read"
+                      defaultValue={dataProduct?.message.ratingsCount}
+                      precision={0.5}
+                      readOnly
+                    />
+                  </Typography>
+                </Row>
+              </Grid>
+              <Grid item xs={4}>
                 <CardActions disableSpacing>
                   <IconButton aria-label="add to favorites">
                     <FavoriteIcon />
@@ -291,8 +299,8 @@ const ProductDetail = (props: any) => {
                     <ShareIcon />
                   </IconButton>
                 </CardActions>
-              </Row>
-              <Grid container style={{ flex: 1, display: "flex" }}>
+              </Grid>
+              <Grid item xs={8}>
                 <Col
                   style={{
                     flex: 2,
@@ -315,9 +323,9 @@ const ProductDetail = (props: any) => {
                         <Box fontSize={40}>
                           {formatter(
                             dataProduct?.message.price -
-                              (dataProduct?.message.price *
-                                dataProduct?.message.discount) /
-                                100
+                            (dataProduct?.message.price *
+                              dataProduct?.message.discount) /
+                            100
                           )}
                         </Box>
                       </Typography>
@@ -418,7 +426,9 @@ const ProductDetail = (props: any) => {
                     </Typography>
                   </Box>
                 </Col>
-                <Col style={{ flex: 1 }}>
+              </Grid>
+              <Grid item xs={4}>
+                <Col style={{ flex: 1, marginRight: 10 }}>
                   <Box border={0.1} borderRadius={10} borderColor="#ededed">
                     <Row>
                       <Avatar
@@ -521,10 +531,28 @@ const ProductDetail = (props: any) => {
                   </Box>
                 </Col>
               </Grid>
-            </CardContent>
-          </div>
-        </Card>
+              <Grid item xs={8}>
+              </Grid>
+              <Grid item xs={4}></Grid>
+              <Grid item xs={8}>
+              </Grid>
+              <Grid item xs={4}></Grid>
+            </Grid>
+          </Grid>
+          <Paper elevation={0} style={{ marginTop: 20, padding: 20, }} >
+            <Typography>
+              <Box fontSize={30} style={{ marginBottom: 20 }}>
+                Chi tiết
+              </Box>
+            </Typography> {parse(dataProduct?.message.detail)}</Paper>
+          <Paper elevation={0} style={{ marginTop: 20, padding: 20, }}> <Typography>
+            <Box fontSize={30} style={{ marginBottom: 20 }}>
+              Mô tả
+            </Box>
+          </Typography>{parse(dataProduct?.message.description)}</Paper>
+        </Col>
       )}
+
     </div>
   );
 };

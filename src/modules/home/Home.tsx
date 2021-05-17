@@ -18,6 +18,7 @@ const Home = (props: some) => {
   const [data, setData] = React.useState<any[]>([]);
   const [pageProduct, setPageProduct] = React.useState<number>(0);
   const sizeProduct = 5;
+  const size = useWindowSize();
 
   const fetchListProduct = async () => {
     try {
@@ -45,15 +46,36 @@ const Home = (props: some) => {
   React.useEffect(() => {
     homeRef.current && localStorage.setItem(WIDTH_PRODUCT, (homeRef?.current.offsetWidth/5 - 1).toString());
   }, [homeRef.current]); 
+  console.log(size);
+
+  function useWindowSize() {
+    const [windowSize, setWindowSize] = React.useState<any>({
+      width: undefined,
+      height: undefined,
+    });
+    React.useEffect(() => {
+      function handleResize() {
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      }
+      // Add event listener
+      window.addEventListener("resize", handleResize);
+      handleResize();
+      return () => window.removeEventListener("resize", handleResize);
+    }, []); 
+    return windowSize;
+  }
 
   return (
     <>
       <Box
         style={{
-          padding: 20,
+          paddingTop: 20,
           width: "100%",
-          paddingLeft: 70,
-          paddingRight: 70,
+          paddingLeft: (size.width - 1178)/2 - 25,
+          paddingRight: (size.width - 1178)/2 - 25,
         }}
       >
         <Row

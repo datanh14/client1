@@ -38,22 +38,20 @@ const Product = (props: any) => {
   const classes = useStyles();
   const { data } = props;
   const [isHover, setIsHover] = useState(false);
-  const [width, setWidth] = useState(parseInt(localStorage.getItem(WIDTH_PRODUCT) || "234.5"));
-  const [height, setHeight] = useState(width*326/234.5);
   const [ productStyle, setProductStyle ] = useState<any>({
-    minWidth: width,
-    minHeight: height,
-    maxWidth: width,
-    maxHeight: height,
+    minWidth: 234.5,
+    minHeight: 326,
+    maxWidth: 234.5,
+    maxHeight: 326,
     padding: 10,
     zIndex: 1,
     backgroundColor: "white",
   });
   const [ productHoverStyle, setProductHoverStyle] = useState<any>({
-    minWidth: width,
-    minHeight: height,
-    maxWidth: width,
-    maxHeight: height,
+    minWidth: 234.5,
+    minHeight: 326,
+    maxWidth: 234.5,
+    maxHeight: 326,
     padding: 10,
     zIndex: 2,
     boxShadow:
