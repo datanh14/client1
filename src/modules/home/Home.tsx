@@ -46,7 +46,6 @@ const Home = (props: some) => {
   React.useEffect(() => {
     homeRef.current && localStorage.setItem(WIDTH_PRODUCT, (homeRef?.current.offsetWidth/5 - 1).toString());
   }, [homeRef.current]); 
-  console.log(size);
 
   function useWindowSize() {
     const [windowSize, setWindowSize] = React.useState<any>({

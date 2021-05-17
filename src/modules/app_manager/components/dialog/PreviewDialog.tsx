@@ -100,7 +100,7 @@ const PreviewDialog: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const handleNextClick = () => {
     if (sliderRef.current) {
       const slide = sliderRef.current;
-      let idx = index > item.img.length - 1 ? 0 : index + 1;
+      let idx = index > item.images.length - 1 ? 0 : index + 1;
       slide.scrollLeft = slide.offsetWidth * idx;
       if (slide.scrollLeft >= slide.scrollWidth - slide.offsetWidth) {
         slide.scrollLeft = 0;
@@ -118,6 +118,7 @@ const PreviewDialog: React.FC<RouteComponentProps<any> & Props> = (props) => {
       slide.scrollLeft = slide.offsetWidth * idx;
     }
   };
+
   return (
     <>
       <Dialog
