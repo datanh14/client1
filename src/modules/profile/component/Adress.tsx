@@ -9,14 +9,13 @@ import { useState } from "react";
 import { ACCOUNTS } from "../../../constants/constants";
 import { PlusOutlined } from "@ant-design/icons";
 import { Content } from "antd/lib/layout/layout";
-
-const Adress = (props: any) => {
+export const StoreContext = React.createContext(null);
+const Adress = () => {
   const [dataUser, setDataUser] = useState<some>(
     JSONbig.parse(localStorage.getItem(ACCOUNTS) || "{}")
   );
-  console.log("113", dataUser.firstName);
-  console.log(setDataUser);
-
+  const [idAddress, setIdAddress] = useState<any>();
+  console.log(idAddress);
   const [dataAdressUser, setDataAdressUser] = React.useState<any>();
   React.useEffect(() => {
     const fetchUserId = async () => {
@@ -30,7 +29,6 @@ const Adress = (props: any) => {
     };
     fetchUserId();
   }, []);
-  console.log("aaa", dataAdressUser);
   return (
     <Content
       style={{
@@ -40,29 +38,50 @@ const Adress = (props: any) => {
         height: "500px",
       }}
     >
-      {dataAdressUser?.message?.map((val: some, index: number) => (
+      {dataAdressUser?.message?.map((val: any, index: number) => (
         <div key={index}>
-          <Row style={{ borderBottom: "1px solid" }}>
-            <Col span={19}>
-              <Descriptions
-                layout="horizontal"
-                title={dataUser?.firstName + " " + dataUser.lastName}
-              >
-                <Descriptions.Item label="Địa chỉ" span={12}>
-                  {val?.district?.districtName + "/" + val?.city?.cityName}
-                </Descriptions.Item>
+          
+            <Button
+              onClick={() => {
+                setIdAddress(val.id);
+                console.log(idAddress);
+              }}
+            >
+              ID
+            </Button>
+            <Row style={{ borderBottom: "1px solid" }}>
+              <Col span={19}>
+                <Descriptions
+                  layout="horizontal"
+                  title={dataUser?.firstName + " " + dataUser.lastName}
+                >
+                  <Descriptions.Item label="Địa chỉ" span={12}>
+                    {val?.address +
+                      "/" +
+                      val?.district?.districtName +
+                      "/" +
+                      val?.city?.cityName}
+                  </Descriptions.Item>
 
-                <Descriptions.Item label="Số điện thoại" span={12}>
-                  {val?.phone}
-                </Descriptions.Item>
-              </Descriptions>
-            </Col>
-            <Col span={3}>
-              <NavLink to="/customer/create">
-                <Button type="link">Chỉnh sửa</Button>
-              </NavLink>
-            </Col>
-          </Row>
+                  <Descriptions.Item label="Số điện thoại" span={12}>
+                    {val?.phone}
+                  </Descriptions.Item>
+                </Descriptions>
+              </Col>
+
+              <Col span={3}>
+                <NavLink to="/customer/create">
+                    <Button
+                      type="link"
+                      onClick={() => {
+                        setIdAddress(val.id);
+                      }}
+                    >
+                      Chỉnh sửa
+                    </Button>
+                </NavLink>
+              </Col>
+            </Row>
         </div>
       ))}
       <NavLink to="/customer/add">
