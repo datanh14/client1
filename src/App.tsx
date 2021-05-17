@@ -19,27 +19,23 @@ import Login from "./modules/login/Login";
 import { AppState } from "./modules/rootReducer";
 import NotFound from "./modules/system/NotFound";
 
-const DetailCategory = React.lazy(
-  () => import("./modules/app_manager/detailCategory/DetailCategory")
-);
 function mapStateToProps(state: AppState) {
   return {
     profile: state.system.profile,
-    
   };
 }
 interface Props extends ReturnType<typeof mapStateToProps> {}
 const App: React.FC<RouteComponentProps<any> & Props> = (props) => {
-  const goToLogin = () => props?.history?.push(routes.LOGIN);
   const fetchDeviceId = async () => {
     if (isEmpty(localStorage.getItem(UUID))) {
       localStorage.setItem(UUID, uuidv4());
     }
     if (localStorage.getItem(ACCESS_TOKEN)) {
       // fetchEmployeesInfo();
-    } else {
-      goToLogin();
     }
+    // else {
+    //   goToLogin();
+    // }
   };
   React.useEffect(() => {
     fetchDeviceId(); //eslint-disable-next-line

@@ -42,6 +42,71 @@ export const actionProductById = (params?: some) => {
     params,
   });
 };
+
+export const actionGetAllProductInCart = (params?: some) => {
+  return api({
+    method: "get",
+    url: "/Cart/CartList/",
+    params,
+  });
+};
+
+export const actionGetAddressByUser = (params?: some) => {
+  return api({
+    method: "get",
+    url: "/Address/GetAddressByUser",
+    params,
+  });
+};
+
+export const actionAddProductToCart = (data: some) => {
+  return api({
+    method: "post",
+    url: "/Cart/AddProductToCart",
+    data
+  });
+};
+
+export const actionDeleteProductFromCart = (params?: some) => {
+  return api({
+    method: "delete",
+    url: "/Cart/DeleteFromCart",
+    params,
+  });
+};
+
+export const actionChangeDefaultAddress = (data: string) => {
+  return api({
+    method: "post",
+    url: "/Address/ChangeDefaultAddress",
+    data
+  });
+};
+
+export const actionConfirmPayment = (params?: some) => {
+  return api({
+    method: "get",
+    url: "/Cart/ConfirmPayment",
+    params,
+  });
+};
+
+export const actionAddStoreByUser = (data: any) => {
+  return api({
+    method: "post",
+    url: "/Store/AddStoreByUser",
+    data
+  });
+};
+
+export const actionDeleteAllCart = (data: any) => {
+  return api({
+    method: "delete",
+    url: "/Cart/DeleteAllCart",
+    data
+  });
+};
+
 export const actionRegister = (data: some) => {
   return api({ method: "post", url: "/api/authenticate/register", data });
 };

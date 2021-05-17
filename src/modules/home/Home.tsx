@@ -3,7 +3,7 @@ import { Box, Button, Container } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { some, SUCCESS_CODE } from "../../constants/constants";
+import { some, SUCCESS_CODE, WIDTH_PRODUCT } from "../../constants/constants";
 import Comment from "../app_manager/components/comments/Comment";
 import Product from "../app_manager/components/product/Product";
 import CarouselProduct from "../app_manager/components/slider/CarouselProduct";
@@ -13,10 +13,12 @@ import { Row } from "../common/Elements";
 import { actionProductInChild } from "../system/systemAction";
 
 const Home = (props: some) => {
+  const homeRef = React.useRef<HTMLDivElement>(null);
   const [dataListProduct, setDataListProduct] = React.useState<any>();
   const [data, setData] = React.useState<any[]>([]);
-  const [pageProduct, setPageProduct] = React.useState<number>(1);
+  const [pageProduct, setPageProduct] = React.useState<number>(0);
   const sizeProduct = 5;
+  const size = useWindowSize();
 
   const fetchListProduct = async () => {
     try {
@@ -27,7 +29,7 @@ const Home = (props: some) => {
       });
       if (res?.code === SUCCESS_CODE) {
         setDataListProduct(res);
-        setData((data) => [...data,...res.message.productsList])
+        setData((data) => [...data, ...res.message.productsList]);
       } else {
       }
     } catch (error) {}
@@ -39,16 +41,41 @@ const Home = (props: some) => {
 
   const handleClickMore = () => {
     setPageProduct((pageProduct) => pageProduct + 1);
+  };
+
+  React.useEffect(() => {
+    homeRef.current && localStorage.setItem(WIDTH_PRODUCT, (homeRef?.current.offsetWidth/5 - 1).toString());
+  }, [homeRef.current]); 
+  console.log(size);
+
+  function useWindowSize() {
+    const [windowSize, setWindowSize] = React.useState<any>({
+      width: undefined,
+      height: undefined,
+    });
+    React.useEffect(() => {
+      function handleResize() {
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      }
+      // Add event listener
+      window.addEventListener("resize", handleResize);
+      handleResize();
+      return () => window.removeEventListener("resize", handleResize);
+    }, []); 
+    return windowSize;
   }
 
   return (
     <>
       <Box
         style={{
-          padding: 20,
+          paddingTop: 20,
           width: "100%",
-          paddingLeft: 70,
-          paddingRight: 70,
+          paddingLeft: (size.width - 1178)/2 - 25,
+          paddingRight: (size.width - 1178)/2 - 25,
         }}
       >
         <Row
@@ -58,22 +85,23 @@ const Home = (props: some) => {
         ></Row>
         <Container maxWidth="xl">
           <CarouselProduct />
-          <Row
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "flex-start",
-              margin: "0 auto",
-              width: "100%",
-            }}
-          >
-            {data !== undefined &&
-              data.map(
-                (item: some, index: number) => {
+          <div ref={homeRef} >
+            <Row
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "flex-start",
+                margin: "0 auto",
+                width: "100%",
+              }}
+            >
+              {data !== undefined &&
+                data.map((item: some, index: number) => {
                   return <Product key={index} data={item} />;
-                }
-              )}
-          </Row>
+                })}
+            </Row>
+          </div>
+
           <Row
             style={{
               width: "100%",
@@ -83,7 +111,11 @@ const Home = (props: some) => {
               marginTop: 24,
             }}
           >
-            <Button variant="outlined" color="primary" onClick={handleClickMore}>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={handleClickMore}
+            >
               Xem thêm
             </Button>
           </Row>

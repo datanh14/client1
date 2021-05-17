@@ -1,11 +1,15 @@
 export type some = { [key: string]: any };
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
 export const ACCOUNTS = "ACCOUNTS";
+export const ACCOUNTS_ID = "ACCOUNTS_ID";
 export const ANONYMOUS: string = "ANONYMOUS";
 export const SHORTCUTS: string = "SHORTCUTS";
 export const NORMAL_ACCOUNT: string = "NORMAL_ACCOUNT";
 export const DEVICE_ID: string = "DEVICE_ID";
 export const UUID: string = "UUID";
+export const CART_LOCAL_STORAGE: string = "CART_LOCAL_STORAGE";
+export const GET_CART_LOCAL_STORAGE: string = "GET_CART_LOCAL_STORAGE";
+export const WIDTH_PRODUCT: string = "WIDTH_PRODUCT";
 
 export const SUCCESS_CODE = 200;
 export const STATUS_MESSAGE: some = {

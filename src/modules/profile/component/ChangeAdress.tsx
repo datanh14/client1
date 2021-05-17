@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "antd/dist/antd.css";
-import { Form, Input, Button, Select, Cascader } from "antd";
+import { Form, Input, Button, Select } from "antd";
 import JSONbig from "json-bigint";
-import { ACCOUNTS, some, SUCCESS_CODE } from "../../../constants/constants";
+import { ACCOUNTS, some } from "../../../constants/constants";
 import Axios from "axios";
 // import { getCity } from "../api/AdressUser";
 // import { Key } from "rc-select/lib/interface/generator";

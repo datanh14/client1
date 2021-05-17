@@ -180,7 +180,7 @@
   "IDS_REGISTER": "Đăng ký tài khoản",
   "IDS_AUTH_ACCOUNT": "Tài khoản",
   "IDS_AUTH_ENTER_ACCOUNT": "Nhập tài khoản",
-  "IDS_RADIO_GROUP_GENGER":"Giới tính"
-
-
+  "IDS_RADIO_GROUP_GENGER":"Giới tính",
+  "IDS_CHAT_STORE_NAME": "Tên cửa hàng",
+  "IDS_CHAT_STORE_DETAIL": "Mô tả"
 }
