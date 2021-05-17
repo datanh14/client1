@@ -122,9 +122,10 @@ const Profile = () => {
           >
             
             <Button type="primary" size="large" onClick={showModal}>Sửa thông tin</Button>
-            <Button type="primary" size="large" onClick={showModalPass} style={{marginLeft:'5px'}}>
-              Đổi mật khẩu
-            </Button>
+            <Button type="primary" size="large" onClick={showModalPass} style={{marginLeft:'5px'}}>Đổi mật khẩu</Button>
+
+
+            
           </Form.Item>
         </Form>
       </Content>
