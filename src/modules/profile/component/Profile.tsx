@@ -120,9 +120,8 @@ const Profile = () => {
               sm: { span: 16, offset: 8 },
             }}
           >
-            <Button type="primary" size="large" onClick={showModal}>
-              Sửa thông tin
-            </Button>
+            
+            <Button type="primary" size="large" onClick={showModal}>Sửa thông tin</Button>
             <Button type="primary" size="large" onClick={showModalPass} style={{marginLeft:'5px'}}>
               Đổi mật khẩu
             </Button>
