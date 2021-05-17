@@ -87,7 +87,7 @@ const Profile = () => {
               sm: { span: 16, offset: 8 },
             }}
           >
-            <Button type='primary' shape='round' size='large'>
+            <Button type='primary' size='large'>
               Xác nhận
             </Button>
             <DialogSignUpToStore item={dataUser}/>

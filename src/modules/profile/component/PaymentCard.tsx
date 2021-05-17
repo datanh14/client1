@@ -1,7 +1,7 @@
 import { ExclamationCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Card, Layout, Popover, Space } from "antd";
 import React from "react";
-const { Header, Content, Footer } = Layout;
+const {  Content } = Layout;
 const content = (
   <div>
     <p>thanh toan bang Vi MOMO</p>
