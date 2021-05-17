@@ -1,21 +1,13 @@
-<<<<<<< HEAD
-import { Button, Modal, DatePicker, Form, Input, Layout, Radio } from "antd";
-import { getDataUser } from "../api/UserInfo";
-import React, { useState } from "react";
-=======
 import { Button, DatePicker, Form, Input, Layout, Radio } from "antd";
->>>>>>> develop
 // import { useParams } from "react-router-dom";
 import "antd/dist/antd.css";
 // import { some, SUCCESS_CODE } from "../../../constants/constants";
 import JSONbig from "json-bigint";
+import moment from "moment";
+import React, { useState } from "react";
 import { ACCOUNTS, some } from "../../../constants/constants";
-<<<<<<< HEAD
-import moment, { Moment } from "moment";
-=======
 import DialogSignUpToStore from "./DialogSignUpToStore";
 
->>>>>>> develop
 const { Content } = Layout;
 const Profile = () => {
   // let id:{} = useParams();
@@ -46,49 +38,18 @@ const Profile = () => {
   // }, [id]);
   const dataUser = JSONbig.parse(localStorage.getItem(ACCOUNTS) || "{}");
   const [value, setValue] = React.useState<any>(1);
-  const onChangeGender = (e: any) => {
+  const onChange = (e: any) => {
     console.log("radio checked", e.target.value);
     setValue(e.target.value);
   };
-<<<<<<< HEAD
-  console.log("dt", dataUser);
-
-  //Modal
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isModalVisiblePass, setIsModalVisiblePass] = useState(false);
-  // info
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
-  // pass
-  const showModalPass = () => {
-    setIsModalVisiblePass(true);
-  };
-
-  const handleOkPass = () => {
-    setIsModalVisiblePass(false);
-  };
-
-  const handleCancelPass = () => {
-    setIsModalVisiblePass(false);
-  };
-=======
->>>>>>> develop
   return (
-    <>
+    <Layout style={{ padding: "12px 12px 12px" }}>
       <Content
         className='site-layout-background'
         style={{
-          margin: "25px 25px",
-          padding: "50px 50px",
-          backgroundColor: "white",
-          height: "500px",
+          padding: 24,
+          margin: 0,
+          minHeight: 280,
         }}
       >
         <Form
@@ -111,26 +72,13 @@ const Profile = () => {
           <Form.Item label='Email'>
             {dataUser?.email && <Input defaultValue={dataUser?.email}></Input>}
           </Form.Item>
-<<<<<<< HEAD
-          <Form.Item label="Giới tính">
-            <Radio.Group
-              onChange={onChangeGender}
-              defaultValue={dataUser.gender}
-            >
-              <Radio value="M">Nam</Radio>
-              <Radio value="F">Nữ</Radio>
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item label="Ngày sinh">
-=======
           <Form.Item label='Giới tính'>
-            <Radio.Group onChange={onchange} defaultValue={dataUser.gender}>
+            <Radio.Group onChange={onChange} defaultValue={dataUser.gender}>
               <Radio value='M'>Nam</Radio>
               <Radio value='F'>Nữ</Radio>
             </Radio.Group>
           </Form.Item>
           <Form.Item label='Ngày sinh'>
->>>>>>> develop
             <DatePicker defaultValue={moment(dataUser.dateOfBirth)} />
           </Form.Item>
           <Form.Item
@@ -139,106 +87,14 @@ const Profile = () => {
               sm: { span: 16, offset: 8 },
             }}
           >
-<<<<<<< HEAD
-            
-            <Button type="primary" size="large" onClick={showModal}>Sửa thông tin</Button>
-            <Button type="primary" size="large" onClick={showModalPass} style={{marginLeft:'5px'}}>Đổi mật khẩu</Button>
-
-
-            
-=======
             <Button type='primary' shape='round' size='large'>
               Xác nhận
             </Button>
             <DialogSignUpToStore item={dataUser}/>
->>>>>>> develop
           </Form.Item>
         </Form>
       </Content>
-      <Modal
-        title="Sửa thông tin"
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <Form
-          labelCol={{ span: 4 }}
-          wrapperCol={{ span: 14 }}
-          layout="horizontal"
-          initialValues={{ size: "default" }}
-        >
-          <Form.Item
-            name={["user", "name"]}
-            label="Firstname"
-            rules={[{ required: true }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name={["user", "name"]}
-            label="Lastname"
-            rules={[{ required: true }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name={["user", "Phone"]}
-            label="Phone"
-            rules={[{ required: true }, { type: "number" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item label="Giới tính">
-            <Radio.Group
-              onChange={onChangeGender}
-              defaultValue={DataCue.gender}
-            >
-              <Radio value="M">Nam</Radio>
-              <Radio value="F">Nữ</Radio>
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item label="Ngày sinh">
-            <DatePicker defaultValue={moment(DataCue.dateOfBirth)} />
-          </Form.Item>
-          <Form.Item
-            name={["user", "email"]}
-            label="Email"
-            rules={[{ required: true }, { type: "email" }]}
-          >
-            <Input />
-          </Form.Item>
-        </Form>
-      </Modal>
-      <Modal
-        title="Đổi mật khẩu"
-        visible={isModalVisiblePass}
-        onOk={handleOkPass}
-        onCancel={handleCancelPass}
-      >
-        <Form
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 14 }}
-          layout="horizontal"
-          initialValues={{ size: "default" }}
-        >
-          <Form.Item
-            label="Mật khẩu cũ"
-            name="oldPassword"
-            rules={[{ required: true, message: "Điền mật khẩu cũ" }]}
-          >
-            <Input.Password />
-          </Form.Item>
-
-          <Form.Item
-            label="Mật khẩu mới"
-            name="newPassword"
-            rules={[{ required: true, message: "Diền mật khẩu cũ" }]}
-          >
-            <Input.Password />
-          </Form.Item>
-        </Form>
-      </Modal>
-      </>
+    </Layout>
   );
 };
 export default Profile;
