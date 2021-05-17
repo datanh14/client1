@@ -43,7 +43,7 @@ const Home = (props: some) => {
   };
 
   React.useEffect(() => {
-    homeRef.current && localStorage.setItem(WIDTH_PRODUCT, (homeRef?.current.offsetWidth/5).toString());
+    homeRef.current && localStorage.setItem(WIDTH_PRODUCT, (homeRef?.current.offsetWidth/5 - 1).toString());
   }, [homeRef.current]); 
 
   return (

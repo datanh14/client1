@@ -148,10 +148,6 @@ const ProductDetail = (props: any) => {
   };
 
   const handleAddToCart = () => {
-    // localStorage.setItem(
-    //   CART_LOCAL_STORAGE,
-    //   ""
-    // );
     var check = false;
     var listProductInCart: some[] = JSONbig.parse(localStorage.getItem(CART_LOCAL_STORAGE) || '[]');
     if (listProductInCart === []) {
