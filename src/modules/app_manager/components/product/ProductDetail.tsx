@@ -30,39 +30,43 @@ import {
   SUCCESS_CODE,
 } from "../../../../constants/constants";
 import { Col, Row } from "../../../common/Elements";
-import { actionAddProductToCart, actionProductById } from "../../../system/systemAction";
+import {
+  actionAddProductToCart,
+  actionProductById,
+} from "../../../system/systemAction";
 import PreviewDialog from "../dialog/PreviewDialog";
 import { formatter } from "../../../../utils/helpers/helpers";
 import JSONbig from "json-bigint";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
       flexDirection: "column",
-      marginLeft: 73,
-      marginRight: 73,
+      paddingLeft: 73,
+      paddingRight: 73,
+      marginTop: 20,
     },
     grow: {
       flexGrow: 1,
       background: "white",
     },
     img: {
-      width: 400,
-      height: 400,
+      // width: 400,
+      // height: 400,
       margin: 10,
     },
     imgSmall: {
-      width: 70,
-      height: 70,
+      // width: 70,
+      // height: 70,
       marginRight: 10,
       borderRadius: 5,
       display: "flex",
     },
     imgSmallBorder: {
-      width: 70,
-      height: 70,
+      // width: 70,
+      // height: 70,
       borderRadius: 5,
       marginRight: 10,
       borderStyle: "solid",
@@ -97,6 +101,9 @@ const ProductDetail = (props: any) => {
   const { productId } = props;
   const classes = useStyles();
   const id: some = useParams();
+  const imageRef = React.useRef<HTMLDivElement>(null);
+  const [sizeImage, setSizeImage] = useState(0);
+  const [sizeImageSmall, setSizeImageSmall] = useState(0);
   const [index, setIndex] = useState(0);
   const [isOpenPreviewDialog, setIsOpenPreviewDialog] = React.useState(false);
   const [idProduct, setIdProduct] = React.useState<string>(id.id);
@@ -117,7 +124,7 @@ const ProductDetail = (props: any) => {
         // setDataListProduct(res);
       } else {
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const fetchAddProductToCart = async (data: some) => {
@@ -131,7 +138,7 @@ const ProductDetail = (props: any) => {
         console.log("actionAddProductToCart");
       } else {
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   React.useEffect(() => {
@@ -142,31 +149,46 @@ const ProductDetail = (props: any) => {
     setUserID(localStorage.getItem(ACCOUNTS_ID) || "");
   }, []);
 
-  const handleClick = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => {
-    event.preventDefault();
-    console.info("You clicked a breadcrumb.");
-  };
+  React.useEffect(() => {
+    if (imageRef.current) {
+      setSizeImage(imageRef?.current?.offsetWidth / 4 - 55);
+      setSizeImageSmall(imageRef?.current?.offsetWidth / 20 - 14);
+    }
+  }, [imageRef.current]);
 
   const handleAddToCart = () => {
     var check = false;
-    var listProductInCart: some[] = JSONbig.parse(localStorage.getItem(CART_LOCAL_STORAGE) || '[]');
+    var listProductInCart: some[] = JSONbig.parse(
+      localStorage.getItem(CART_LOCAL_STORAGE) || "[]"
+    );
     if (listProductInCart === []) {
-      listProductInCart = [...listProductInCart, { ...dataProduct?.message, "count": count }];
-      fetchAddProductToCart({ ...dataProduct?.message, "count": count });
+      listProductInCart = [
+        ...listProductInCart,
+        { ...dataProduct?.message, count: count },
+      ];
+      fetchAddProductToCart({ ...dataProduct?.message, count: count });
     } else {
       listProductInCart.map((item: some, index: number) => {
         if (item.id === dataProduct?.message?.id) {
           check = true;
-          listProductInCart = [...listProductInCart.slice(0, index), { ...dataProduct?.message, "count": count + item.count }, ...listProductInCart.slice(index + 1)];
-          fetchAddProductToCart({ ...dataProduct?.message, "count": count + item.count });
+          listProductInCart = [
+            ...listProductInCart.slice(0, index),
+            { ...dataProduct?.message, count: count + item.count },
+            ...listProductInCart.slice(index + 1),
+          ];
+          fetchAddProductToCart({
+            ...dataProduct?.message,
+            count: count + item.count,
+          });
         }
       });
     }
     if (!check) {
-      listProductInCart = [...listProductInCart, { ...dataProduct?.message, "count": count }];
-      fetchAddProductToCart({ ...dataProduct?.message, "count": count });
+      listProductInCart = [
+        ...listProductInCart,
+        { ...dataProduct?.message, count: count },
+      ];
+      fetchAddProductToCart({ ...dataProduct?.message, count: count });
     }
     localStorage.setItem(
       CART_LOCAL_STORAGE,
@@ -179,97 +201,100 @@ const ProductDetail = (props: any) => {
     setIsOpenPreviewDialog(false);
   };
   return (
-    <div className={classes.root} >
-      <Breadcrumbs aria-label="breadcrumb">
-        <Link color="inherit" href="/" onClick={handleClick}>
-          Material-UI
-        </Link>
-        <Link
-          color="inherit"
-          href="/getting-started/installation/"
-          onClick={handleClick}
-        >
-          Core
-        </Link>
-        <Typography color="textPrimary">Breadcrumb</Typography>
-      </Breadcrumbs>
+    <div className={classes.root} ref={imageRef}>
       {dataProduct !== undefined && (
         <Col>
-          <Grid container className={classes.grow} direction="row"
-            justify="flex-start">
-            <Grid item xs={3}>
-              <Col style={{ maxWidth: 400 }}>
-                <img
-                  className={classes.img}
-                  src={dataProduct?.message.images[index]}
-                  alt={dataProduct?.message.name}
-                />
-                <Row
-                  style={{
-                    marginLeft: 10,
-                    marginBottom: 10,
-                  }}
-                >
-                  {dataProduct?.message.images.map(
-                    (item: any, idx: number) =>
-                      idx < 4 && (
-                        <img
-                          className={
-                            index === idx
-                              ? classes.imgSmallBorder
-                              : classes.imgSmall
-                          }
-                          src={item}
-                          alt={dataProduct?.message.name}
-                          onClick={() => setIndex(idx)}
-                        />
-                      )
-                  )}
-                  {dataProduct?.message.images.length >= 4 && (
-                    <div
-                      style={{
-                        backgroundImage: `url(${dataProduct?.message.images[4]})`,
-                        backgroundSize: "70px 70px",
-                        minWidth: 70,
-                        minHeight: 70,
-                        marginRight: 10,
-                        borderRadius: 5,
-                        display: "flex",
-                        textAlign: "center",
-                        justifyContent: "center",
-                      }}
-                      onClick={() => setIsOpenPreviewDialog(true)}
-                    >
-                      <Typography
-                        variant="body2"
+          <Grid
+            container
+            className={classes.grow}
+            direction="row"
+            justify="flex-start"
+          >
+            <Grid
+              item
+              xs={12}
+              sm={3}
+              direction="column"
+              style={{ justifyContent: "space-between", display: "flex" }}
+            >
+              <img
+                style={{
+                  width: sizeImage,
+                  height: sizeImage,
+                }}
+                className={classes.img}
+                src={dataProduct?.message.images[index]}
+                alt={dataProduct?.message.name}
+              />
+              <Row
+                style={{
+                  marginLeft: 10,
+                  marginBottom: 10,
+                }}
+              >
+                {dataProduct?.message.images.map(
+                  (item: any, idx: number) =>
+                    idx < 4 && (
+                      <img
                         style={{
-                          minWidth: 70,
-                          minHeight: 70,
-                          lineHeight: 1.8,
-                          color: "white",
-                          backgroundColor: "black",
-                          opacity: 0.7,
-                          borderRadius: 5,
-                          paddingTop: 5,
+                          width: sizeImageSmall,
+                          height: sizeImageSmall,
                         }}
-                      >
-                        <Box fontSize={11}>Xem</Box>
-                        <Box fontSize={11}>thêm 10</Box>
-                        <Box fontSize={11}>hình</Box>
-                      </Typography>
-                    </div>
-                  )}
+                        className={
+                          index === idx
+                            ? classes.imgSmallBorder
+                            : classes.imgSmall
+                        }
+                        src={item}
+                        alt={dataProduct?.message.name}
+                        onClick={() => setIndex(idx)}
+                      />
+                    )
+                )}
+                {dataProduct?.message.images.length >= 4 && (
+                  <div
+                    style={{
+                      backgroundImage: `url(${dataProduct?.message.images[4]})`,
+                      backgroundSize: `${sizeImageSmall}px ${sizeImageSmall}px`,
+                      width: sizeImageSmall,
+                      height: sizeImageSmall,
+                      marginRight: 10,
+                      borderRadius: 5,
+                      display: "flex",
+                      textAlign: "center",
+                      justifyContent: "center",
+                    }}
+                    onClick={() => setIsOpenPreviewDialog(true)}
+                  >
+                    <Typography
+                      variant="body2"
+                      style={{
+                        width: sizeImageSmall,
+                        height: sizeImageSmall,
+                        lineHeight: 1.8,
+                        color: "white",
+                        backgroundColor: "black",
+                        opacity: 0.7,
+                        borderRadius: 5,
+                        paddingTop: 5,
+                      }}
+                    >
+                      <Box fontSize={8}>Xem</Box>
+                      <Box fontSize={8}>thêm 10</Box>
+                      <Box fontSize={8}>hình</Box>
+                    </Typography>
+                  </div>
+                )}
 
-                  <PreviewDialog
-                    key={dataProduct?.message.id}
-                    isOpen={isOpenPreviewDialog}
-                    onCloseDialog={onCloseDialog}
-                    item={dataProduct?.message}
-                  />
-                </Row>
-              </Col>
+                <PreviewDialog
+                  key={dataProduct?.message.id}
+                  isOpen={isOpenPreviewDialog}
+                  onCloseDialog={onCloseDialog}
+                  item={dataProduct?.message}
+                />
+              </Row>
             </Grid>
-            <Grid container xs={9}>
+            <Grid container xs={12} sm={9}>
               <Grid item xs={8} style={{ flex: 1, alignContent: "center" }}>
                 <Row>
                   <Typography style={{ flexDirection: "column" }}>
@@ -323,9 +348,9 @@ const ProductDetail = (props: any) => {
                         <Box fontSize={40}>
                           {formatter(
                             dataProduct?.message.price -
-                            (dataProduct?.message.price *
-                              dataProduct?.message.discount) /
-                            100
+                              (dataProduct?.message.price *
+                                dataProduct?.message.discount) /
+                                100
                           )}
                         </Box>
                       </Typography>
@@ -416,6 +441,7 @@ const ProductDetail = (props: any) => {
                           backgroundColor: "#eb4034",
                           borderRadius: 5,
                           marginTop: 10,
+                          marginBottom: 10,
                           fontSize: 15,
                           fontWeight: "bold",
                         }}
@@ -531,28 +557,31 @@ const ProductDetail = (props: any) => {
                   </Box>
                 </Col>
               </Grid>
-              <Grid item xs={8}>
-              </Grid>
+              <Grid item xs={8}></Grid>
               <Grid item xs={4}></Grid>
-              <Grid item xs={8}>
-              </Grid>
+              <Grid item xs={8}></Grid>
               <Grid item xs={4}></Grid>
             </Grid>
           </Grid>
-          <Paper elevation={0} style={{ marginTop: 20, padding: 20, }} >
+          <Paper elevation={0} style={{ marginTop: 20, padding: 20 }}>
             <Typography>
               <Box fontSize={30} style={{ marginBottom: 20 }}>
                 Chi tiết
               </Box>
-            </Typography> {parse(dataProduct?.message.detail)}</Paper>
-          <Paper elevation={0} style={{ marginTop: 20, padding: 20, }}> <Typography>
-            <Box fontSize={30} style={{ marginBottom: 20 }}>
-              Mô tả
-            </Box>
-          </Typography>{parse(dataProduct?.message.description)}</Paper>
+            </Typography>{" "}
+            {parse(dataProduct?.message.detail)}
+          </Paper>
+          <Paper elevation={0} style={{ marginTop: 20, padding: 20 }}>
+            {" "}
+            <Typography>
+              <Box fontSize={30} style={{ marginBottom: 20 }}>
+                Mô tả
+              </Box>
+            </Typography>
+            {parse(dataProduct?.message.description)}
+          </Paper>
         </Col>
       )}
-
     </div>
   );
 };
