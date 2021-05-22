@@ -2,44 +2,127 @@ import React, { useState } from "react";
 import { Button, Modal, DatePicker, Form, Input, Layout, Radio } from "antd";
 import "antd/dist/antd.css";
 import JSONbig from "json-bigint";
-import { ACCOUNTS, some } from "../../../constants/constants";
+import { ACCOUNTS, ACCESS_TOKEN } from "../../../constants/constants";
 import moment from "moment";
 import DialogSignUpToStore from "./DialogSignUpToStore";
+import Axios from "axios";
 const { Content } = Layout;
 const Profile = () => {
   const dataUser = JSONbig.parse(localStorage.getItem(ACCOUNTS) || "{}");
   const [value, setValue] = React.useState<any>(1);
+  console.log(value);
   const onChange = (e: any) => {
     console.log("radio checked", e.target.value);
     setValue(e.target.value);
   };
-  console.log("dt", dataUser);
-
+  const token = localStorage.getItem(ACCESS_TOKEN)
+  console.log(token)
+const urlprofile ="https://tiki-test-1.herokuapp.com/api/authenticate/ChangeInfo";
+const urlpass = "https://tiki-test-1.herokuapp.com/api/authenticate/ChangePassword";
   //Modal
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalVisiblePass, setIsModalVisiblePass] = useState(false);
   // info
+  const [data, setData] = useState({
+    Email: "",
+    firstname: "",
+    lastname: "",
+    dateofbirth:"",
+    gender: "",
+    phonenumber: ""
+  });
   const showModal = () => {
     setIsModalVisible(true);
   };
   const handleOk = () => {
     setIsModalVisible(false);
+    Axios.post(urlprofile,{
+      headers: {
+        'Authorization': 'Bearer ' + token,
+    },
+      Email: data.Email,
+      firstname: data.firstname,
+      lastname: data.lastname,
+      dateofbirth: data.dateofbirth,
+      gender: data.gender,
+      phonenumber: data.phonenumber,
+    })
+    .then(res =>{
+      console.log(res.data)
+    })
   };
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+  const onChangeFirstName = (e: any) => {
+    const newdata = { ...data };
+    newdata.firstname = e.target.value;
+    setData(newdata);
+  };
+  const onChangeLastName = (e: any) => {
+    const newdata = { ...data };
+    newdata.lastname = e.target.value;
+    setData(newdata);
+  };
+  const onChangePhone = (e: any) => {
+    const newdata = { ...data };
+    newdata.phonenumber = e.target.value;
+    setData(newdata);
+  };
+  const onChangeEmail = (e: any)=>{
+    const newdata = { ...data };
+    newdata.Email = e.target.value;
+    setData(newdata);
+  }
+  const onChangeGender = (e: any)=>{
+    const newdata = { ...data };
+    newdata.gender =  e.target.value;
+    setData(newdata);
+  }
+  const onChangeDate = (value: any)=>{
+    const newdata = { ...data };
+    newdata.dateofbirth = value.format('YYYY-MM-DD');
+    setData(newdata);
+  }
+  console.log(data)
+
   // pass
+  const [pass, setPass] = useState({
+    Password:"",
+    NewPassword:"",
+  })
   const showModalPass = () => {
     setIsModalVisiblePass(true);
   };
 
   const handleOkPass = () => {
     setIsModalVisiblePass(false);
+    Axios.post(urlpass,{
+      headers: {
+        'Authorization': 'Bearer ' + token,
+    },
+      Password: pass.Password,
+      NewPassword: pass.NewPassword
+    })
+    .then(res =>{
+      console.log(res.data)
+    })
   };
 
   const handleCancelPass = () => {
     setIsModalVisiblePass(false);
   };
+  const onChangePass = (e: any)=>{
+    const newdata = { ...pass };
+    newdata.Password =  e.target.value;
+    setPass(newdata);
+  }
+  const onChangeNewPass = (e: any)=>{
+    const newdata = { ...pass };
+    newdata.NewPassword =  e.target.value;
+    setPass(newdata);
+  }
+  console.log(pass)
   return(
     <div>
       <Content
@@ -108,29 +191,29 @@ const Profile = () => {
           initialValues={{ size: "default" }}
         >
           <Form.Item
-            name={["user", "name"]}
-            label="Firstname"
+            name="First Name"
+            label="First Name"
             rules={[{ required: true }]}
           >
-            <Input />
+            <Input onChange={onChangeFirstName}/>
           </Form.Item>
           <Form.Item
-            name={["user", "name"]}
-            label="Lastname"
+            name="Last Name"
+            label="Last Name"
             rules={[{ required: true }]}
           >
-            <Input />
+            <Input onChange={onChangeLastName}/>
           </Form.Item>
           <Form.Item
-            name={["user", "Phone"]}
+            name="Number Phone"
             label="Phone"
             rules={[{ required: true }, { type: "number" }]}
           >
-            <Input />
+            <Input onChange={onChangePhone} />
           </Form.Item>
           <Form.Item label="Giới tính">
             <Radio.Group
-              onChange={onChange}
+              onChange={onChangeGender}
               defaultValue={dataUser.gender}
             >
               <Radio value="M">Nam</Radio>
@@ -138,14 +221,16 @@ const Profile = () => {
             </Radio.Group>
           </Form.Item>
           <Form.Item label="Ngày sinh">
-            <DatePicker defaultValue={moment(dataUser.dateOfBirth)} />
+            <DatePicker 
+           // defaultValue={moment(dataUser.dateOfBirth)} 
+            onChange = {onChangeDate}/>
           </Form.Item>
           <Form.Item
-            name={["user", "email"]}
+            name="Email"
             label="Email"
             rules={[{ required: true }, { type: "email" }]}
           >
-            <Input />
+            <Input onChange = {onChangeEmail}/>
           </Form.Item>
         </Form>
       </Modal>
@@ -166,7 +251,7 @@ const Profile = () => {
             name="oldPassword"
             rules={[{ required: true, message: "Điền mật khẩu cũ" }]}
           >
-            <Input.Password />
+            <Input.Password onChange={onChangePass} />
           </Form.Item>
 
           <Form.Item
@@ -174,7 +259,7 @@ const Profile = () => {
             name="newPassword"
             rules={[{ required: true, message: "Diền mật khẩu cũ" }]}
           >
-            <Input.Password />
+            <Input.Password onChange = {onChangeNewPass}/>
           </Form.Item>
         </Form>
       </Modal>
