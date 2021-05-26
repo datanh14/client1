@@ -85,9 +85,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-const handleClick = () => {
-  alert("You clicked the Chip."); // eslint-disable-line no-alert
-};
 const DetailCategory = (props: some) => {
   const intl = useIntl();
   const id: some = useParams();
