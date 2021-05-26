@@ -1,11 +1,9 @@
 // import { FormattedMessage } from 'react-intl';
 import {
-  Button,
   Container,
   Divider,
   InputBase,
   Paper,
-  TextField,
   Typography,
 } from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
@@ -15,6 +13,7 @@ import {
   makeStyles,
   Theme,
 } from "@material-ui/core/styles";
+import SearchIcon from "@material-ui/icons/Search";
 import { Rating } from "@material-ui/lab";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -22,14 +21,12 @@ import { connect } from "react-redux";
 import { useParams, withRouter } from "react-router-dom";
 import { some, SUCCESS_CODE } from "../../../constants/constants";
 import { Col, Row } from "../../common/Elements";
-import SearchIcon from "@material-ui/icons/Search";
 import {
   actionGetAllProduct,
   actionProductInChild,
 } from "../../system/systemAction";
 import Product from "../components/product/Product";
 import SliderAds from "../components/slider/SliderAds";
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -134,9 +131,11 @@ const DetailCategory = (props: some) => {
   };
   React.useEffect(() => {
     fetchListCategory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   React.useEffect(() => {
     fetchListProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, idProductChild, star, fromPrice, toPrice, searchKey]);
   return (
     <div style={{ marginTop: 30 }}>
@@ -144,7 +143,7 @@ const DetailCategory = (props: some) => {
         <Col style={{ maxWidth: 500, minWidth: 300, flex: 1, marginRight: 10 }}>
           <Paper style={{ padding: 12 }}>
             <Typography
-              variant='body2'
+              variant="body2"
               style={{ fontWeight: "bold", marginBottom: 12 }}
             >
               {intl.formatMessage({ id: "IDS_APP_LIST_PRODUCT" })}
@@ -158,7 +157,7 @@ const DetailCategory = (props: some) => {
                       setNameListProduct(data.name);
                     }}
                     key={i}
-                    variant='body2'
+                    variant="body2"
                     style={{ marginBottom: 8, cursor: "pointer" }}
                   >
                     {data.name}
@@ -167,29 +166,33 @@ const DetailCategory = (props: some) => {
               )}
             <Divider />
             <Typography
-              variant='body2'
+              variant="body2"
               style={{ fontWeight: "bold", marginBottom: 12 }}
             >
               {intl.formatMessage({ id: "IDS_APP_DELIVERY_ADDRESS" })}
             </Typography>
-            <Typography variant='body2'>Tổ 7 Khu 6 Mông Dương</Typography>{" "}
+            <Typography variant="body2">Tổ 7 Khu 6 Mông Dương</Typography>{" "}
             <Divider />
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder='Search…'
+                placeholder="Search…"
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
                 }}
                 inputProps={{ "aria-label": "search" }}
-                onChange={(event) => setSearchKey(event.target.value)}
+                onChange={(event) => {
+                  setSearchKey(event.target.value);
+                  setStar(undefined);
+                  setIdProductChild("");
+                }}
               />
             </div>
             <Typography
-              variant='body2'
+              variant="body2"
               style={{ fontWeight: "bold", marginBottom: 12 }}
             >
               {intl.formatMessage({ id: "IDS_APP_VOTE" })}
@@ -202,10 +205,10 @@ const DetailCategory = (props: some) => {
               }}
               style={{ cursor: "pointer" }}
             >
-              <Typography variant='body2'>
+              <Typography variant="body2">
                 {intl.formatMessage({ id: "IDS_APP_VOTE_FROM_5_STARTS" })}
               </Typography>
-              <Rating value={5} size='small' readOnly />
+              <Rating value={5} size="small" readOnly />
             </div>
             <div
               onClick={() => {
@@ -215,10 +218,10 @@ const DetailCategory = (props: some) => {
               }}
               style={{ cursor: "pointer" }}
             >
-              <Typography variant='body2'>
+              <Typography variant="body2">
                 {intl.formatMessage({ id: "IDS_APP_VOTE_FROM_4_STARTS" })}
               </Typography>
-              <Rating value={4} size='small' readOnly />
+              <Rating value={4} size="small" readOnly />
             </div>
             <div
               onClick={() => {
@@ -228,20 +231,20 @@ const DetailCategory = (props: some) => {
               }}
               style={{ cursor: "pointer" }}
             >
-              <Typography variant='body2'>
+              <Typography variant="body2">
                 {intl.formatMessage({ id: "IDS_APP_VOTE_FROM_3_STARTS" })}
               </Typography>
-              <Rating value={3} size='small' readOnly />
+              <Rating value={3} size="small" readOnly />
             </div>
             <Divider />
             <Typography
-              variant='body2'
+              variant="body2"
               style={{ fontWeight: "bold", marginBottom: 12 }}
             >
               {intl.formatMessage({ id: "IDS_APP_PRICE" })}
             </Typography>
             <Chip
-              size='small'
+              size="small"
               label={"Dưới 500.000"}
               className={classes.chip}
               onClick={() => {
@@ -250,7 +253,7 @@ const DetailCategory = (props: some) => {
               }}
             />
             <Chip
-              size='small'
+              size="small"
               label={"Từ 500.000 đến 8.000.000"}
               className={classes.chip}
               onClick={() => {
@@ -260,7 +263,7 @@ const DetailCategory = (props: some) => {
               }}
             />
             <Chip
-              size='small'
+              size="small"
               label={"Từ 8.000.000 đến 18.500.000"}
               className={classes.chip}
               onClick={() => {
@@ -270,7 +273,7 @@ const DetailCategory = (props: some) => {
               }}
             />
             <Chip
-              size='small'
+              size="small"
               label={"Trên 18.500.000 "}
               className={classes.chip}
               onClick={() => {
@@ -283,7 +286,7 @@ const DetailCategory = (props: some) => {
         </Col>
         <Col style={{ flex: 3 }}>
           <Paper>
-            <Typography variant='h6' style={{ padding: "10px 20px" }}>
+            <Typography variant="h6" style={{ padding: "10px 20px" }}>
               {nameListProduct}
             </Typography>
             <SliderAds />

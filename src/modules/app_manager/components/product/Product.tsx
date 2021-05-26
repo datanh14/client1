@@ -3,7 +3,6 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Rating from "@material-ui/lab/Rating";
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import { WIDTH_PRODUCT } from "../../../../constants/constants";
 import { formatter } from "../../../../utils/helpers/helpers";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,7 +37,7 @@ const Product = (props: any) => {
   const classes = useStyles();
   const { data } = props;
   const [isHover, setIsHover] = useState(false);
-  const [ productStyle, setProductStyle ] = useState<any>({
+  const [productStyle, setProductStyle] = useState<any>({
     minWidth: 234.5,
     minHeight: 326,
     maxWidth: 234.5,
@@ -47,7 +46,7 @@ const Product = (props: any) => {
     zIndex: 1,
     backgroundColor: "white",
   });
-  const [ productHoverStyle, setProductHoverStyle] = useState<any>({
+  const [productHoverStyle, setProductHoverStyle] = useState<any>({
     minWidth: 234.5,
     minHeight: 326,
     maxWidth: 234.5,
@@ -89,11 +88,11 @@ const Product = (props: any) => {
           style={{
             fontSize: 13,
             marginBottom: 5,
-            display: '-webkit-box',
-            WebkitBoxOrient: 'vertical',
+            display: "-webkit-box",
+            WebkitBoxOrient: "vertical",
             WebkitLineClamp: 2,
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
+            overflow: "hidden",
+            textOverflow: "ellipsis",
           }}
         >
           <Box>{data.name}</Box>

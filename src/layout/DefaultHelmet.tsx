@@ -71,9 +71,8 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [data, setData] = React.useState<any>();
   const [userProfile, setUserProfile] = React.useState<some>(profile || {});
-  const [anchorElMenu, setAnchorElMenu] = React.useState<HTMLElement | null>(
-    null
-  );
+  const [anchorElMenu, setAnchorElMenu] =
+    React.useState<HTMLElement | null>(null);
   const [anchorElMenuAgent, setAnchorElMenuAgent] = React.useState(null);
   const handleClickAgent = (event: any) => {
     setAnchorElMenuAgent(event.currentTarget);
@@ -82,11 +81,11 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
     setAnchorElMenuAgent(null);
   };
   const open = Boolean(anchorElMenu);
-  const [
-    mobileMoreAnchorEl,
-    setMobileMoreAnchorEl,
-  ] = React.useState<null | HTMLElement>(null);
-  const [islogin, setLogin] = React.useState(userProfile?.account !== undefined);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
+    React.useState<null | HTMLElement>(null);
+  const [islogin, setLogin] = React.useState(
+    userProfile?.account !== undefined
+  );
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -172,16 +171,15 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
           gotoProfile(routes.CUSTOMER);
         }}
       >
-        Profile
+        Thông tin tài khoản
       </MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       {islogin ? (
         <MenuItem
           onClick={() => {
             handleMenuLogout(routes.HOME);
           }}
         >
-          Logout
+          Đăng xuất
         </MenuItem>
       ) : (
         <MenuItem
@@ -189,7 +187,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
             handleMenuLogin(routes.LOGIN);
           }}
         >
-          Login
+          Đăng nhập
         </MenuItem>
       )}
     </Menu>
@@ -208,21 +206,21 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
     >
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
-          aria-label='account of current user'
-          aria-controls='primary-search-account-menu'
-          aria-haspopup='true'
-          color='inherit'
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
         >
           <AccountCircle />
         </IconButton>
-        <p>profile</p>
+        <p>Thông tin tài khoản</p>
       </MenuItem>
       <MenuItem>
         <IconButton
-          aria-label='account of current user'
-          aria-controls='primary-search-account-menu'
-          aria-haspopup='true'
-          color='inherit'
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
         >
           <ShoppingCartIcon />
           <Typography>Giỏ hàng</Typography>
@@ -232,11 +230,11 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   );
   return (
     <div className={classes.grow}>
-      <AppBar position='static'>
+      <AppBar position="static">
         <Toolbar>
           <Typography
             className={classes.title}
-            variant='h6'
+            variant="h6"
             noWrap
             style={{
               marginRight: 10,
@@ -252,21 +250,21 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
           </Typography>
           <Row style={{ width: 200 }}>
             <IconButton
-              edge='start'
-              color='inherit'
-              aria-label='open drawer'
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
               aria-owns={open ? "mouse-over-popover" : undefined}
-              aria-haspopup='true'
+              aria-haspopup="true"
               // onClick={handleClickAgent}
               onMouseEnter={handlePopoverOpen}
               onMouseLeave={handlePopoverClose}
             >
               <Row>
-                <MenuIcon fontSize='large' />
+                <MenuIcon fontSize="large" />
                 <Col>
                   <Typography
                     style={{ fontSize: 10, paddingTop: 10, textAlign: "left" }}
-                    variant='body2'
+                    variant="body2"
                   >
                     Danh Mục
                   </Typography>
@@ -276,17 +274,17 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                       paddingBottom: 10,
                       fontWeight: "bold",
                     }}
-                    variant='body2'
+                    variant="body2"
                   >
                     Sản Phẩm
                   </Typography>
                 </Col>
                 <Popper
                   style={{ zIndex: 4 }}
-                  id='mouse-over-popover'
+                  id="mouse-over-popover"
                   open={open}
                   anchorEl={anchorElMenu}
-                  placement='top-start'
+                  placement="top-start"
                   disablePortal={true}
                   modifiers={{
                     flip: {
@@ -324,17 +322,17 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
           <div className={classes.sectionDesktop}>
             <Row style={{ width: 120 }}>
               <IconButton
-                edge='end'
-                aria-label='account of current user'
+                edge="end"
+                aria-label="account of current user"
                 aria-controls={menuId}
-                aria-haspopup='true'
+                aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
-                color='inherit'
+                color="inherit"
               >
                 <Row>
                   <Avatar
-                    alt='Remy Sharp'
-                    src='https://scontent.fhan2-5.fna.fbcdn.net/v/t1.6435-9/153745673_1997564207066819_2723027247060726863_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=A5IMouMiviEAX-qd3fr&_nc_ht=scontent.fhan2-5.fna&oh=732a6d84a3ae1cb3d41924496738ebd6&oe=608C0150'
+                    alt="Remy Sharp"
+                    src="https://scontent.fhan2-5.fna.fbcdn.net/v/t1.6435-9/153745673_1997564207066819_2723027247060726863_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=A5IMouMiviEAX-qd3fr&_nc_ht=scontent.fhan2-5.fna&oh=732a6d84a3ae1cb3d41924496738ebd6&oe=608C0150"
                     className={classes.large}
                   />
                   <Col>
@@ -344,13 +342,13 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                         paddingTop: 10,
                         textAlign: "left",
                       }}
-                      variant='body2'
+                      variant="body2"
                     >
                       Tài khoản
                     </Typography>
                     <Typography
                       style={{ fontSize: 10, paddingBottom: 10 }}
-                      variant='body2'
+                      variant="body2"
                     >
                       {userProfile?.account}
                     </Typography>
@@ -361,17 +359,17 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
           </div>
           <div className={classes.sectionDesktop}>
             <IconButton
-              edge='end'
-              aria-label='account of current user'
+              edge="end"
+              aria-label="account of current user"
               aria-controls={menuId}
-              aria-haspopup='true'
-              color='inherit'
+              aria-haspopup="true"
+              color="inherit"
               onClick={() => {
                 gotoCart(routes.PRODUCT_CART);
               }}
             >
               <Row>
-                <ShoppingCartIcon fontSize='large' />
+                <ShoppingCartIcon fontSize="large" />
                 <Typography style={{ fontSize: 10, paddingTop: 12 }}>
                   Giỏ hàng
                 </Typography>
@@ -380,11 +378,11 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
-              aria-label='show more'
+              aria-label="show more"
               aria-controls={mobileMenuId}
-              aria-haspopup='true'
+              aria-haspopup="true"
               onClick={handleMobileMenuOpen}
-              color='inherit'
+              color="inherit"
             >
               <MoreIcon />
             </IconButton>

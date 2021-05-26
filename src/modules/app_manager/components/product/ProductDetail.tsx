@@ -2,16 +2,12 @@ import {
   Avatar,
   Box,
   Button,
-  Card,
   CardActions,
-  CardContent,
   Grid,
   IconButton,
   Paper,
   Typography,
 } from "@material-ui/core";
-import Breadcrumbs from "@material-ui/core/Breadcrumbs";
-import Link from "@material-ui/core/Link";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import AddBoxIcon from "@material-ui/icons/AddBox";
@@ -21,6 +17,8 @@ import ShareIcon from "@material-ui/icons/Share";
 import StarIcon from "@material-ui/icons/Star";
 import StorefrontIcon from "@material-ui/icons/Storefront";
 import Rating from "@material-ui/lab/Rating";
+import parse from "html-react-parser";
+import JSONbig from "json-bigint";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import {
@@ -29,15 +27,13 @@ import {
   some,
   SUCCESS_CODE,
 } from "../../../../constants/constants";
+import { formatter } from "../../../../utils/helpers/helpers";
 import { Col, Row } from "../../../common/Elements";
 import {
   actionAddProductToCart,
   actionProductById,
 } from "../../../system/systemAction";
 import PreviewDialog from "../dialog/PreviewDialog";
-import { formatter } from "../../../../utils/helpers/helpers";
-import JSONbig from "json-bigint";
-import parse from "html-react-parser";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -120,7 +116,6 @@ const ProductDetail = (props: any) => {
       });
       if (res?.code === SUCCESS_CODE) {
         setDataProduct(res);
-        console.log("idProduct", res);
         // setDataListProduct(res);
       } else {
       }
@@ -143,6 +138,7 @@ const ProductDetail = (props: any) => {
 
   React.useEffect(() => {
     fetchListProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idProduct]);
 
   React.useEffect(() => {
@@ -154,6 +150,7 @@ const ProductDetail = (props: any) => {
       setSizeImage(imageRef?.current?.offsetWidth / 4 - 55);
       setSizeImageSmall(imageRef?.current?.offsetWidth / 20 - 14);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imageRef.current]);
 
   const handleAddToCart = () => {
