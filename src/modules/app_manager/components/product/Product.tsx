@@ -60,8 +60,11 @@ const Product = (props: any) => {
     overflow: "hidden",
   });
   const gotoAction = (route: string) => {
-    props?.history?.push(`/`);
-    props?.history?.push(`product-detail/${route}`);
+    props?.history?.replace({
+      pathname : `product-detail/${route}`,
+    });
+    // props?.history?.push(`/`);
+    // props?.history?.push(`product-detail/${route}`);
   };
   return (
     <>

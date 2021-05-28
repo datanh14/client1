@@ -13,12 +13,10 @@ import { Row } from "../common/Elements";
 import { actionProductInChild } from "../system/systemAction";
 
 const Home = (props: some) => {
-  const homeRef = React.useRef<HTMLDivElement>(null);
   const [dataListProduct, setDataListProduct] = React.useState<any>();
   const [data, setData] = React.useState<any[]>([]);
   const [pageProduct, setPageProduct] = React.useState<number>(0);
   const sizeProduct = 5;
-  const size = useWindowSize();
 
   const fetchListProduct = async () => {
     try {
@@ -43,38 +41,12 @@ const Home = (props: some) => {
     setPageProduct((pageProduct) => pageProduct + 1);
   };
 
-  React.useEffect(() => {
-    homeRef.current && localStorage.setItem(WIDTH_PRODUCT, (homeRef?.current.offsetWidth/5 - 1).toString());
-  }, [homeRef.current]); 
-
-  function useWindowSize() {
-    const [windowSize, setWindowSize] = React.useState<any>({
-      width: undefined,
-      height: undefined,
-    });
-    React.useEffect(() => {
-      function handleResize() {
-        setWindowSize({
-          width: window.innerWidth,
-          height: window.innerHeight,
-        });
-      }
-      // Add event listener
-      window.addEventListener("resize", handleResize);
-      handleResize();
-      return () => window.removeEventListener("resize", handleResize);
-    }, []); 
-    return windowSize;
-  }
-
   return (
     <>
       <Box
         style={{
           paddingTop: 20,
           width: "100%",
-          paddingLeft: (size.width - 1178)/2 - 25,
-          paddingRight: (size.width - 1178)/2 - 25,
         }}
       >
         <Row
@@ -84,7 +56,7 @@ const Home = (props: some) => {
         ></Row>
         <Container maxWidth="xl">
           <CarouselProduct />
-          <div ref={homeRef} >
+          <div>
             <Row
               style={{
                 display: "flex",

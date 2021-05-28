@@ -30,18 +30,22 @@ import {
 import { formatter } from "../../../../utils/helpers/helpers";
 import { Col, Row } from "../../../common/Elements";
 import {
+  actionAddFollow,
   actionAddProductToCart,
+  actionGetStoreFollowing,
   actionProductById,
+  actionUnFollow,
 } from "../../../system/systemAction";
 import PreviewDialog from "../dialog/PreviewDialog";
+import CheckIcon from "@material-ui/icons/Check";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
       flexDirection: "column",
-      paddingLeft: 73,
-      paddingRight: 73,
       marginTop: 20,
     },
     grow: {
@@ -108,6 +112,7 @@ const ProductDetail = (props: any) => {
   const [userID, setUserID] = React.useState(
     localStorage.getItem(ACCOUNTS_ID) || ""
   );
+  const [isFollow, setFollow] = React.useState(false);
 
   const fetchListProduct = async () => {
     try {
@@ -130,7 +135,52 @@ const ProductDetail = (props: any) => {
         Quantity: data.count,
       });
       if (res?.code === SUCCESS_CODE) {
-        console.log("actionAddProductToCart");
+        setFollow(true);
+      } else {
+      }
+    } catch (error) {}
+  };
+
+  const fetchAddFollow = async () => {
+    try {
+      const res: some = await actionAddFollow({
+        userID: userID,
+        storeID: dataProduct?.message.store.id,
+      });
+      if (res?.code === SUCCESS_CODE) {
+        setFollow(true);
+      } else {
+      }
+    } catch (error) {}
+  };
+
+  const fetchUnFollow = async () => {
+    try {
+      const res: some = await actionUnFollow({
+        userID: userID,
+        storeID: dataProduct?.message.store.id,
+      });
+      if (res?.code === SUCCESS_CODE) {
+        setFollow(false);
+      } else {
+      }
+    } catch (error) {}
+  };
+
+  const fetchGetStoreFollowing = async () => {
+    try {
+      const res: some = await actionGetStoreFollowing({
+        userID: userID,
+      });
+      if (res?.code === SUCCESS_CODE) {
+        let follow: boolean = false;
+        res?.message &&
+          res?.message.map((item: some, index: number) => {
+            if (item?.id === dataProduct?.message.store.id) {
+              follow = true;
+            }
+          });
+        setFollow(follow);
       } else {
       }
     } catch (error) {}
@@ -140,6 +190,11 @@ const ProductDetail = (props: any) => {
     fetchListProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idProduct]);
+
+  React.useEffect(() => {
+    fetchGetStoreFollowing();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataProduct]);
 
   React.useEffect(() => {
     setUserID(localStorage.getItem(ACCOUNTS_ID) || "");
@@ -197,6 +252,17 @@ const ProductDetail = (props: any) => {
   const onCloseDialog = () => {
     setIsOpenPreviewDialog(false);
   };
+
+  const handleFollow = () => {
+    isFollow ? fetchUnFollow() : fetchAddFollow();
+  };
+
+  const gotoStore = () => {
+    props?.history?.replace({
+      pathname : `/store/${dataProduct?.message.store.id}`,
+    });
+  };
+
   return (
     <div className={classes.root} ref={imageRef}>
       {dataProduct !== undefined && (
@@ -520,14 +586,16 @@ const ProductDetail = (props: any) => {
                       </Grid>
                       <Grid item xs={12} sm={6} className={classes.grid}>
                         <Typography>
-                          <Box fontSize={15}>
+                          <Box fontSize={12} marginBottom={1}>
                             {dataProduct?.message.store.followerCount}
                           </Box>
                         </Typography>
                       </Grid>
                       <Grid item xs={12} sm={6} className={classes.grid}>
                         <Typography>
-                          <Box fontSize={15}>Theo dõi</Box>
+                          <Box fontSize={12} marginBottom={1}>
+                            Theo dõi
+                          </Box>
                         </Typography>
                       </Grid>
                       <Grid item xs={12} sm={6} className={classes.grid}>
@@ -536,6 +604,7 @@ const ProductDetail = (props: any) => {
                           color="default"
                           className={classes.button}
                           startIcon={<StorefrontIcon />}
+                          onClick={gotoStore}
                         >
                           Xem shop
                         </Button>
@@ -545,9 +614,16 @@ const ProductDetail = (props: any) => {
                           variant="outlined"
                           color="default"
                           className={classes.button}
-                          startIcon={<AddIcon />}
+                          startIcon={
+                            isFollow ? (
+                              <CheckIcon style={{ color: "blue" }} />
+                            ) : (
+                              <AddIcon />
+                            )
+                          }
+                          onClick={handleFollow}
                         >
-                          Theo dõi
+                          {isFollow ? "Đã theo dõi" : "Theo dõi"}
                         </Button>
                       </Grid>
                     </Grid>
@@ -582,4 +658,5 @@ const ProductDetail = (props: any) => {
     </div>
   );
 };
-export default ProductDetail;
+
+export default withRouter(ProductDetail);

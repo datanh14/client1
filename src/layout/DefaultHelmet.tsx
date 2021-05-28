@@ -23,7 +23,7 @@ import {
 import { routes } from "../constants/routes";
 import { Col, Row } from "../modules/common/Elements";
 import { actionGetAllProduct } from "../modules/system/systemAction";
-
+import JSONbig from "json-bigint";
 interface Props {
   readonly profile?: some;
 }
@@ -70,7 +70,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [data, setData] = React.useState<any>();
-  const [userProfile, setUserProfile] = React.useState<some>(profile || {});
+  const [userProfile, setUserProfile] = React.useState<some>(JSONbig.parse(localStorage.getItem(ACCOUNTS) || "{}"));
   const [anchorElMenu, setAnchorElMenu] =
     React.useState<HTMLElement | null>(null);
   const [anchorElMenuAgent, setAnchorElMenuAgent] = React.useState(null);
@@ -84,13 +84,13 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
   const [islogin, setLogin] = React.useState(
-    userProfile?.account !== undefined
+    userProfile?.userName !== undefined
   );
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   useEffect(() => {
-    setLogin(userProfile?.account !== undefined); // eslint-disable-next-line
+    setLogin(userProfile?.userName !== undefined ); // eslint-disable-next-line
   }, []);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -350,7 +350,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                       style={{ fontSize: 10, paddingBottom: 10 }}
                       variant="body2"
                     >
-                      {userProfile?.account}
+                      {userProfile?.userName}
                     </Typography>
                   </Col>
                 </Row>
