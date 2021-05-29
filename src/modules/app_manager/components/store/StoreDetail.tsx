@@ -99,15 +99,6 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: 20,
       zIndex: -1,
     },
-    grid: {
-      backgroundColor: "white",
-      paddingLeft: 10,
-      paddingRight: 10,
-    },
-    rowMoney: {
-      padding: 10,
-      margin: 10,
-    },
     button: {
       backgroundColor: "#ffb459",
       fontSize: theme.typography.pxToRem(13),
@@ -194,7 +185,7 @@ const StoreDetail = (props: some) => {
 
   React.useEffect(() => {
     fetchGetStoreByID();
-  }, [id]);
+  }, [id,isFollow]);
 
   React.useEffect(() => {
     setUserID(localStorage.getItem(ACCOUNTS_ID) || "");

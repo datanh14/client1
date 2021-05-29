@@ -1,53 +1,25 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  CardActions,
-  Container,
-  Grid,
-  IconButton,
-  Paper,
-  Typography,
-} from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import AddIcon from "@material-ui/icons/Add";
-import AddBoxIcon from "@material-ui/icons/AddBox";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
-import ShareIcon from "@material-ui/icons/Share";
-import StarIcon from "@material-ui/icons/Star";
-import StorefrontIcon from "@material-ui/icons/Storefront";
-import Rating from "@material-ui/lab/Rating";
-import parse from "html-react-parser";
-import JSONbig from "json-bigint";
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import {
-  ACCOUNTS_ID,
-  CART_LOCAL_STORAGE,
-  some,
-  SUCCESS_CODE,
-} from "../../../../constants/constants";
-import { formatter } from "../../../../utils/helpers/helpers";
+import { Box, Container, Paper, Typography } from "@material-ui/core";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { TreeItem, TreeView } from "@material-ui/lab";
+import React from "react";
+import { useIntl } from "react-intl";
+import { some, SUCCESS_CODE } from "../../../../constants/constants";
 import { Col, Row } from "../../../common/Elements";
 import {
-  actionAddFollow,
-  actionAddProductToCart,
-  actionGetStoreFollowing,
-  actionProductById,
-  actionGetProductByStoreIDbyRange,
-  actionUnFollow,
-  actionGetAllProduct,
+  actionGetCategoryAllChildList,
+  actionGetProductByCategoryIDbyRange,
 } from "../../../system/systemAction";
-import PreviewDialog from "../dialog/PreviewDialog";
-import CheckIcon from "@material-ui/icons/Check";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import Product from "../product/Product";
-import { useIntl } from "react-intl";
 
 interface Props {
   id: string;
+}
+
+interface RenderTree {
+  id: string;
+  name: string;
+  childList?: RenderTree[];
 }
 
 const StoreAllCategory: React.FC<Props> = (props) => {
@@ -55,93 +27,136 @@ const StoreAllCategory: React.FC<Props> = (props) => {
   const intl = useIntl();
   const [data, setData] = React.useState<any[]>([]);
   const [dataCategoryChild, setDataCategoryChild] = React.useState<any>();
-  const [dataListProductChild, setDataListProductChild] = React.useState<any>();
-  const [idProductChild, setIdProductChild] = React.useState<string>(id);
-  const [pageProduct, setPageProduct] = React.useState<number>(1);
-  const sizeProduct = 2;
+  const [categoryID, setCategoryID] = React.useState<string>("");
+  const [pageProduct, setPageProduct] = React.useState<number>(0);
+  const sizeProduct = 5;
   const [nameListProduct, setNameListProduct] = React.useState<string>();
-  const [star, setStar] = React.useState<number>();
-  const [fromPrice, setFromPrice] = React.useState<number>();
-  const [toPrice, setToPrice] = React.useState<number>();
-  const [searchKey, setSearchKey] = React.useState<string>("");
+  const [listCategory, setListCatergory] = React.useState<some>([]);
 
-  const fetchListCategory = async () => {
+  const fetchAllCategory = async () => {
     try {
-      const res: some = await actionGetAllProduct({ parentId: id });
+      const res: some = await actionGetCategoryAllChildList({});
       if (res?.code === SUCCESS_CODE) {
-        setDataCategoryChild(res);
-        setNameListProduct(res?.message.name);
+        setListCatergory(res?.category.childList);
+        setCategoryID(res?.category.childList[0].childList[0].id);
+        setNameListProduct(res?.category.childList[0].childList[0].name);
       } else {
+        // none
       }
     } catch (error) {}
   };
+
   const fetchListProduct = async () => {
     try {
-      const res: some = await actionGetProductByStoreIDbyRange({
+      const res: some = await actionGetProductByCategoryIDbyRange({
+        CategoryID: categoryID,
         StoreID: id,
         page: pageProduct,
         size: sizeProduct,
       });
       if (res?.code === SUCCESS_CODE) {
-        setData((data) => [...data, ...res.message]);
+        setData([...res.message.productsList]);
       } else {
       }
     } catch (error) {}
   };
+
+  const handleClickCategory = (name: string, id: string) => {
+    setNameListProduct(name);
+    setCategoryID(id);
+  };
+
+  const renderTree = (nodes: RenderTree) => (
+    <TreeItem
+      key={nodes.id}
+      nodeId={nodes.id}
+      label={nodes.name}
+      onClick={() => {
+        if (nodes.childList?.length === 0) {
+          handleClickCategory(nodes.name, nodes.id);
+        }
+      }}
+    >
+      {Array.isArray(nodes.childList)
+        ? nodes.childList.map((node) => renderTree(node))
+        : null}
+    </TreeItem>
+  );
+
   React.useEffect(() => {
-    fetchListCategory();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+    categoryID && fetchListProduct();
+  }, [categoryID]);
+
   React.useEffect(() => {
-    fetchListProduct();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, idProductChild]);
+    fetchAllCategory();
+  }, []);
+
   return (
     <div style={{ marginTop: 30 }}>
       <Container style={{ display: "flex" }}>
-        <Col style={{ maxWidth: 500, minWidth: 300, flex: 1, marginRight: 10 }}>
-          <Paper style={{ padding: 12 }}>
+        <Col
+          style={{
+            minWidth: 234.5,
+            maxWidth: 234.5,
+            flex: 1,
+          }}
+        >
+          <Paper elevation={0} square style={{ padding: 12 }}>
             <Typography
               variant="body2"
               style={{ fontWeight: "bold", marginBottom: 12 }}
             >
               {intl.formatMessage({ id: "IDS_APP_LIST_PRODUCT" })}
             </Typography>
-            {dataCategoryChild !== undefined &&
-              dataCategoryChild.message.childList.map(
-                (data: some, i: number) => (
-                  <Typography
-                    onClick={() => {
-                      setIdProductChild(data.id);
-                      setNameListProduct(data.name);
-                    }}
-                    key={i}
-                    variant="body2"
-                    style={{ marginBottom: 8, cursor: "pointer" }}
-                  >
-                    {data.name}
-                  </Typography>
-                )
-              )}
+            <TreeView
+              defaultExpanded={["3fba6643-fac5-47f6-9093-3898aac0d2fb"]}
+              selected={[categoryID]}
+              defaultCollapseIcon={<ExpandMoreIcon />}
+              defaultExpandIcon={<ChevronRightIcon />}
+            >
+              {listCategory &&
+                listCategory.map((node: any) => renderTree(node))}
+            </TreeView>
           </Paper>
         </Col>
         <Col style={{ flex: 3 }}>
-          <Paper>
+          <Paper elevation={0} square>
             <Typography variant="h6" style={{ padding: "10px 20px" }}>
               {nameListProduct}
             </Typography>
-            <Row
-              style={{
-                flexWrap: "wrap",
-                margin: "0 auto",
-                width: "100%",
-              }}
-            >
-              {dataListProductChild !== undefined &&
-                data.map((item: some, index: number) => {
-                  return <Product key={index} data={item} />;
-                })}
-            </Row>
+            {data !== undefined && data.length > 0 ? (
+              <Row
+                style={{
+                  flexWrap: "wrap",
+                  margin: "0 auto",
+                  width: "100%",
+                }}
+              >
+                {data !== undefined &&
+                  data.map((item: some, index: number) => {
+                    return <Product key={index} data={item} />;
+                  })}
+              </Row>
+            ) : (
+              <Col style={{
+                minHeight: 500,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+              }}>
+                <img
+                  style={{
+                    minWidth: 100,
+                    maxWidth: 100,
+                  }}
+                  alt="Không có sản phẩm nào trong cửa hàng"
+                  src="https://www.orientappliances.pk//images/no.svg"
+                />
+                <Typography>
+                  <Box fontSize={15}>Không có sản phẩm nào trong cửa hàng</Box>
+                </Typography>
+              </Col>
+            )}
           </Paper>
         </Col>
       </Container>

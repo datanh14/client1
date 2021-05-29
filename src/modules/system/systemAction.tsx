@@ -147,6 +147,22 @@ export const actionGetProductByStoreIDbyRange = (params?: some) => {
   });
 };
 
+export const actionGetProductByCategoryIDbyRange = (params?: some) => {
+  return api({
+    method: "get",
+    url: "/Product/GetProductByCategoryIDbyRange",
+    params,
+  });
+};
+
+export const actionGetCategoryAllChildList = (params?: some) => {
+  return api({
+    method: "get",
+    url: "/Category/CategoryAllChildList",
+    params,
+  });
+};
+
 export const actionRegister = (data: some) => {
   return api({ method: "post", url: "/api/authenticate/register", data });
 };

@@ -32,6 +32,7 @@ import { Col, Row } from "../../../common/Elements";
 import {
   actionAddFollow,
   actionAddProductToCart,
+  actionGetStoreByID,
   actionGetStoreFollowing,
   actionProductById,
   actionUnFollow,
@@ -60,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) =>
     imgSmall: {
       // width: 70,
       // height: 70,
-      marginRight: 10,
+      marginRight: 13,
       borderRadius: 5,
       display: "flex",
     },
@@ -68,7 +69,7 @@ const useStyles = makeStyles((theme: Theme) =>
       // width: 70,
       // height: 70,
       borderRadius: 5,
-      marginRight: 10,
+      marginRight: 13,
       borderStyle: "solid",
       display: "flex",
       borderWidth: 1,
@@ -103,6 +104,7 @@ const ProductDetail = (props: any) => {
   const id: some = useParams();
   const imageRef = React.useRef<HTMLDivElement>(null);
   const [sizeImage, setSizeImage] = useState(0);
+  const [storeData, setStoreData] = React.useState<some>({});
   const [sizeImageSmall, setSizeImageSmall] = useState(0);
   const [index, setIndex] = useState(0);
   const [isOpenPreviewDialog, setIsOpenPreviewDialog] = React.useState(false);
@@ -192,6 +194,11 @@ const ProductDetail = (props: any) => {
   }, [idProduct]);
 
   React.useEffect(() => {
+    fetchListProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFollow]);
+
+  React.useEffect(() => {
     fetchGetStoreFollowing();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataProduct]);
@@ -202,7 +209,7 @@ const ProductDetail = (props: any) => {
 
   React.useEffect(() => {
     if (imageRef.current) {
-      setSizeImage(imageRef?.current?.offsetWidth / 4 - 55);
+      setSizeImage(imageRef?.current?.offsetWidth / 4 - 20);
       setSizeImageSmall(imageRef?.current?.offsetWidth / 20 - 14);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -258,9 +265,7 @@ const ProductDetail = (props: any) => {
   };
 
   const gotoStore = () => {
-    props?.history?.replace({
-      pathname : `/store/${dataProduct?.message.store.id}`,
-    });
+    props?.history?.push(`/store/${dataProduct?.message.store.id}`);
   };
 
   return (
@@ -314,7 +319,7 @@ const ProductDetail = (props: any) => {
                       />
                     )
                 )}
-                {dataProduct?.message.images.length >= 4 && (
+                {dataProduct?.message.images.length > 4 && (
                   <div
                     style={{
                       backgroundImage: `url(${dataProduct?.message.images[4]})`,
@@ -343,7 +348,7 @@ const ProductDetail = (props: any) => {
                       }}
                     >
                       <Box fontSize={8}>Xem</Box>
-                      <Box fontSize={8}>thêm 10</Box>
+                      <Box fontSize={8}>thêm {dataProduct?.message.images.length - 4}</Box>
                       <Box fontSize={8}>hình</Box>
                     </Typography>
                   </div>
