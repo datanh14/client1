@@ -32,6 +32,7 @@ import { Col, Row } from "../../../common/Elements";
 import {
   actionAddFollow,
   actionAddProductToCart,
+  actionGetRatingForProduct,
   actionGetStoreByID,
   actionGetStoreFollowing,
   actionProductById,
@@ -41,6 +42,7 @@ import PreviewDialog from "../dialog/PreviewDialog";
 import CheckIcon from "@material-ui/icons/Check";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import Comment from "../comments/Comment";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -110,6 +112,7 @@ const ProductDetail = (props: any) => {
   const [isOpenPreviewDialog, setIsOpenPreviewDialog] = React.useState(false);
   const [idProduct, setIdProduct] = React.useState<string>(id.id);
   const [dataProduct, setDataProduct] = React.useState<any>();
+  const [dataComment, setDataComment] = React.useState<any>();
   const [count, setCount] = React.useState<number>(1);
   const [userID, setUserID] = React.useState(
     localStorage.getItem(ACCOUNTS_ID) || ""
@@ -123,6 +126,19 @@ const ProductDetail = (props: any) => {
       });
       if (res?.code === SUCCESS_CODE) {
         setDataProduct(res);
+        // setDataListProduct(res);
+      } else {
+      }
+    } catch (error) {}
+  };
+
+  const fetchListComment = async () => {
+    try {
+      const res: some = await actionGetRatingForProduct({
+        ProductID: idProduct,
+      });
+      if (res?.code === SUCCESS_CODE) {
+        setDataComment(res);
         // setDataListProduct(res);
       } else {
       }
@@ -199,7 +215,8 @@ const ProductDetail = (props: any) => {
   }, [isFollow]);
 
   React.useEffect(() => {
-    fetchGetStoreFollowing();
+    dataProduct && fetchGetStoreFollowing();
+    dataProduct && fetchListComment();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataProduct]);
 
@@ -348,7 +365,9 @@ const ProductDetail = (props: any) => {
                       }}
                     >
                       <Box fontSize={8}>Xem</Box>
-                      <Box fontSize={8}>thêm {dataProduct?.message.images.length - 4}</Box>
+                      <Box fontSize={8}>
+                        thêm {dataProduct?.message.images.length - 4}
+                      </Box>
                       <Box fontSize={8}>hình</Box>
                     </Typography>
                   </div>
@@ -644,19 +663,31 @@ const ProductDetail = (props: any) => {
           <Paper elevation={0} style={{ marginTop: 20, padding: 20 }}>
             <Typography>
               <Box fontSize={30} style={{ marginBottom: 20 }}>
-                Chi tiết
+                Thông tin chi tiết
               </Box>
             </Typography>{" "}
             {parse(dataProduct?.message.detail)}
           </Paper>
           <Paper elevation={0} style={{ marginTop: 20, padding: 20 }}>
-            {" "}
             <Typography>
               <Box fontSize={30} style={{ marginBottom: 20 }}>
-                Mô tả
+                Mô tả sản phẩm
               </Box>
             </Typography>
             {parse(dataProduct?.message.description)}
+          </Paper>
+          <Paper elevation={0} style={{ marginTop: 20, padding: 20 }}>
+            <Col>
+              <Typography>
+                <Box fontSize={30} style={{ marginBottom: 20 }}>
+                  Đánh giá cùng nhận xét
+                </Box>
+              </Typography>
+              {dataComment &&
+                dataComment.message.map((item: some, index: number) => {
+                  return <Comment item={item} storeName={dataProduct?.message.store.name} />;
+                })}
+            </Col>
           </Paper>
         </Col>
       )}

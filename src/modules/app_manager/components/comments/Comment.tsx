@@ -13,17 +13,14 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
-      marginLeft: 50,
-      marginRight: 50,
       transition: theme.transitions.create("transform"),
       backgroundColor: "white",
-      marginBottom: 24,
+      borderTop: "1px solid #ededed"
     },
     grid: {
       display: "flex",
     },
     button: {
-      margin: 20,
       color: "#2979ff",
     },
     icon: {
@@ -42,8 +39,15 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-const Comment = (props: some) => {
+
+interface Props {
+  item?: some;
+  storeName?: string;
+}
+
+const Comment: React.FC<Props> = (props) => {
   const classes = useStyles();
+  const { item, storeName } = props;
   const data = {
     img:
       "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
@@ -89,14 +93,14 @@ const Comment = (props: some) => {
                     display: "flex",
                   }}
                 >
-                  Chaâu Đăng khoa
+                  {item?.user.name}
                 </Box>
-                <Box className={classes.grey} marginLeft={1} fontSize={15}>
+                {/* <Box className={classes.grey} marginLeft={1} fontSize={15}>
                   Đã tham gia 5 năm
-                </Box>
+                </Box> */}
               </Typography>
             </Row>
-            <Row
+            {/* <Row
               style={{
                 marginBottom: 5,
               }}
@@ -121,8 +125,8 @@ const Comment = (props: some) => {
                   22 Đánh giá
                 </Box>
               </Typography>
-            </Row>
-            <Row>
+            </Row> */}
+            {/* <Row>
               <Typography>
                 <Box
                   fontSize={14}
@@ -144,7 +148,7 @@ const Comment = (props: some) => {
                   22 Lượt cảm ơn
                 </Box>
               </Typography>
-            </Row>
+            </Row> */}
           </Col>
         </Grid>
         <Grid
@@ -161,7 +165,7 @@ const Comment = (props: some) => {
             <Row>
               <Rating
                 name="half-rating-read"
-                defaultValue={2.5}
+                defaultValue={item?.star}
                 precision={0.5}
                 emptyIcon={
                   <StarBorderIcon
@@ -202,22 +206,20 @@ const Comment = (props: some) => {
                       margin: 5,
                     }}
                   />
-                  ĐẠI LÝ NỆM ĐỨC LỢI
+                  {storeName}
                 </Box>
               </Typography>
               <Typography>
-                <Box className={classes.grey} fontSize={15}>
+                {/* <Box className={classes.grey} fontSize={15}>
                   size 100*200*5cm size 120*200*5cm
-                </Box>
+                </Box> */}
               </Typography>
             </Row>
           </Grid>
           <Grid item xs={12}>
             <Typography>
               <Box fontSize={15}>
-                Nằm êm hơn khi có em nó. Bao bì nhãn mác everon nhìn hơi bình
-                thường ko biết có phải chính hãng ko hay gia công bên ngoài.
-                Giao hàng nhanh.
+                {item?.comment}
               </Box>
             </Typography>
           </Grid>
@@ -243,7 +245,7 @@ const Comment = (props: some) => {
                     borderRight: "1px solid #ededed",
                   }}
                 >
-                  Nhận xét vào 19/01/2021
+                  Nhận xét vào {item?.time}
                 </Box>
               </Typography>
               <Typography>

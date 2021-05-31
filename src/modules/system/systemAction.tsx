@@ -163,6 +163,14 @@ export const actionGetCategoryAllChildList = (params?: some) => {
   });
 };
 
+export const actionGetRatingForProduct = (params?: some) => {
+  return api({
+    method: "get",
+    url: "/Rating/GetRatingForProduct",
+    params,
+  });
+};
+
 export const actionRegister = (data: some) => {
   return api({ method: "post", url: "/api/authenticate/register", data });
 };
