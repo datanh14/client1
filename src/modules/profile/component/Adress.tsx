@@ -9,11 +9,13 @@ import {
   Input,
   Select,
   Layout,
+  Pagination,
+  Spin,
 } from "antd";
 import "antd/dist/antd.css";
 import { NavLink } from "react-router-dom";
 import { getDataAdressUser } from "../api/AdressUser";
-import { some, SUCCESS_CODE } from "../../../constants/constants";
+import { ACCESS_TOKEN, some, SUCCESS_CODE } from "../../../constants/constants";
 import JSONbig from "json-bigint";
 import { useState } from "react";
 import { ACCOUNTS } from "../../../constants/constants";
@@ -25,9 +27,10 @@ const Adress = (props: any) => {
   const [dataUser, setDataUser] = useState<some>(
     JSONbig.parse(localStorage.getItem(ACCOUNTS) || "{}")
   );
-  console.log("113", dataUser.firstName);
-  console.log(setDataUser);
 
+
+  const [totalItems, setTotaItem] = useState(0);
+  const [page, setPage] = useState(1);
   const [dataAdressUser, setDataAdressUser] = React.useState<any>();
   React.useEffect(() => {
     const fetchUserId = async () => {
@@ -40,6 +43,7 @@ const Adress = (props: any) => {
       } catch (error) {}
     };
     fetchUserId();
+    setTotaItem(dataAdressUser?.message?.length)
   }, []);
   console.log("aaa", dataAdressUser);
 
@@ -89,21 +93,25 @@ const Adress = (props: any) => {
     newdata.DistrictID = value;
     setData(newdata);
   };
-  console.log(data);
-  // delete address
-  const urlDel = "https://tiki-test-1.herokuapp.com/Address/DeleteAddress";
-  const [dataDel, setDataDel] = useState({
-    ID: "",
-  });
-  // const deleteAddress =()=>{
-  //   Axios.delete(urlDel,{
-  //     dataDel:{ID: da}
-  //   })
-  //   .then(res =>{
-  //     console.log(res.data)
-  //     window.location.reload()
-  //   })
-  // }
+  if (dataAdressUser === undefined) {
+    return (
+      <Content
+        className="site-layout-background"
+        style={{
+          margin: "25px 25px",
+          padding: "50px 50px",
+          backgroundColor: "white",
+          height: "500px",
+        }}
+      >
+        <Spin size="large" style ={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}/>
+      </Content>
+    );
+  }
   return (
     <>
       <Content
