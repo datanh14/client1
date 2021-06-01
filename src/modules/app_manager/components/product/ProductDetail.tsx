@@ -2,16 +2,12 @@ import {
   Avatar,
   Box,
   Button,
-  Card,
   CardActions,
-  CardContent,
   Grid,
   IconButton,
   Paper,
   Typography,
 } from "@material-ui/core";
-import Breadcrumbs from "@material-ui/core/Breadcrumbs";
-import Link from "@material-ui/core/Link";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import AddBoxIcon from "@material-ui/icons/AddBox";
@@ -21,6 +17,8 @@ import ShareIcon from "@material-ui/icons/Share";
 import StarIcon from "@material-ui/icons/Star";
 import StorefrontIcon from "@material-ui/icons/Storefront";
 import Rating from "@material-ui/lab/Rating";
+import parse from "html-react-parser";
+import JSONbig from "json-bigint";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import {
@@ -29,23 +27,28 @@ import {
   some,
   SUCCESS_CODE,
 } from "../../../../constants/constants";
+import { formatter } from "../../../../utils/helpers/helpers";
 import { Col, Row } from "../../../common/Elements";
 import {
+  actionAddFollow,
   actionAddProductToCart,
+  actionGetRatingForProduct,
+  actionGetStoreByID,
+  actionGetStoreFollowing,
   actionProductById,
+  actionUnFollow,
 } from "../../../system/systemAction";
 import PreviewDialog from "../dialog/PreviewDialog";
-import { formatter } from "../../../../utils/helpers/helpers";
-import JSONbig from "json-bigint";
-import parse from "html-react-parser";
+import CheckIcon from "@material-ui/icons/Check";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import Comment from "../comments/Comment";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
       flexDirection: "column",
-      paddingLeft: 73,
-      paddingRight: 73,
       marginTop: 20,
     },
     grow: {
@@ -60,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
     imgSmall: {
       // width: 70,
       // height: 70,
-      marginRight: 10,
+      marginRight: 13,
       borderRadius: 5,
       display: "flex",
     },
@@ -68,7 +71,7 @@ const useStyles = makeStyles((theme: Theme) =>
       // width: 70,
       // height: 70,
       borderRadius: 5,
-      marginRight: 10,
+      marginRight: 13,
       borderStyle: "solid",
       display: "flex",
       borderWidth: 1,
@@ -103,15 +106,18 @@ const ProductDetail = (props: any) => {
   const id: some = useParams();
   const imageRef = React.useRef<HTMLDivElement>(null);
   const [sizeImage, setSizeImage] = useState(0);
+  const [storeData, setStoreData] = React.useState<some>({});
   const [sizeImageSmall, setSizeImageSmall] = useState(0);
   const [index, setIndex] = useState(0);
   const [isOpenPreviewDialog, setIsOpenPreviewDialog] = React.useState(false);
   const [idProduct, setIdProduct] = React.useState<string>(id.id);
   const [dataProduct, setDataProduct] = React.useState<any>();
+  const [dataComment, setDataComment] = React.useState<any>();
   const [count, setCount] = React.useState<number>(1);
   const [userID, setUserID] = React.useState(
     localStorage.getItem(ACCOUNTS_ID) || ""
   );
+  const [isFollow, setFollow] = React.useState(false);
 
   const fetchListProduct = async () => {
     try {
@@ -120,7 +126,19 @@ const ProductDetail = (props: any) => {
       });
       if (res?.code === SUCCESS_CODE) {
         setDataProduct(res);
-        console.log("idProduct", res);
+        // setDataListProduct(res);
+      } else {
+      }
+    } catch (error) {}
+  };
+
+  const fetchListComment = async () => {
+    try {
+      const res: some = await actionGetRatingForProduct({
+        ProductID: idProduct,
+      });
+      if (res?.code === SUCCESS_CODE) {
+        setDataComment(res);
         // setDataListProduct(res);
       } else {
       }
@@ -135,7 +153,52 @@ const ProductDetail = (props: any) => {
         Quantity: data.count,
       });
       if (res?.code === SUCCESS_CODE) {
-        console.log("actionAddProductToCart");
+        setFollow(true);
+      } else {
+      }
+    } catch (error) {}
+  };
+
+  const fetchAddFollow = async () => {
+    try {
+      const res: some = await actionAddFollow({
+        userID: userID,
+        storeID: dataProduct?.message.store.id,
+      });
+      if (res?.code === SUCCESS_CODE) {
+        setFollow(true);
+      } else {
+      }
+    } catch (error) {}
+  };
+
+  const fetchUnFollow = async () => {
+    try {
+      const res: some = await actionUnFollow({
+        userID: userID,
+        storeID: dataProduct?.message.store.id,
+      });
+      if (res?.code === SUCCESS_CODE) {
+        setFollow(false);
+      } else {
+      }
+    } catch (error) {}
+  };
+
+  const fetchGetStoreFollowing = async () => {
+    try {
+      const res: some = await actionGetStoreFollowing({
+        userID: userID,
+      });
+      if (res?.code === SUCCESS_CODE) {
+        let follow: boolean = false;
+        res?.message &&
+          res?.message.map((item: some, index: number) => {
+            if (item?.id === dataProduct?.message.store.id) {
+              follow = true;
+            }
+          });
+        setFollow(follow);
       } else {
       }
     } catch (error) {}
@@ -143,7 +206,19 @@ const ProductDetail = (props: any) => {
 
   React.useEffect(() => {
     fetchListProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idProduct]);
+
+  React.useEffect(() => {
+    fetchListProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFollow]);
+
+  React.useEffect(() => {
+    dataProduct && fetchGetStoreFollowing();
+    dataProduct && fetchListComment();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataProduct]);
 
   React.useEffect(() => {
     setUserID(localStorage.getItem(ACCOUNTS_ID) || "");
@@ -151,9 +226,10 @@ const ProductDetail = (props: any) => {
 
   React.useEffect(() => {
     if (imageRef.current) {
-      setSizeImage(imageRef?.current?.offsetWidth / 4 - 55);
+      setSizeImage(imageRef?.current?.offsetWidth / 4 - 20);
       setSizeImageSmall(imageRef?.current?.offsetWidth / 20 - 14);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imageRef.current]);
 
   const handleAddToCart = () => {
@@ -200,6 +276,15 @@ const ProductDetail = (props: any) => {
   const onCloseDialog = () => {
     setIsOpenPreviewDialog(false);
   };
+
+  const handleFollow = () => {
+    isFollow ? fetchUnFollow() : fetchAddFollow();
+  };
+
+  const gotoStore = () => {
+    props?.history?.push(`/store/${dataProduct?.message.store.id}`);
+  };
+
   return (
     <div className={classes.root} ref={imageRef}>
       {dataProduct !== undefined && (
@@ -251,7 +336,7 @@ const ProductDetail = (props: any) => {
                       />
                     )
                 )}
-                {dataProduct?.message.images.length >= 4 && (
+                {dataProduct?.message.images.length > 4 && (
                   <div
                     style={{
                       backgroundImage: `url(${dataProduct?.message.images[4]})`,
@@ -280,7 +365,9 @@ const ProductDetail = (props: any) => {
                       }}
                     >
                       <Box fontSize={8}>Xem</Box>
-                      <Box fontSize={8}>thêm 10</Box>
+                      <Box fontSize={8}>
+                        thêm {dataProduct?.message.images.length - 4}
+                      </Box>
                       <Box fontSize={8}>hình</Box>
                     </Typography>
                   </div>
@@ -523,14 +610,16 @@ const ProductDetail = (props: any) => {
                       </Grid>
                       <Grid item xs={12} sm={6} className={classes.grid}>
                         <Typography>
-                          <Box fontSize={15}>
+                          <Box fontSize={12} marginBottom={1}>
                             {dataProduct?.message.store.followerCount}
                           </Box>
                         </Typography>
                       </Grid>
                       <Grid item xs={12} sm={6} className={classes.grid}>
                         <Typography>
-                          <Box fontSize={15}>Theo dõi</Box>
+                          <Box fontSize={12} marginBottom={1}>
+                            Theo dõi
+                          </Box>
                         </Typography>
                       </Grid>
                       <Grid item xs={12} sm={6} className={classes.grid}>
@@ -539,6 +628,7 @@ const ProductDetail = (props: any) => {
                           color="default"
                           className={classes.button}
                           startIcon={<StorefrontIcon />}
+                          onClick={gotoStore}
                         >
                           Xem shop
                         </Button>
@@ -548,9 +638,16 @@ const ProductDetail = (props: any) => {
                           variant="outlined"
                           color="default"
                           className={classes.button}
-                          startIcon={<AddIcon />}
+                          startIcon={
+                            isFollow ? (
+                              <CheckIcon style={{ color: "blue" }} />
+                            ) : (
+                              <AddIcon />
+                            )
+                          }
+                          onClick={handleFollow}
                         >
-                          Theo dõi
+                          {isFollow ? "Đã theo dõi" : "Theo dõi"}
                         </Button>
                       </Grid>
                     </Grid>
@@ -566,23 +663,36 @@ const ProductDetail = (props: any) => {
           <Paper elevation={0} style={{ marginTop: 20, padding: 20 }}>
             <Typography>
               <Box fontSize={30} style={{ marginBottom: 20 }}>
-                Chi tiết
+                Thông tin chi tiết
               </Box>
             </Typography>{" "}
             {parse(dataProduct?.message.detail)}
           </Paper>
           <Paper elevation={0} style={{ marginTop: 20, padding: 20 }}>
-            {" "}
             <Typography>
               <Box fontSize={30} style={{ marginBottom: 20 }}>
-                Mô tả
+                Mô tả sản phẩm
               </Box>
             </Typography>
             {parse(dataProduct?.message.description)}
+          </Paper>
+          <Paper elevation={0} style={{ marginTop: 20, padding: 20 }}>
+            <Col>
+              <Typography>
+                <Box fontSize={30} style={{ marginBottom: 20 }}>
+                  Đánh giá cùng nhận xét
+                </Box>
+              </Typography>
+              {dataComment &&
+                dataComment.message.map((item: some, index: number) => {
+                  return <Comment item={item} storeName={dataProduct?.message.store.name} />;
+                })}
+            </Col>
           </Paper>
         </Col>
       )}
     </div>
   );
 };
-export default ProductDetail;
+
+export default withRouter(ProductDetail);

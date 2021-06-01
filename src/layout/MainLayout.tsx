@@ -9,7 +9,7 @@ import {
   withRouter,
 } from "react-router-dom";
 import { GREY_100 } from "../assets/theme/colors";
-import { some } from "../constants/constants";
+import { some, WIDTH_PRODUCT } from "../constants/constants";
 import { routes } from "../constants/routes";
 import { PageWrapper } from "../modules/common/Elements";
 import LoadingIcon from "../modules/common/LoadingIcon";
@@ -22,6 +22,7 @@ import Cart from "../modules/app_manager/components/cart/Cart";
 import Footer from "../modules/app_manager/components/footer/Footer";
 import DetailCategory from "../modules/app_manager/detailCategory/DetailCategory";
 import profilePage from "../modules/profile/profilePage";
+import StoreDetail from "../modules/app_manager/components/store/StoreDetail";
 
 const SIDE_BAR_MENU: some[] = [
   {
@@ -41,6 +42,12 @@ const SIDE_BAR_MENU: some[] = [
     name: "Cart",
     route: routes.PRODUCT_CART,
     component: Cart,
+  },
+  {
+    icon: <DashboardIcon />,
+    name: "StoreDetail",
+    route: routes.STORE,
+    component: StoreDetail,
   },
   {
     icon: <DashboardIcon />,
@@ -64,7 +71,34 @@ interface Props extends ReturnType<typeof mapStateToProps> {}
 
 const MainLayout: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const { profile } = props;
+  const homeRef = React.useRef<HTMLDivElement>(null);
   const classes = mainStyles();
+  const size = useWindowSize();
+  
+  React.useEffect(() => {
+    homeRef.current && localStorage.setItem(WIDTH_PRODUCT, (homeRef?.current.offsetWidth/5 - 1).toString());
+  }, [homeRef.current]); 
+
+  function useWindowSize() {
+    const [windowSize, setWindowSize] = React.useState<any>({
+      width: undefined,
+      height: undefined,
+    });
+    React.useEffect(() => {
+      function handleResize() {
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      }
+      // Add event listener
+      window.addEventListener("resize", handleResize);
+      handleResize();
+      return () => window.removeEventListener("resize", handleResize);
+    }, []); 
+    return windowSize;
+  }
+
   return (
     <PageWrapper style={{ background: GREY_100 }}>
       <DefaultHelmet profile={profile} />
@@ -73,6 +107,8 @@ const MainLayout: React.FC<RouteComponentProps<any> & Props> = (props) => {
         className={classes.content}
         style={{
           transition: "linear 225ms",
+          paddingLeft: (size.width - 1178)/2 - 25,
+          paddingRight: (size.width - 1178)/2 - 25,
         }}
       >
         <React.Suspense fallback={<LoadingIcon />}>

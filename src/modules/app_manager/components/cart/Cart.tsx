@@ -26,6 +26,7 @@ import {
   actionDeleteAllCart,
 } from "../../../system/systemAction";
 import DialogChangeAddress from "./DialogChangeAddress";
+import { routes } from "../../../../constants/routes";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -145,7 +146,9 @@ const Cart = (props: some) => {
     try {
       const res: some = await actionDeleteAllCart(JSON.stringify(id));
       if (res?.code === SUCCESS_CODE) {
-        // 
+        setIsGetAll("true");
+        localStorage.setItem(GET_CART_LOCAL_STORAGE, "true");
+        addAllProductToCartFromLocal();
       } else {
       }
     } catch (error) {}
@@ -160,15 +163,15 @@ const Cart = (props: some) => {
     }
   };
 
-  const addAllProductToCart= () => {
-    addAllProductToCartFromLocal();
-    console.log("cart.length",cart.length);
+  const addAllProductToCart = () => {
     if (cart.length === 0) {
       fetchAllProductInCart();
-    }  else {
-      fetchDeleteAllCart(userID);
+    } else {
+      if (isGetAll === "false") {
+        fetchDeleteAllCart(userID);
+      }
     }
-  }
+  };
 
   const fetchDeleteProductFromCart = async (data: some) => {
     try {
@@ -221,6 +224,10 @@ const Cart = (props: some) => {
   const handleClickChangeAddress = () => {
     fetchGetAddressByUser();
   };
+
+  const handleLogin = () => {
+    props?.history?.push(routes.LOGIN);
+  }
 
   React.useEffect(() => {
     handleBill();
@@ -323,64 +330,88 @@ const Cart = (props: some) => {
                       </Typography>
                     </Box>
                     <Box>
-                      {indexDefaut !== -1 && (
+                      {indexDefaut !== -1 && userID !== "" && (
                         <DialogChangeAddress
                           indexDefaut={indexDefaut}
                           item={listAddress || []}
                           fetchData={handleClickChangeAddress}
                         />
                       )}
+                      {userID === "" && (
+                        <Button color="secondary" onClick={handleLogin}>
+                          Đăng nhập
+                        </Button>
+                      )}
                     </Box>
                   </Row>
                 </Grid>
-
-                <Grid item xs={12} className={classes.grid}>
-                  <Row>
-                    <Typography>
-                      <Box
-                        fontWeight="fontWeightBold"
-                        fontSize={15}
-                        style={{
-                          borderRight: "1px solid #ededed",
-                          paddingRight: 20,
-                        }}
-                      >
-                        {profile?.firstName + " " + profile?.lastName}
-                      </Box>
-                    </Typography>
-                    <Typography>
-                      <Box
-                        fontWeight="fontWeightBold"
-                        style={{
-                          marginLeft: 20,
-                        }}
-                      >
-                        {address ? address?.phone : ""}
-                      </Box>
-                    </Typography>
-                  </Row>
-                </Grid>
-                <Grid item xs={12} className={classes.grid}>
-                  <Typography>
-                    <Box
-                      fontSize={14}
-                      marginRight={1}
-                      paddingRight={1}
-                      style={{
-                        color: "#9e9e9e",
-                        paddingBottom: 10,
-                      }}
-                    >
-                      {address
-                        ? address?.address +
-                          ", " +
-                          address?.district?.districtName +
-                          ", " +
-                          address?.city?.cityName
-                        : ""}
-                    </Box>
-                  </Typography>
-                </Grid>
+                {userID !== "" ? (
+                  <>
+                    <Grid item xs={12} className={classes.grid}>
+                      <Row>
+                        <Typography>
+                          <Box
+                            fontWeight="fontWeightBold"
+                            fontSize={15}
+                            style={{
+                              borderRight: "1px solid #ededed",
+                              paddingRight: 20,
+                            }}
+                          >
+                            {profile?.firstName + " " + profile?.lastName}
+                          </Box>
+                        </Typography>
+                        <Typography>
+                          <Box
+                            fontWeight="fontWeightBold"
+                            style={{
+                              marginLeft: 20,
+                            }}
+                          >
+                            {address ? address?.phone : ""}
+                          </Box>
+                        </Typography>
+                      </Row>
+                    </Grid>
+                    <Grid item xs={12} className={classes.grid}>
+                      <Typography>
+                        <Box
+                          fontSize={14}
+                          marginRight={1}
+                          paddingRight={1}
+                          style={{
+                            color: "#9e9e9e",
+                            paddingBottom: 10,
+                          }}
+                        >
+                          {address
+                            ? address?.address +
+                              ", " +
+                              address?.district?.districtName +
+                              ", " +
+                              address?.city?.cityName
+                            : ""}
+                        </Box>
+                      </Typography>
+                    </Grid>
+                  </>
+                ) : (
+                  <>
+                    <Grid item xs={12} className={classes.grid}>
+                      <Row>
+                        <Typography>
+                          <Box
+                            fontWeight="fontWeightBold"
+                            fontSize={15}
+                            marginBottom={1}
+                          >
+                            Bạn chưa đăng nhập
+                          </Box>
+                        </Typography>
+                      </Row>
+                    </Grid>
+                  </>
+                )}
               </Grid>
               <Grid
                 item

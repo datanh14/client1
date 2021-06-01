@@ -29,16 +29,14 @@ const BorderLinearProgress = withStyles((theme) => ({
   },
 }))(LinearProgress);
 
-const ProductSale = (props: any) => {
+const ProductSale = (props: Props) => {
   const tile = {
-    img:
-      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
+    img: "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
     title: "ok",
     gia: "100d",
     dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
     sao: 2,
   };
-  const [value, setValue] = React.useState(2);
   return (
     <>
       <Paper
@@ -69,6 +67,7 @@ const ProductSale = (props: any) => {
             }}
           >
             <img
+              alt=""
               style={{
                 width: 30,
                 height: 30,

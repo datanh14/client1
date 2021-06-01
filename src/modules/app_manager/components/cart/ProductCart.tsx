@@ -230,7 +230,7 @@ const ProductCart: React.FC<RouteComponentProps<some> & Props> = (props) => {
               >
                 Xóa
               </Button>
-              <Button color="secondary">Để dành mua sau</Button>
+              {/* <Button color="secondary">Để dành mua sau</Button> */}
             </Row>
           </Grid>
           <Grid item xs={12} sm={4}>

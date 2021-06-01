@@ -32,6 +32,7 @@ request.interceptors.request.use(
         appHash: AppHash,
         "device-id": `${localStorage.getItem(UUID)}`,
         "login-token": `${localStorage.getItem(ACCESS_TOKEN)}`,
+        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
       },
     };
     if (

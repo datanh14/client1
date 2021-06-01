@@ -91,6 +91,22 @@ export const actionConfirmPayment = (params?: some) => {
   });
 };
 
+export const actionAddFollow = (params?: some) => {
+  return api({
+    method: "post",
+    url: "/Follow/AddFollow",
+    params,
+  });
+};
+
+export const actionUnFollow = (params?: some) => {
+  return api({
+    method: "delete",
+    url: "/Follow/Unfollow",
+    params,
+  });
+};
+
 export const actionAddStoreByUser = (data: any) => {
   return api({
     method: "post",
@@ -104,6 +120,54 @@ export const actionDeleteAllCart = (data: any) => {
     method: "delete",
     url: "/Cart/DeleteAllCart",
     data
+  });
+};
+
+export const actionGetStoreFollowing = (params?: some) => {
+  return api({
+    method: "get",
+    url: "/Follow/GetStoreFollowing",
+    params,
+  });
+};
+
+export const actionGetStoreByID = (params?: some) => {
+  return api({
+    method: "get",
+    url: "/Store/GetStoreByID",
+    params,
+  });
+};
+
+export const actionGetProductByStoreIDbyRange = (params?: some) => {
+  return api({
+    method: "get",
+    url: "Product/GetProductByStoreIDbyRange",
+    params,
+  });
+};
+
+export const actionGetProductByCategoryIDbyRange = (params?: some) => {
+  return api({
+    method: "get",
+    url: "/Product/GetProductByCategoryIDbyRange",
+    params,
+  });
+};
+
+export const actionGetCategoryAllChildList = (params?: some) => {
+  return api({
+    method: "get",
+    url: "/Category/CategoryAllChildList",
+    params,
+  });
+};
+
+export const actionGetRatingForProduct = (params?: some) => {
+  return api({
+    method: "get",
+    url: "/Rating/GetRatingForProduct",
+    params,
   });
 };
 
