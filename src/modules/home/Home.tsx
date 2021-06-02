@@ -3,12 +3,9 @@ import { Box, Button, Container } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { some, SUCCESS_CODE, WIDTH_PRODUCT } from "../../constants/constants";
-import Comment from "../app_manager/components/comments/Comment";
+import { some, SUCCESS_CODE } from "../../constants/constants";
 import Product from "../app_manager/components/product/Product";
 import CarouselProduct from "../app_manager/components/slider/CarouselProduct";
-import SliderAds from "../app_manager/components/slider/SliderAds";
-import SliderProduct from "../app_manager/components/slider/SliderProduct";
 import { Row } from "../common/Elements";
 import { actionProductInChild } from "../system/systemAction";
 
@@ -90,8 +87,6 @@ const Home = (props: some) => {
               Xem thêm
             </Button>
           </Row>
-
-          <SliderProduct />
         </Container>
       </Box>
     </>
