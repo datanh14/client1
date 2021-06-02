@@ -69,21 +69,6 @@ const SubMenu = () => {
                   Thông tin thanh toán
                 </NavLink>
               </Menu.Item>
-              <Menu.Item key='6'>
-                {" "}
-                <StarOutlined />
-                Nhận xét của tôi
-              </Menu.Item>
-              <Menu.Item key='7'>
-                {" "}
-                <EyeOutlined />
-                Sản phẩm đã xem
-              </Menu.Item>
-              <Menu.Item key='8'>
-                {" "}
-                <HeartOutlined />
-                Sản phẩm ưu thích
-              </Menu.Item>
               <Menu.Item key='9'>
                 {" "}
                 <ShoppingCartOutlined />
