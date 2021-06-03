@@ -9,7 +9,7 @@
   "IDS_SWITCH_CHAT": "Đổi trạng thái Chat",
   "IDS_FORGOT_PASSWORD": "Bạn quên mật khẩu?",
   "IDS_HAVE_NOT_ACCOUNT": "Bạn chưa có tài khoản?",
-  "IDS_LICENSE": "©{year} Team Đụt",
+  "IDS_LICENSE": "©{year} TIKO DUT",
   "IDS_SIGN_UP_NOW": "Đăng ký ngay tại đây",
   "IDS_EMAIL": "Email",
   "IDS_ENTER_EMAIL": "Nhập email",
@@ -180,7 +180,7 @@
   "IDS_REGISTER": "Đăng ký tài khoản",
   "IDS_AUTH_ACCOUNT": "Tài khoản",
   "IDS_AUTH_ENTER_ACCOUNT": "Nhập tài khoản",
-  "IDS_RADIO_GROUP_GENGER":"Giới tính",
+  "IDS_RADIO_GROUP_GENGER": "Giới tính",
   "IDS_CHAT_STORE_NAME": "Tên cửa hàng",
   "IDS_CHAT_STORE_DETAIL": "Mô tả"
 }

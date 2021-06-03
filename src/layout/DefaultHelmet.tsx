@@ -70,7 +70,9 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [data, setData] = React.useState<any>();
-  const [userProfile, setUserProfile] = React.useState<some>(JSONbig.parse(localStorage.getItem(ACCOUNTS) || "{}"));
+  const [userProfile, setUserProfile] = React.useState<some>(
+    JSONbig.parse(localStorage.getItem(ACCOUNTS) || "{}")
+  );
   const [anchorElMenu, setAnchorElMenu] =
     React.useState<HTMLElement | null>(null);
   const [anchorElMenuAgent, setAnchorElMenuAgent] = React.useState(null);
@@ -90,7 +92,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   useEffect(() => {
-    setLogin(userProfile?.userName !== undefined ); // eslint-disable-next-line
+    setLogin(userProfile?.userName !== undefined); // eslint-disable-next-line
   }, []);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -246,7 +248,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
               props?.history?.push(`/`);
             }}
           >
-            Team Đụt
+            TIKO DUT
           </Typography>
           <Row style={{ width: 200 }}>
             <IconButton
