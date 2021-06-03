@@ -32,7 +32,7 @@ const Product = (props: any) => {
   const gotoAction = (route: string) => {
     props?.history?.push(`/product-detail/${route}`);
   };
-  console.log("datadata", data);
+
   return (
     <>
       <div
