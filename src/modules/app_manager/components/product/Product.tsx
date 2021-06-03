@@ -1,43 +1,13 @@
 import { Box, Typography } from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Rating from "@material-ui/lab/Rating";
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { formatter } from "../../../../utils/helpers/helpers";
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      minWidth: 234.5,
-      minHeight: 326,
-      maxWidth: 234.5,
-      maxHeight: 326,
-      padding: 10,
-      zIndex: 1,
-      backgroundColor: "white",
-      transition: theme.transitions.create("transform"),
-    },
-    rootHover: {
-      minWidth: 234.5,
-      minHeight: 326,
-      maxWidth: 234.5,
-      maxHeight: 326,
-      padding: 10,
-      zIndex: 2,
-      boxShadow:
-        "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-      elevation: 10,
-      backgroundColor: "white",
-      transition: theme.transitions.create("transform"),
-      overflow: "hidden",
-    },
-  })
-);
 
 const Product = (props: any) => {
-  const classes = useStyles();
   const { data } = props;
   const [isHover, setIsHover] = useState(false);
-  const [productStyle, setProductStyle] = useState<any>({
+  const productStyle = {
     minWidth: 234.5,
     minHeight: 326,
     maxWidth: 234.5,
@@ -45,8 +15,8 @@ const Product = (props: any) => {
     padding: 10,
     zIndex: 1,
     backgroundColor: "white",
-  });
-  const [productHoverStyle, setProductHoverStyle] = useState<any>({
+  };
+  const productHoverStyle = {
     minWidth: 234.5,
     minHeight: 326,
     maxWidth: 234.5,
@@ -58,10 +28,11 @@ const Product = (props: any) => {
     elevation: 10,
     backgroundColor: "white",
     overflow: "hidden",
-  });
+  };
   const gotoAction = (route: string) => {
     props?.history?.push(`/product-detail/${route}`);
   };
+  console.log("datadata", data);
   return (
     <>
       <div
@@ -85,7 +56,7 @@ const Product = (props: any) => {
         <Typography
           variant="body2"
           style={{
-            fontSize: 13,
+            fontSize: 20,
             marginBottom: 5,
             display: "-webkit-box",
             WebkitBoxOrient: "vertical",
@@ -115,12 +86,13 @@ const Product = (props: any) => {
             style={{
               alignItems: "center",
               display: "flex",
+              fontSize: 17,
             }}
           >
-            <Box fontSize={17}>{formatter(data.price)}</Box>
+            {formatter(data.price)}
           </Typography>
 
-          {data.sale && (
+          {data?.discount && (
             <Box
               style={{
                 maxWidth: 40,
@@ -135,7 +107,7 @@ const Product = (props: any) => {
                 padding: 2,
               }}
             >
-              <p>-13%</p>
+              <p>{data.discount}%</p>
             </Box>
           )}
         </Box>

@@ -1,4 +1,4 @@
-import { CssBaseline } from "@material-ui/core";
+import { Container, CssBaseline } from "@material-ui/core";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import React from "react";
 import { connect } from "react-redux";
@@ -74,10 +74,14 @@ const MainLayout: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const homeRef = React.useRef<HTMLDivElement>(null);
   const classes = mainStyles();
   const size = useWindowSize();
-  
+
   React.useEffect(() => {
-    homeRef.current && localStorage.setItem(WIDTH_PRODUCT, (homeRef?.current.offsetWidth/5 - 1).toString());
-  }, [homeRef.current]); 
+    homeRef.current &&
+      localStorage.setItem(
+        WIDTH_PRODUCT,
+        (homeRef?.current.offsetWidth / 5 - 1).toString()
+      );
+  }, [homeRef.current]);
 
   function useWindowSize() {
     const [windowSize, setWindowSize] = React.useState<any>({
@@ -95,7 +99,7 @@ const MainLayout: React.FC<RouteComponentProps<any> & Props> = (props) => {
       window.addEventListener("resize", handleResize);
       handleResize();
       return () => window.removeEventListener("resize", handleResize);
-    }, []); 
+    }, []);
     return windowSize;
   }
 
@@ -107,8 +111,8 @@ const MainLayout: React.FC<RouteComponentProps<any> & Props> = (props) => {
         className={classes.content}
         style={{
           transition: "linear 225ms",
-          paddingLeft: (size.width - 1178)/2 - 25,
-          paddingRight: (size.width - 1178)/2 - 25,
+          paddingLeft: (size.width - 1178) / 2 - 25,
+          paddingRight: (size.width - 1178) / 2 - 25,
         }}
       >
         <React.Suspense fallback={<LoadingIcon />}>

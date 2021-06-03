@@ -1,4 +1,4 @@
-import { Avatar, Paper, Popper } from "@material-ui/core";
+import { Avatar, Container, Paper, Popper } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
@@ -171,6 +171,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
       <MenuItem
         onClick={() => {
           gotoProfile(routes.CUSTOMER);
+          handleMenuClose();
         }}
       >
         Thông tin tài khoản
@@ -233,110 +234,37 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   return (
     <div className={classes.grow}>
       <AppBar position="static">
-        <Toolbar>
-          <Typography
-            className={classes.title}
-            variant="h6"
-            noWrap
-            style={{
-              marginRight: 10,
-              width: 150,
-              cursor: "pointer",
-              color: "white",
-            }}
-            onClick={() => {
-              props?.history?.push(`/`);
-            }}
-          >
-            TIKO DUT
-          </Typography>
-          <Row style={{ width: 200 }}>
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              aria-owns={open ? "mouse-over-popover" : undefined}
-              aria-haspopup="true"
-              // onClick={handleClickAgent}
-              onMouseEnter={handlePopoverOpen}
-              onMouseLeave={handlePopoverClose}
+        <Container>
+          <Toolbar>
+            <Typography
+              className={classes.title}
+              variant="h6"
+              noWrap
+              style={{
+                marginRight: 10,
+                width: 150,
+                cursor: "pointer",
+                color: "white",
+              }}
+              onClick={() => {
+                props?.history?.push(`/`);
+              }}
             >
-              <Row>
-                <MenuIcon fontSize="large" />
-                <Col>
-                  <Typography
-                    style={{ fontSize: 10, paddingTop: 10, textAlign: "left" }}
-                    variant="body2"
-                  >
-                    Danh Mục
-                  </Typography>
-                  <Typography
-                    style={{
-                      fontSize: 12,
-                      paddingBottom: 10,
-                      fontWeight: "bold",
-                    }}
-                    variant="body2"
-                  >
-                    Sản Phẩm
-                  </Typography>
-                </Col>
-                <Popper
-                  style={{ zIndex: 4 }}
-                  id="mouse-over-popover"
-                  open={open}
-                  anchorEl={anchorElMenu}
-                  placement="top-start"
-                  disablePortal={true}
-                  modifiers={{
-                    flip: {
-                      enabled: true,
-                    },
-                    preventOverflow: {
-                      enabled: true,
-                      boundariesElement: "scrollParent",
-                    },
-                  }}
-                >
-                  <Paper onMouseLeave={handlePopoverClose}>
-                    {data !== undefined &&
-                      data.message.childList.map(
-                        (items: some, index: number) => {
-                          return (
-                            <MenuItem
-                              key={index}
-                              onClick={() => {
-                                gotoDetailCategory(items.id);
-                                handlePopoverClose();
-                              }}
-                            >
-                              {items?.name}
-                            </MenuItem>
-                          );
-                        }
-                      )}
-                  </Paper>
-                </Popper>
-              </Row>
-            </IconButton>
-          </Row>
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <Row style={{ width: 120 }}>
+              TIKO DUT
+            </Typography>
+            <Row style={{ width: 200 }}>
               <IconButton
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
+                edge="start"
                 color="inherit"
+                aria-label="open drawer"
+                aria-owns={open ? "mouse-over-popover" : undefined}
+                aria-haspopup="true"
+                // onClick={handleClickAgent}
+                onMouseEnter={handlePopoverOpen}
+                onMouseLeave={handlePopoverClose}
               >
                 <Row>
-                  <Avatar
-                    alt="Remy Sharp"
-                    src="https://scontent.fhan2-5.fna.fbcdn.net/v/t1.6435-9/153745673_1997564207066819_2723027247060726863_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=A5IMouMiviEAX-qd3fr&_nc_ht=scontent.fhan2-5.fna&oh=732a6d84a3ae1cb3d41924496738ebd6&oe=608C0150"
-                    className={classes.large}
-                  />
+                  <MenuIcon fontSize="large" />
                   <Col>
                     <Typography
                       style={{
@@ -346,50 +274,129 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                       }}
                       variant="body2"
                     >
-                      Tài khoản
+                      Danh Mục
                     </Typography>
                     <Typography
-                      style={{ fontSize: 10, paddingBottom: 10 }}
+                      style={{
+                        fontSize: 12,
+                        paddingBottom: 10,
+                        fontWeight: "bold",
+                      }}
                       variant="body2"
                     >
-                      {userProfile?.userName}
+                      Sản Phẩm
                     </Typography>
                   </Col>
+                  <Popper
+                    style={{ zIndex: 4 }}
+                    id="mouse-over-popover"
+                    open={open}
+                    anchorEl={anchorElMenu}
+                    placement="top-start"
+                    disablePortal={true}
+                    modifiers={{
+                      flip: {
+                        enabled: true,
+                      },
+                      preventOverflow: {
+                        enabled: true,
+                        boundariesElement: "scrollParent",
+                      },
+                    }}
+                  >
+                    <Paper onMouseLeave={handlePopoverClose}>
+                      {data !== undefined &&
+                        data.message.childList.map(
+                          (items: some, index: number) => {
+                            return (
+                              <MenuItem
+                                key={index}
+                                onClick={() => {
+                                  gotoDetailCategory(items.id);
+                                  handlePopoverClose();
+                                }}
+                              >
+                                {items?.name}
+                              </MenuItem>
+                            );
+                          }
+                        )}
+                    </Paper>
+                  </Popper>
                 </Row>
               </IconButton>
             </Row>
-          </div>
-          <div className={classes.sectionDesktop}>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              color="inherit"
-              onClick={() => {
-                gotoCart(routes.PRODUCT_CART);
-              }}
-            >
-              <Row>
-                <ShoppingCartIcon fontSize="large" />
-                <Typography style={{ fontSize: 10, paddingTop: 12 }}>
-                  Giỏ hàng
-                </Typography>
+            <div className={classes.grow} />
+            <div className={classes.sectionDesktop}>
+              <Row style={{ width: 120 }}>
+                <IconButton
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <Row>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src="https://scontent.fhan2-5.fna.fbcdn.net/v/t1.6435-9/153745673_1997564207066819_2723027247060726863_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=A5IMouMiviEAX-qd3fr&_nc_ht=scontent.fhan2-5.fna&oh=732a6d84a3ae1cb3d41924496738ebd6&oe=608C0150"
+                      className={classes.large}
+                    />
+                    <Col>
+                      <Typography
+                        style={{
+                          fontSize: 10,
+                          paddingTop: 10,
+                          textAlign: "left",
+                        }}
+                        variant="body2"
+                      >
+                        Tài khoản
+                      </Typography>
+                      <Typography
+                        style={{ fontSize: 10, paddingBottom: 10 }}
+                        variant="body2"
+                      >
+                        {userProfile?.userName}
+                      </Typography>
+                    </Col>
+                  </Row>
+                </IconButton>
               </Row>
-            </IconButton>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
-        </Toolbar>
+            </div>
+            <div className={classes.sectionDesktop}>
+              <IconButton
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                color="inherit"
+                onClick={() => {
+                  gotoCart(routes.PRODUCT_CART);
+                }}
+              >
+                <Row>
+                  <ShoppingCartIcon fontSize="large" />
+                  <Typography style={{ fontSize: 10, paddingTop: 12 }}>
+                    Giỏ hàng
+                  </Typography>
+                </Row>
+              </IconButton>
+            </div>
+            <div className={classes.sectionMobile}>
+              <IconButton
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}
+                color="inherit"
+              >
+                <MoreIcon />
+              </IconButton>
+            </div>
+          </Toolbar>
+        </Container>
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
