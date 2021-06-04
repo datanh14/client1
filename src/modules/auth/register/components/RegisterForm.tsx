@@ -2,6 +2,7 @@
 import {
   Divider,
   FormControlLabel,
+  InputLabel,
   Radio,
   RadioGroup,
   TextField,
@@ -20,7 +21,8 @@ import { IRegisterData } from "../../redux/authThunks";
 import moment, { Moment } from "moment";
 import { DATE_FORMAT_BACK_END } from "../../../../models/moment";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 export interface Props {
   loading: boolean;
   onRegister(data: IRegisterData): void;
@@ -43,18 +45,48 @@ const RegisterForm: React.FunctionComponent<Props> = (props) => {
   const { onRegister, loading } = props;
   const intl = useIntl();
   const [endDate, setEndDate] = React.useState<Moment | undefined>(moment());
-  const { handleSubmit, control } = useForm({
+  const [gender, setGender] = React.useState("");
+  const [valid, setValid] = React.useState<boolean>(false);
+  const schema = yup.object().shape({
+    account: yup.string().required("Tài khoản không được để trống"),
+    password: yup
+      .string()
+      .required("Mật khẩu không được để trống")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        "Mật khẩu phải có ít nhất 8 ký tự. Trong đó có it nhất 1 chữ hoa, 1 chữ số, 1 ký tự đặc biết"
+      ),
+    email: yup
+      .string()
+      .required("Email không được để trống")
+      .email("Email không hợp lệ"),
+    phoneNumber: yup.string().required("Số điện thoại không được để trống"),
+    firstName: yup.string().required("Họ không được để trống"),
+    lastName: yup.string().required("Tên không được để trống"),
+    dateOfBirth: yup.string().required("Ngày sinh không được để trống"),
+  });
+
+  const { handleSubmit, getValues, control, reset, formState } = useForm({
+    resolver: yupResolver(schema),
     defaultValues: {
-      email: "",
-      phonenumber: "",
-      firstname: "",
-      lastname: "",
-      name: "",
+      id: "",
       account: "",
-      dateofbirth: "",
+      password: "",
+      email: "",
+      phoneNumber: "",
       gender: "",
+      profilePhoto: "",
+      firstName: "",
+      lastName: "",
+      name: "",
+      dateOfBirth: "",
+      followStores: null,
     },
   });
+  const { errors } = formState;
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setGender((event.target as HTMLInputElement).value);
+  };
   return (
     <form
       onSubmit={handleSubmit(onRegister)}
@@ -66,140 +98,168 @@ const RegisterForm: React.FunctionComponent<Props> = (props) => {
           <FormattedMessage id="IDS_REGISTER_NEW" />
         </Typography>
         <Controller
-          as={React.forwardRef((itemProps: any, ref) => (
+          render={({ onChange, value, ref }) => (
             <FormControlTextField
-              {...itemProps}
+              value={value}
+              onChange={onChange}
               formControlStyle={{ width: "100%" }}
               label={<FormattedMessage id="IDS_EMAIL" />}
               placeholder={intl.formatMessage({ id: "IDS_ENTER_EMAIL" })}
               inputProps={{ maxLength: 50, autoComplete: "new" }}
-              optional
+              errorMessage={errors.email?.message}
               inputRef={ref}
             />
-          ))}
+          )}
           name="email"
           control={control}
         />
         <Controller
-          as={React.forwardRef((itemProps: any, ref) => (
+          render={({ onChange, value, ref }) => (
             <FormControlTextField
-              {...itemProps}
-              formControlStyle={{ width: "100%" }}
-              label={<FormattedMessage id="IDS_FIRST_NAME" />}
-              placeholder={intl.formatMessage({ id: "IDS_ENTER_FIRST_NAME" })}
-              inputProps={{ maxLength: 50, autoComplete: "new" }}
-              optional
-              inputRef={ref}
-            />
-          ))}
-          name="firstname"
-          control={control}
-        />
-        <Controller
-          as={React.forwardRef((itemProps: any, ref) => (
-            <FormControlTextField
-              {...itemProps}
+              value={value}
+              onChange={onChange}
               formControlStyle={{ width: "100%" }}
               label={<FormattedMessage id="IDS_LAST_NAME" />}
               placeholder={intl.formatMessage({ id: "IDS_ENTER_LAST_NAME" })}
               inputProps={{ maxLength: 50, autoComplete: "new" }}
-              optional
+              errorMessage={errors.firstName?.message}
               inputRef={ref}
             />
-          ))}
-          name="lastname"
+          )}
+          name="firstName"
           control={control}
         />
-        <label>
-          <Typography variant="body2">
-            {intl.formatMessage({ id: "IDS_RADIO_GROUP_GENGER" })}
-          </Typography>
-        </label>
+        <Controller
+          render={({ onChange, value, ref }) => (
+            <FormControlTextField
+              value={value}
+              onChange={onChange}
+              formControlStyle={{ width: "100%" }}
+              label={<FormattedMessage id="IDS_FIRST_NAME" />}
+              placeholder={intl.formatMessage({ id: "IDS_ENTER_FIRST_NAME" })}
+              inputProps={{ maxLength: 50, autoComplete: "new" }}
+              errorMessage={errors.lastName?.message}
+              inputRef={ref}
+            />
+          )}
+          name="lastName"
+          control={control}
+        />
         <Controller
           as={
-            <RadioGroup aria-label="gender">
-              <Row>
-                <FormControlLabel
-                  value="F"
-                  control={<Radio />}
-                  label="Female"
-                />
-                <FormControlLabel value="M" control={<Radio />} label="Male" />
-              </Row>
-            </RadioGroup>
+            <>
+              <InputLabel>
+                {<FormattedMessage id="IDS_RADIO_GROUP_GENGER" />}
+              </InputLabel>
+              <RadioGroup
+                aria-label="gender"
+                value={gender}
+                onChange={handleChange}
+              >
+                <Row>
+                  <FormControlLabel
+                    value="F"
+                    control={<Radio size="small" />}
+                    label="Nữ"
+                  />
+                  <FormControlLabel
+                    value="M"
+                    control={<Radio size="small" />}
+                    label="Nam"
+                  />
+                  <FormControlLabel
+                    value="O"
+                    control={<Radio size="small" />}
+                    label="Khác"
+                  />
+                </Row>
+              </RadioGroup>
+              {valid && gender === "" && (
+                <Typography
+                  style={{ fontSize: 15, color: "#f5584d", fontWeight: 400 }}
+                >
+                  Giới tính không được để trống
+                </Typography>
+              )}
+            </>
           }
           name="gender"
           control={control}
         />
         <Controller
-          as={
-            <TextField
-              id="date"
-              label="Birthday"
-              type="date"
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          }
-          name="dateofbirth"
-          control={control}
-        />
-        <Controller
-          as={React.forwardRef((itemProps: any, ref) => (
+          render={({ onChange, value, ref }) => (
             <FormControlTextField
-              {...itemProps}
-              formControlStyle={{ width: "100%" }}
-              label={<FormattedMessage id="IDS_AUTH_ACCOUNT" />}
-              placeholder={intl.formatMessage({ id: "IDS_AUTH_ENTER_ACCOUNT" })}
-              inputProps={{ maxLength: 50, autoComplete: "new" }}
-              optional
+              value={value}
+              onChange={onChange}
+              label={<FormattedMessage id="Ngày sinh" />}
+              formControlStyle={{ width: "100%", marginRight: 0 }}
+              inputProps={{ maxLength: 50, autoComplete: "none" }}
               inputRef={ref}
+              type="date"
+              errorMessage={errors.dateOfBirth?.message}
             />
-          ))}
-          name="account"
+          )}
+          name="dateOfBirth"
           control={control}
         />
-        <Controller
-          as={React.forwardRef((itemProps: any, ref) => (
+         <Controller
+          render={({ onChange, value, ref }) => (
             <FormControlTextField
-              {...itemProps}
+              value={value}
+              onChange={onChange}
               formControlStyle={{ width: "100%" }}
               label={<FormattedMessage id="IDS_CHAT_PHONE_NUMBER" />}
               placeholder={intl.formatMessage({
                 id: "IDS_CHAT_ENTER_PHONE_NUMBER",
               })}
               inputProps={{ maxLength: 50, autoComplete: "new" }}
-              optional
+              errorMessage={errors.phoneNumber?.message}
               inputRef={ref}
             />
-          ))}
-          name="phonenumber"
+          )}
+          name="phoneNumber"
           control={control}
         />
         <Controller
-          as={React.forwardRef((itemProps: any, ref) => (
+          render={({ onChange, value, ref }) => (
             <FormControlTextField
-              {...itemProps}
+              value={value}
+              onChange={onChange}
+              formControlStyle={{ width: "100%" }}
+              label={<FormattedMessage id="IDS_AUTH_ACCOUNT" />}
+              placeholder={intl.formatMessage({ id: "IDS_AUTH_ENTER_ACCOUNT" })}
+              inputProps={{ maxLength: 50, autoComplete: "new" }}
+              errorMessage={errors.account?.message}
+              inputRef={ref}
+            />
+          )}
+          name="account"
+          control={control}
+        />
+        <Controller
+          render={({ onChange, value, ref }) => (
+            <FormControlTextField
+              value={value}
+              onChange={onChange}
               formControlStyle={{ width: "100%" }}
               label={<FormattedMessage id="IDS_PASSWORD" />}
               placeholder={intl.formatMessage({ id: "IDS_ENTER_PASSWORD" })}
               inputProps={{ maxLength: 20, autoComplete: "none" }}
               type="password"
-              optional
+              errorMessage={errors.password?.message}
               inputRef={ref}
             />
-          ))}
+          )}
           name="password"
           control={control}
         />
         <LoadingButton
-          style={{ minWidth: 160, backgroundColor: BLUE_NAVY }}
+          style={{ minWidth: 160, backgroundColor: BLUE_NAVY, marginTop: 10, }}
           type="submit"
           variant="contained"
           loading={loading}
           disableElevation
+          onClick={() => setValid(true)}
         >
           <Typography
             variant="body2"

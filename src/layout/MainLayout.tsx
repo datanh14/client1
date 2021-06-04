@@ -11,18 +11,18 @@ import {
 import { GREY_100 } from "../assets/theme/colors";
 import { some, WIDTH_PRODUCT } from "../constants/constants";
 import { routes } from "../constants/routes";
+import Cart from "../modules/app_manager/components/cart/Cart";
+import Footer from "../modules/app_manager/components/footer/Footer";
+import ProductDetail from "../modules/app_manager/components/product/ProductDetail";
+import StoreDetail from "../modules/app_manager/components/store/StoreDetail";
+import DetailCategory from "../modules/app_manager/detailCategory/DetailCategory";
 import { PageWrapper } from "../modules/common/Elements";
 import LoadingIcon from "../modules/common/LoadingIcon";
 import Home from "../modules/home/Home";
+import profilePage from "../modules/profile/profilePage";
 import { AppState } from "../modules/rootReducer";
 import DefaultHelmet from "./DefaultHelmet";
 import { mainStyles } from "./styles";
-import ProductDetail from "../modules/app_manager/components/product/ProductDetail";
-import Cart from "../modules/app_manager/components/cart/Cart";
-import Footer from "../modules/app_manager/components/footer/Footer";
-import DetailCategory from "../modules/app_manager/detailCategory/DetailCategory";
-import profilePage from "../modules/profile/profilePage";
-import StoreDetail from "../modules/app_manager/components/store/StoreDetail";
 
 const SIDE_BAR_MENU: some[] = [
   {
@@ -74,10 +74,14 @@ const MainLayout: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const homeRef = React.useRef<HTMLDivElement>(null);
   const classes = mainStyles();
   const size = useWindowSize();
-  
+
   React.useEffect(() => {
-    homeRef.current && localStorage.setItem(WIDTH_PRODUCT, (homeRef?.current.offsetWidth/5 - 1).toString());
-  }, [homeRef.current]); 
+    homeRef.current &&
+      localStorage.setItem(
+        WIDTH_PRODUCT,
+        (homeRef?.current.offsetWidth / 5 - 1).toString()
+      );
+  }, [homeRef.current]);
 
   function useWindowSize() {
     const [windowSize, setWindowSize] = React.useState<any>({
@@ -95,7 +99,7 @@ const MainLayout: React.FC<RouteComponentProps<any> & Props> = (props) => {
       window.addEventListener("resize", handleResize);
       handleResize();
       return () => window.removeEventListener("resize", handleResize);
-    }, []); 
+    }, []);
     return windowSize;
   }
 
@@ -107,19 +111,23 @@ const MainLayout: React.FC<RouteComponentProps<any> & Props> = (props) => {
         className={classes.content}
         style={{
           transition: "linear 225ms",
-          paddingLeft: (size.width - 1178)/2 - 25,
-          paddingRight: (size.width - 1178)/2 - 25,
+          paddingLeft:
+            (size.width - 1178) / 2 - 25 > 0 ? (size.width - 1178) / 2 - 25 : 0,
+          paddingRight:
+            (size.width - 1178) / 2 - 25 > 0 ? (size.width - 1178) / 2 - 25 : 0,
         }}
       >
         <React.Suspense fallback={<LoadingIcon />}>
           <Switch>
-            {[...SIDE_BAR_MENU].map((item: some) => (
-              <Route
-                exact
-                path={item.route}
-                component={item.component}
-                key={item.route}
-              />
+            {[...SIDE_BAR_MENU].map((item: some, index: number) => (
+              <div key={index}>
+                <Route
+                  exact
+                  path={item.route}
+                  component={item.component}
+                  key={item.route}
+                />
+              </div>
             ))}
           </Switch>
         </React.Suspense>
