@@ -62,7 +62,7 @@ const OrderManagement = () => {
           margin: "25px 25px",
           padding: "50px 50px",
           backgroundColor: "white",
-          height: "500px",
+          height: "600px",
         }}
       >
         <Spin size="large" style ={{
@@ -80,7 +80,6 @@ const OrderManagement = () => {
         margin: "25px 25px",
         padding: "50px 50px",
         backgroundColor: "white",
-        height: "500px",
       }}
     >
       <Table
@@ -89,6 +88,9 @@ const OrderManagement = () => {
         pagination={{
           defaultPageSize: 5,
           position: ["bottomCenter"],
+        }}
+        style={{
+          margin: "25px 25px",
         }}
       />
     </Content>

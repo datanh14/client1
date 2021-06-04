@@ -15,25 +15,29 @@ const Profile = () => {
     console.log("radio checked", e.target.value);
     setValue(e.target.value);
   };
-  const token = localStorage.getItem(ACCESS_TOKEN)
-  console.log(token)
-const urlprofile ="https://tiki-test-1.herokuapp.com/api/authenticate/ChangeInfo";
-const urlpass = "https://tiki-test-1.herokuapp.com/api/authenticate/ChangePassword";
+  const token = localStorage.getItem(ACCESS_TOKEN);
+  console.log(token);
+  const urlprofile =
+    "https://tiki-test-1.herokuapp.com/api/authenticate/ChangeInfo";
+  const urlpass =
+    "https://tiki-test-1.herokuapp.com/api/authenticate/ChangePassword";
+  console.log(dataUser);
   //Modal
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalVisiblePass, setIsModalVisiblePass] = useState(false);
   // info
   const [data, setData] = useState({
-    Email: "",
-    firstname: "",
-    lastname: "",
-    dateofbirth:"",
-    gender: "",
-    phonenumber: ""
+    Email: dataUser.email,
+    firstname: dataUser.firstName,
+    lastname: dataUser.lastName,
+    dateofbirth: dataUser.dateOfBirth,
+    gender: dataUser.gender,
+    phonenumber: dataUser.phone,
   });
   const showModal = () => {
     setIsModalVisible(true);
   };
+   
   const handleOk = () => {
     setIsModalVisible(false);
     Axios.post(urlprofile,{
@@ -69,101 +73,98 @@ const urlpass = "https://tiki-test-1.herokuapp.com/api/authenticate/ChangePasswo
     newdata.phonenumber = e.target.value;
     setData(newdata);
   };
-  const onChangeEmail = (e: any)=>{
+  const onChangeEmail = (e: any) => {
     const newdata = { ...data };
     newdata.Email = e.target.value;
     setData(newdata);
-  }
-  const onChangeGender = (e: any)=>{
+  };
+  const onChangeGender = (e: any) => {
     const newdata = { ...data };
-    newdata.gender =  e.target.value;
+    newdata.gender = e.target.value;
     setData(newdata);
-  }
-  const onChangeDate = (value: any)=>{
+  };
+  const onChangeDate = (value: any) => {
     const newdata = { ...data };
-    newdata.dateofbirth = value.format('YYYY-MM-DD');
+
+    newdata.dateofbirth = value.format("YYYY-MM-DD");
     setData(newdata);
-  }
-  console.log(data)
+  };
+  console.log(data);
 
   // pass
   const [pass, setPass] = useState({
-    Password:"",
-    NewPassword:"",
-  })
+    Password: "",
+    NewPassword: "",
+  });
   const showModalPass = () => {
     setIsModalVisiblePass(true);
   };
 
   const handleOkPass = () => {
     setIsModalVisiblePass(false);
-    Axios.post(urlpass,{
+    Axios.post(urlpass, {
       headers: {
-        'Authorization': 'Bearer ' + token,
-    },
+        Authorization: "Bearer " + token,
+      },
       Password: pass.Password,
-      NewPassword: pass.NewPassword
-    })
-    .then(res =>{
-      console.log(res.data)
-    })
+      NewPassword: pass.NewPassword,
+    }).then((res) => {
+      console.log(res.data);
+    });
   };
 
   const handleCancelPass = () => {
     setIsModalVisiblePass(false);
   };
-  const onChangePass = (e: any)=>{
+  const onChangePass = (e: any) => {
     const newdata = { ...pass };
-    newdata.Password =  e.target.value;
+    newdata.Password = e.target.value;
     setPass(newdata);
-  }
-  const onChangeNewPass = (e: any)=>{
+  };
+  const onChangeNewPass = (e: any) => {
     const newdata = { ...pass };
-    newdata.NewPassword =  e.target.value;
+    newdata.NewPassword = e.target.value;
     setPass(newdata);
-  }
-  console.log(pass)
-  return(
+  };
+  console.log(pass);
+  return (
     <div>
       <Content
-        className='site-layout-background'
+        className="site-layout-background"
         style={{
           margin: "25px 25px",
           padding: "50px 50px",
           backgroundColor: "white",
-          height: "500px",
         }}
       >
+        <div style={{margin: "25px 25px"}}>
         <Form
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 14 }}
-          layout='horizontal'
+          layout="horizontal"
           initialValues={{ size: "default" }}
           // size="default"
         >
-          <Form.Item label='Họ và tên'>
+          <Form.Item label="Họ và tên">
             {dataUser?.firstName && (
               <Input
                 defaultValue={dataUser?.firstName + " " + dataUser.lastName}
               ></Input>
             )}
           </Form.Item>
-          <Form.Item label='Số điện thoại'>
+          <Form.Item label="Số điện thoại">
             {dataUser?.phone && <Input defaultValue={dataUser?.phone}></Input>}
           </Form.Item>
-          <Form.Item label='Email'>
+          <Form.Item label="Email">
             {dataUser?.email && <Input defaultValue={dataUser?.email}></Input>}
           </Form.Item>
           <Form.Item label="Giới tính">
-            <Radio.Group
-              onChange={onChange}
-              defaultValue={dataUser.gender}
-            >
+            <Radio.Group onChange={onChange} defaultValue={dataUser.gender}>
               <Radio value="M">Nam</Radio>
               <Radio value="F">Nữ</Radio>
             </Radio.Group>
           </Form.Item>
-          <Form.Item label='Ngày sinh'>
+          <Form.Item label="Ngày sinh">
             <DatePicker defaultValue={moment(dataUser.dateOfBirth)} />
           </Form.Item>
           <Form.Item
@@ -172,11 +173,22 @@ const urlpass = "https://tiki-test-1.herokuapp.com/api/authenticate/ChangePasswo
               sm: { span: 16, offset: 8 },
             }}
           >
-            <Button type="primary" size="large" onClick={showModal}>Sửa thông tin</Button>
-            <Button type="primary" size="large" onClick={showModalPass} style={{marginLeft:'5px'}}>Đổi mật khẩu</Button>
-            <DialogSignUpToStore item={dataUser}/>
+            <Button type="primary" size="large" onClick={showModal}>
+              Sửa thông tin
+            </Button>
+            <Button
+              type="primary"
+              size="large"
+              onClick={showModalPass}
+              style={{ margin: "5px 5px" }}
+            >
+              Đổi mật khẩu
+            </Button>
+            <DialogSignUpToStore item={dataUser} />
           </Form.Item>
         </Form>
+        </div>
+        
       </Content>
       <Modal
         title="Sửa thông tin"
@@ -195,21 +207,27 @@ const urlpass = "https://tiki-test-1.herokuapp.com/api/authenticate/ChangePasswo
             label="First Name"
             rules={[{ required: true }]}
           >
-            <Input onChange={onChangeFirstName}/>
+            <Input
+              defaultValue={dataUser.firstName}
+              onChange={onChangeFirstName}
+            />
           </Form.Item>
           <Form.Item
             name="Last Name"
             label="Last Name"
             rules={[{ required: true }]}
           >
-            <Input onChange={onChangeLastName}/>
+            <Input
+              defaultValue={dataUser.lastName}
+              onChange={onChangeLastName}
+            />
           </Form.Item>
           <Form.Item
             name="Number Phone"
             label="Phone"
             rules={[{ required: true }, { type: "number" }]}
           >
-            <Input onChange={onChangePhone} />
+            <Input defaultValue={dataUser.phone} onChange={onChangePhone} />
           </Form.Item>
           <Form.Item label="Giới tính">
             <Radio.Group
@@ -221,16 +239,17 @@ const urlpass = "https://tiki-test-1.herokuapp.com/api/authenticate/ChangePasswo
             </Radio.Group>
           </Form.Item>
           <Form.Item label="Ngày sinh">
-            <DatePicker 
-           // defaultValue={moment(dataUser.dateOfBirth)} 
-            onChange = {onChangeDate}/>
+            <DatePicker
+              defaultValue={moment(dataUser.dateOfBirth)}
+              onChange={onChangeDate}
+            />
           </Form.Item>
           <Form.Item
             name="Email"
             label="Email"
             rules={[{ required: true }, { type: "email" }]}
           >
-            <Input onChange = {onChangeEmail}/>
+            <Input defaultValue={dataUser.email} onChange={onChangeEmail} />
           </Form.Item>
         </Form>
       </Modal>
@@ -259,11 +278,11 @@ const urlpass = "https://tiki-test-1.herokuapp.com/api/authenticate/ChangePasswo
             name="newPassword"
             rules={[{ required: true, message: "Diền mật khẩu cũ" }]}
           >
-            <Input.Password onChange = {onChangeNewPass}/>
+            <Input.Password onChange={onChangeNewPass} />
           </Form.Item>
         </Form>
       </Modal>
     </div>
-  )
-}
+  );
+};
 export default Profile;
