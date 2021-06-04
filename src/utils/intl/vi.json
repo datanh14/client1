@@ -182,5 +182,12 @@
   "IDS_AUTH_ENTER_ACCOUNT": "Nhập tài khoản",
   "IDS_RADIO_GROUP_GENGER": "Giới tính",
   "IDS_CHAT_STORE_NAME": "Tên cửa hàng",
-  "IDS_CHAT_STORE_DETAIL": "Mô tả"
+  "IDS_CHAT_STORE_DETAIL": "Mô tả",
+  "IDS_RESET_PASSWORD": "Đổi mật khẩu",
+  "IDS_GET_PASSWORD": "Lấy lại mật khẩu",
+  "IDS_AUTH_FORGOT_PASSWORD": "Quên mật khẩu",
+  "IDS_TITLE_RESET_PASSWORD": "Đổi mật khẩu",
+  "IDS_FORGOT_PASSWORD_SUCCESS_NOTE": "Quên mật khẩu thành công. Bạn vui lòng kiểm tra email và xác nhận",
+  "IDS_RESET_PASSWORD_SUCCESS_NOTE": "Đổi mật khẩu thành công. Bạn có thể đăng nhập tài khoản và sử dụng",
+  "IDS_AUTH_ALREADY_LOGIN": "Bạn đã có thể đăng nhập?"
 }

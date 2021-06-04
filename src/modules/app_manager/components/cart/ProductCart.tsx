@@ -80,7 +80,7 @@ const ProductCart: React.FC<RouteComponentProps<some> & Props> = (props) => {
   const { index, data, changeCount, handleDeleteProductByCart } = props;
   const classes = useStyles();
   const [count, setCount] = React.useState(data?.count);
-  const [loadding, setLoadding] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
   const [isBuyInDay, setIsBuyInDay] = React.useState(false);
   const [isSale, setIsSale] = React.useState(false);
@@ -100,7 +100,7 @@ const ProductCart: React.FC<RouteComponentProps<some> & Props> = (props) => {
       const res: some = await actionGetStoreByID({
         StoreID: data?.storeID,
       });
-      setLoadding(true);
+      setLoading(true);
       if (res?.code === SUCCESS_CODE) {
         res?.store && setStoreData(res?.store);
       } else {
@@ -114,7 +114,7 @@ const ProductCart: React.FC<RouteComponentProps<some> & Props> = (props) => {
 
   return ( 
     <div className={classes.root}>
-      {data !== undefined && loadding && (
+      {data !== undefined && loading && (
         <Grid
           container
           style={{

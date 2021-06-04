@@ -14,7 +14,7 @@ import Product from "../product/Product";
 
 interface Props {
   id: string;
-  setLoadding?: (load: boolean) => void;
+  setLoading?: (load: boolean) => void;
 }
 
 interface RenderTree {
@@ -24,7 +24,7 @@ interface RenderTree {
 }
 
 const StoreAllCategory: React.FC<Props> = (props) => {
-  const { id, setLoadding } = props;
+  const { id, setLoading } = props;
   const intl = useIntl();
   const [data, setData] = React.useState<any[]>([]);
   const [dataCategoryChild, setDataCategoryChild] = React.useState<any>();
@@ -57,10 +57,12 @@ const StoreAllCategory: React.FC<Props> = (props) => {
       });
       if (res?.code === SUCCESS_CODE) {
         setData([...res.message.productsList]);
-        setLoadding?.(true);
       } else {
       }
     } catch (error) {}
+    finally {
+      setLoading?.(true);
+    }
   };
 
   const handleClickCategory = (name: string, id: string) => {

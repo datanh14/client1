@@ -68,3 +68,13 @@ export const defaultRegisterData: IRegisterData = {
   password: "",
   dateofbirth: endDate?.format(DATE_FORMAT_BACK_END),
 };
+
+export interface IForgotPassword {
+  userName: string;
+}
+
+export interface IResetPassword {
+  Account: string;
+  Token: string;
+  NewPassword: string;
+}

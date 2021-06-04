@@ -7,11 +7,11 @@ import Product from "../product/Product";
 
 interface Props {
   id: string;
-  setLoadding?: (load:boolean) => void;
+  setLoading?: (load:boolean) => void;
 }
 
 const StoreWithProduct: React.FC<Props> = (props) => {
-  const { id, setLoadding } = props;
+  const { id, setLoading } = props;
   const [data, setData] = React.useState<any[]>([]);
   const [pageProduct, setPageProduct] = React.useState<number>(0);
   const sizeProduct = 15;
@@ -24,10 +24,12 @@ const StoreWithProduct: React.FC<Props> = (props) => {
       });
       if (res?.code === SUCCESS_CODE) {
         setData((data) => [...data, ...res.message]);
-        setLoadding?.(true);
       } else {
       }
     } catch (error) {}
+    finally {
+      setLoading?.(true);
+    }
   };
   React.useEffect(() => {
     fetchListProduct();
@@ -35,7 +37,7 @@ const StoreWithProduct: React.FC<Props> = (props) => {
 
   const handleClickMore = () => {
     setPageProduct((pageProduct) => pageProduct + 1);
-    setLoadding?.(false);
+    setLoading?.(false);
   };
 
   return (

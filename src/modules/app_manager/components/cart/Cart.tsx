@@ -66,7 +66,7 @@ const Cart = (props: some) => {
   const [address, setAddress] = React.useState<some>({});
   const [listAddress, setListAddress] = React.useState<some[]>([]);
   const [indexDefaut, setIndexDefaut] = React.useState(-1);
-  const [loadding, setLoadding] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   const handleBill = () => {
     var sum = 0;
@@ -193,7 +193,7 @@ const Cart = (props: some) => {
       const res: some = await actionGetAddressByUser({
         UserID: userID,
       });
-      setLoadding(true);
+      setLoading(true);
       if (res?.code === SUCCESS_CODE) {
         if (res?.message) {
           setListAddress(res?.message);
@@ -245,7 +245,7 @@ const Cart = (props: some) => {
 
   return (
     <>
-      {!loadding && <LoaddingPage isOpen={!loadding} />}
+      {!loading && <LoaddingPage isOpen={!loading} />}
       <Row
         style={{
           color: "#ff9800",

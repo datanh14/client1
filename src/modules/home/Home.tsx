@@ -11,7 +11,7 @@ import { Row } from "../common/Elements";
 import { actionProductInChild } from "../system/systemAction";
 
 const Home = (props: some) => {
-  const [loadding, setLoadding] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const [dataListProduct, setDataListProduct] = React.useState<any>();
   const [data, setData] = React.useState<any[]>([]);
   const [pageProduct, setPageProduct] = React.useState<number>(0);
@@ -27,10 +27,12 @@ const Home = (props: some) => {
       if (res?.code === SUCCESS_CODE) {
         setDataListProduct(res);
         setData((data) => [...data, ...res.message.productsList]);
-        setLoadding(true);
       } else {
       }
     } catch (error) {}
+    finally {
+      setLoading(true);
+    }
   };
 
   React.useEffect(() => {
@@ -39,12 +41,12 @@ const Home = (props: some) => {
 
   const handleClickMore = () => {
     setPageProduct((pageProduct) => pageProduct + 1);
-    setLoadding(false);
+    setLoading(false);
   };
 
   return (
     <>
-      {!loadding && <LoaddingPage isOpen={!loadding} />}
+      {!loading && <LoaddingPage isOpen={!loading} />}
       <Box
         style={{
           paddingTop: 20,

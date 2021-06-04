@@ -177,3 +177,15 @@ export const actionRegister = (data: some) => {
 export const actionChangeLocation = (data: some) => {
   return api({ method: "post", url: "/api/authenticate/ChangeInfo", data });
 };
+
+export const actionChangePasswordByToken = (data: some) => {
+  return api({ method: "post", url: "/api/authenticate/ChangePasswordByToken", data });
+};
+
+export const actionResetPasswordMail = (params?: some) => {
+  return api({
+    method: "get",
+    url: "/Mail/ResetPasswordMail",
+    params,
+  });
+};

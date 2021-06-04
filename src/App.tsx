@@ -13,7 +13,9 @@ import "./App.scss";
 import { ACCESS_TOKEN, UUID } from "./constants/constants";
 import { routes } from "./constants/routes";
 import MainLayout from "./layout/MainLayout";
+import ForgotPassword from "./modules/auth/ForgotPassword/pages/ForgotPassword";
 import Register from "./modules/auth/register/pages/Register";
+import ResetPassword from "./modules/auth/ResetPassword/pages/ResetPassword";
 import LoadingIcon from "./modules/common/LoadingIcon";
 import Login from "./modules/login/Login";
 import { AppState } from "./modules/rootReducer";
@@ -51,6 +53,8 @@ const App: React.FC<RouteComponentProps<any> & Props> = (props) => {
             component={DetailCategory}
           /> */}
           <Route exact path={routes.REGISTER} component={Register} />
+          <Route exact path={routes.FORGOT_PASSWORD} component={ForgotPassword} />
+          <Route exact path={routes.RESET_PASSWORD} component={ResetPassword} />
           <Route path={"*"} component={MainLayout} />
         </Switch>
       </React.Suspense>

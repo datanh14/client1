@@ -107,7 +107,7 @@ const ProductDetail = (props: any) => {
   const id: some = useParams();
   const imageRef = React.useRef<HTMLDivElement>(null);
   const [sizeImage, setSizeImage] = useState(0);
-  const [loadding, setLoadding] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const [storeData, setStoreData] = React.useState<some>({});
   const [sizeImageSmall, setSizeImageSmall] = useState(0);
   const [index, setIndex] = useState(0);
@@ -145,6 +145,9 @@ const ProductDetail = (props: any) => {
       } else {
       }
     } catch (error) {}
+    finally {
+      setLoading(true);
+    }
   };
 
   const fetchAddProductToCart = async (data: some) => {
@@ -192,7 +195,7 @@ const ProductDetail = (props: any) => {
       const res: some = await actionGetStoreFollowing({
         userID: userID,
       });
-      setLoadding(true);
+      setLoading(true);
       if (res?.code === SUCCESS_CODE) {
         let follow: boolean = false;
         res?.message &&
@@ -208,7 +211,6 @@ const ProductDetail = (props: any) => {
   };
 
   React.useEffect(() => {
-    setLoadding(false);
     fetchListProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idProduct]);
@@ -219,7 +221,7 @@ const ProductDetail = (props: any) => {
   }, [isFollow]);
 
   React.useEffect(() => {
-    dataProduct && fetchGetStoreFollowing();
+    dataProduct && userID && fetchGetStoreFollowing();
     dataProduct && fetchListComment();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataProduct]);
@@ -290,7 +292,7 @@ const ProductDetail = (props: any) => {
 
   return (
     <div className={classes.root} ref={imageRef}>
-      {!loadding && <LoaddingPage isOpen={!loadding} />}
+      {!loading && <LoaddingPage isOpen={!loading} />}
       {dataProduct !== undefined && (
         <Col>
           <Grid

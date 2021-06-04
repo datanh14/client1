@@ -158,8 +158,13 @@ const LoginForm: React.FC<RouteComponentProps<any> & Props> = (props) => {
           </Typography>
         </Row> */}
         <Link to={{ pathname: routes.REGISTER }}>
-          <Typography variant="body2" style={{ color: BLUE_500 }}>
+          <Typography variant="body2" style={{ color: BLUE_500, marginTop:5 }}>
             <FormattedMessage id="IDS_SIGN_UP_NOW" />
+          </Typography>
+        </Link>
+        <Link to={{ pathname: routes.FORGOT_PASSWORD }}>
+          <Typography variant="body2" style={{ color: BLUE_500 }}>
+            <FormattedMessage id="IDS_AUTH_FORGOT_PASSWORD" />
           </Typography>
         </Link>
       </Col>

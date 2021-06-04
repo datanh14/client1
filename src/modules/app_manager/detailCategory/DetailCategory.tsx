@@ -100,7 +100,7 @@ const DetailCategory = (props: some) => {
   const [fromPrice, setFromPrice] = React.useState<number>();
   const [toPrice, setToPrice] = React.useState<number>();
   const [searchKey, setSearchKey] = React.useState<string>("");
-  const [loadding, setLoadding] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   const fetchListCategory = async () => {
     try {
@@ -125,23 +125,25 @@ const DetailCategory = (props: some) => {
       });
       if (res?.code === SUCCESS_CODE) {
         setDataListProductChild(res);
-        setLoadding(true);
       } else {
       }
     } catch (error) {}
+    finally {
+      setLoading(true);
+    }
   };
   React.useEffect(() => {
     fetchListCategory();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   React.useEffect(() => {
-    setLoadding(false);
+    setLoading(false);
     fetchListProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, idProductChild, star, fromPrice, toPrice, searchKey]);
   return (
     <div style={{ marginTop: 30, minHeight: 704 }}>
-      {!loadding && <LoaddingPage isOpen={!loadding} />}
+      {!loading && <LoaddingPage isOpen={!loading} />}
       <div style={{ display: "flex" }}>
         <Col style={{ flex: 1, minWidth: 275, maxWidth: 275, marginRight:10, }}>
           <Paper style={{ padding: 12 }}>

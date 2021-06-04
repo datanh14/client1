@@ -14,4 +14,6 @@ export const routes: some = {
   PRODUCT_CART: "/cart",
   PROFILEPAGE: "/profile-page",
   STORE: "/store/:id",
+  RESET_PASSWORD: "/resest-password", // Cần sửa lại
+  FORGOT_PASSWORD: "/forgot-password", 
 };
