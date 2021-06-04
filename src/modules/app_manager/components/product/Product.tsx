@@ -50,13 +50,14 @@ const Product = (props: any) => {
             marginRight: 18,
             marginLeft: 18,
           }}
-          src={data.image ? data.images[0] : data.images}
+          src={data.images ? data.images[0] : "https://vnpi-hcm.vn/wp-content/uploads/2018/01/no-image-800x600.png"}
           alt={data.name}
         />
         <Typography
           variant="body2"
           style={{
-            fontSize: 20,
+            height: 40,
+            fontSize: 15,
             marginBottom: 5,
             display: "-webkit-box",
             WebkitBoxOrient: "vertical",
@@ -78,7 +79,9 @@ const Product = (props: any) => {
           display="flex"
           alignItems="flex-start"
           style={{
+            position: "relative",
             marginTop: 5,
+            bottom:0
           }}
         >
           <Typography
@@ -86,16 +89,16 @@ const Product = (props: any) => {
             style={{
               alignItems: "center",
               display: "flex",
-              fontSize: 17,
+              fontSize: 18,
             }}
           >
             {formatter(data.price)}
           </Typography>
 
-          {data?.discount && (
+          {data?.discount !== "0" && (
             <Box
               style={{
-                maxWidth: 40,
+                minWidth: 35,
                 maxHeight: 30,
                 marginLeft: 20,
                 textAlign: "center",
@@ -104,6 +107,7 @@ const Product = (props: any) => {
                 alignItems: "center",
                 justifyContent: "center",
                 display: "flex",
+                color: "white",
                 padding: 2,
               }}
             >

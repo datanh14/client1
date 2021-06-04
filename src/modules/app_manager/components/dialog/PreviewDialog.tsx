@@ -1,4 +1,4 @@
-import { Avatar, Box, IconButton } from "@material-ui/core";
+import { Avatar, Box, Container, IconButton } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
 import Dialog from "@material-ui/core/Dialog";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
@@ -11,7 +11,7 @@ import { some } from "../../../../constants/constants";
 import { Row } from "../../../common/Elements";
 
 interface Props {
-  key: string,
+  key: string;
   isOpen: boolean;
   onCloseDialog(): void;
   item: some;
@@ -35,12 +35,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     next: {
       position: "absolute",
-      right: 5,
+      right: -100,
       top: "40%",
     },
     prev: {
       position: "absolute",
-      left: 5,
+      left: -100,
       top: "40%",
     },
     grey: {
@@ -58,15 +58,15 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: "orange",
     },
     imgSmall: {
-      width: 90,
-      height: 90,
+      width: 70,
+      height: 70,
       marginRight: 10,
       borderRadius: 5,
       display: "flex",
     },
     imgSmallBorder: {
-      width: 90,
-      height: 90,
+      width: 80,
+      height: 80,
       borderRadius: 5,
       marginRight: 10,
       borderStyle: "solid",
@@ -138,51 +138,55 @@ const PreviewDialog: React.FC<RouteComponentProps<any> & Props> = (props) => {
             height: "100%",
           }}
         >
-          <Box justifyContent="flex-end" display="flex">
-            <IconButton aria-label="back" onClick={onCloseDialog}>
-              <CloseIcon fontSize="large" style={{ color: "white" }} />
-            </IconButton>
-          </Box>
-          <div className={classes.root}>
-            <Avatar className={`${classes.grey} ${classes.prev}`}>
-              <IconButton aria-label="prev">
-                <NavigateBeforeIcon onClick={handlePrevClick} />
+          <Container>
+            <Box justifyContent="flex-end" display="flex">
+              <IconButton aria-label="back" onClick={onCloseDialog}>
+                <CloseIcon fontSize="large" style={{ color: "white" }} />
               </IconButton>
-            </Avatar>
-            <div className={classes.slider} ref={sliderRef}>
-              {item.images.map((it: any, index: number) => {
-                return (
-                  <Box className={classes.boxImg}>
-                    <img className={classes.img} src={it} alt={item.name} />
-                  </Box>
-                );
-              })}
+            </Box>
+            <div className={classes.root}>
+              <Avatar className={`${classes.grey} ${classes.prev}`}>
+                <IconButton aria-label="prev">
+                  <NavigateBeforeIcon onClick={handlePrevClick} />
+                </IconButton>
+              </Avatar>
+              <div className={classes.slider} ref={sliderRef}>
+                {item.images &&
+                  item.images.map((it: any, index: number) => {
+                    return (
+                      <Box className={classes.boxImg}>
+                        <img className={classes.img} src={it} alt={item.name} />
+                      </Box>
+                    );
+                  })}
+              </div>
+              <Avatar className={`${classes.grey} ${classes.next}`}>
+                <IconButton aria-label="next">
+                  <NavigateNextIcon onClick={handleNextClick} />
+                </IconButton>
+              </Avatar>
             </div>
-            <Avatar className={`${classes.grey} ${classes.next}`}>
-              <IconButton aria-label="next">
-                <NavigateNextIcon onClick={handleNextClick} />
-              </IconButton>
-            </Avatar>
-          </div>
-          <Row
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: 50,
-            }}
-          >
-            {item.images.map((it: any, idx: number) => (
-              <img
-                className={
-                  index === idx ? classes.imgSmallBorder : classes.imgSmall
-                }
-                src={it}
-                alt={item.name}
-                onClick={() => onClickImg(idx)}
-              />
-            ))}
-          </Row>
+            <Row
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: 40,
+              }}
+            >
+              {item.images &&
+                item.images.map((it: any, idx: number) => (
+                  <img
+                    className={
+                      index === idx ? classes.imgSmallBorder : classes.imgSmall
+                    }
+                    src={it}
+                    alt={item.name}
+                    onClick={() => onClickImg(idx)}
+                  />
+                ))}
+            </Row>
+          </Container>
         </div>
       </Dialog>
     </>

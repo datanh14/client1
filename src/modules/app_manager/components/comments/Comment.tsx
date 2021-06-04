@@ -8,6 +8,7 @@ import Rating from "@material-ui/lab/Rating";
 import React from "react";
 import { some } from "../../../../constants/constants";
 import { Col, Row } from "../../../common/Elements";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       transition: theme.transitions.create("transform"),
       backgroundColor: "white",
-      borderTop: "1px solid #ededed"
+      borderTop: "1px solid #ededed",
     },
     grid: {
       display: "flex",
@@ -37,20 +38,26 @@ const useStyles = makeStyles((theme: Theme) =>
       width: 20,
       height: 20,
     },
+    linkStore: {
+      display: "flex",
+      "&:hover": {
+        fontWeight: "bold",
+        cursor: "pointer",
+      },
+    },
   })
 );
 
 interface Props {
   item?: some;
-  storeName?: string;
+  store?: some;
 }
 
-const Comment: React.FC<Props> = (props) => {
+const Comment: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const classes = useStyles();
-  const { item, storeName } = props;
+  const { item, store } = props;
   const data = {
-    img:
-      "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
+    img: "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
     title: "ok",
     gia: "100d",
     dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
@@ -164,20 +171,29 @@ const Comment: React.FC<Props> = (props) => {
           <Grid item xs={12}>
             <Row>
               <Rating
+                size="small"
                 name="half-rating-read"
                 defaultValue={item?.star}
                 precision={0.5}
                 emptyIcon={
                   <StarBorderIcon
                     fontSize="inherit"
-                    style={{ color: "#ffc107" }}
+                    style={{ color: "#ffc107", marginRight: 20 }}
                   />
                 }
                 readOnly
               />
               <Typography>
                 <Box fontWeight="fontWeightBold" fontSize={15}>
-                  Hai long
+                  {item?.star === 5
+                    ? "Cực kì hài lòng"
+                    : item?.star < 5 && item?.star >= 4
+                    ? "Hài lòng"
+                    : item?.star < 4 && item?.star >= 3
+                    ? "Bình thường"
+                    : item?.star < 3 && item?.star >= 2
+                    ? "Không hài lòng"
+                    : "Rất không hài lòng"}
                 </Box>
               </Typography>
             </Row>
@@ -186,7 +202,6 @@ const Comment: React.FC<Props> = (props) => {
             <Row>
               <Typography>
                 <Box
-                  fontWeight="fontWeightBold"
                   fontSize={15}
                   marginRight={1}
                   paddingRight={1}
@@ -206,7 +221,14 @@ const Comment: React.FC<Props> = (props) => {
                       margin: 5,
                     }}
                   />
-                  {storeName}
+                  <Typography
+                    onClick={() => {
+                      props?.history?.push(`/store/${store?.id}`);
+                    }}
+                    className={classes.linkStore}
+                  >
+                    <Box fontSize={15}>{store?.name}</Box>
+                  </Typography>
                 </Box>
               </Typography>
               <Typography>
@@ -218,9 +240,7 @@ const Comment: React.FC<Props> = (props) => {
           </Grid>
           <Grid item xs={12}>
             <Typography>
-              <Box fontSize={15}>
-                {item?.comment}
-              </Box>
+              <Box fontSize={15}>{item?.comment}</Box>
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -264,7 +284,7 @@ const Comment: React.FC<Props> = (props) => {
               >
                 Hữu ích
               </Button>
-              <Button className={classes.button}>Gửi trả lời</Button>
+              {/* <Button className={classes.button}>Gửi trả lời</Button> */}
             </Row>
           </Grid>
         </Grid>
@@ -272,4 +292,5 @@ const Comment: React.FC<Props> = (props) => {
     </div>
   );
 };
-export default Comment;
+
+export default withRouter(Comment);

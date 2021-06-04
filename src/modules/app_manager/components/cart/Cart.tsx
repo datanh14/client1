@@ -27,6 +27,7 @@ import {
 } from "../../../system/systemAction";
 import DialogChangeAddress from "./DialogChangeAddress";
 import { routes } from "../../../../constants/routes";
+import LoaddingPage from "../loading/LoaddingPage";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -65,6 +66,7 @@ const Cart = (props: some) => {
   const [address, setAddress] = React.useState<some>({});
   const [listAddress, setListAddress] = React.useState<some[]>([]);
   const [indexDefaut, setIndexDefaut] = React.useState(-1);
+  const [loadding, setLoadding] = React.useState(false);
 
   const handleBill = () => {
     var sum = 0;
@@ -191,6 +193,7 @@ const Cart = (props: some) => {
       const res: some = await actionGetAddressByUser({
         UserID: userID,
       });
+      setLoadding(true);
       if (res?.code === SUCCESS_CODE) {
         if (res?.message) {
           setListAddress(res?.message);
@@ -227,7 +230,7 @@ const Cart = (props: some) => {
 
   const handleLogin = () => {
     props?.history?.push(routes.LOGIN);
-  }
+  };
 
   React.useEffect(() => {
     handleBill();
@@ -242,10 +245,10 @@ const Cart = (props: some) => {
 
   return (
     <>
+      {!loadding && <LoaddingPage isOpen={!loadding} />}
       <Row
         style={{
           color: "#ff9800",
-          paddingLeft: 70,
           paddingRight: 4,
           paddingTop: 20,
           paddingBottom: 10,
@@ -278,7 +281,7 @@ const Cart = (props: some) => {
         address && (
           <Grid container>
             <Grid item xs={12} sm={8}>
-              <Box style={{ paddingLeft: 24, paddingRight: 24, width: "100%" }}>
+              <Box style={{ paddingRight: 15, width: "100%" }}>
                 <Row
                   style={{
                     width: "100%",
@@ -305,12 +308,7 @@ const Cart = (props: some) => {
                 </Row>
               </Box>
             </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={4}
-              style={{ paddingRight: 24, width: "100%" }}
-            >
+            <Grid item xs={12} sm={4} style={{ width: "100%" }}>
               <Grid item xs={12} className={classes.grid}>
                 <Grid item xs={12} className={classes.grid}>
                   <Row>

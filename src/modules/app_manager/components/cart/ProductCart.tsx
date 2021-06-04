@@ -16,10 +16,11 @@ import ReceiptIcon from "@material-ui/icons/Receipt";
 import RemoveIcon from "@material-ui/icons/Remove";
 import clsx from "clsx";
 import React from "react";
-import { some } from "../../../../constants/constants";
+import { some, SUCCESS_CODE } from "../../../../constants/constants";
 import { formatter } from "../../../../utils/helpers/helpers";
 import { Col, Row } from "../../../common/Elements";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import { actionGetStoreByID } from "../../../system/systemAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -58,6 +59,14 @@ const useStyles = makeStyles((theme: Theme) =>
       width: 20,
       height: 20,
     },
+    linkStore: {
+      display: "flex",
+      color: "green",
+      "&:hover": {
+        fontWeight: "bold",
+        cursor: "pointer",
+      },
+    },
   })
 );
 interface Props {
@@ -71,9 +80,11 @@ const ProductCart: React.FC<RouteComponentProps<some> & Props> = (props) => {
   const { index, data, changeCount, handleDeleteProductByCart } = props;
   const classes = useStyles();
   const [count, setCount] = React.useState(data?.count);
+  const [loadding, setLoadding] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
   const [isBuyInDay, setIsBuyInDay] = React.useState(false);
   const [isSale, setIsSale] = React.useState(false);
+  const [storeData, setStoreData] = React.useState<some>({});
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -84,9 +95,26 @@ const ProductCart: React.FC<RouteComponentProps<some> & Props> = (props) => {
     props?.history?.push(`product-detail/${route}`);
   };
 
-  return (
+  const fetchGetStoreByID = async () => {
+    try {
+      const res: some = await actionGetStoreByID({
+        StoreID: data?.storeID,
+      });
+      setLoadding(true);
+      if (res?.code === SUCCESS_CODE) {
+        res?.store && setStoreData(res?.store);
+      } else {
+      }
+    } catch (error) {}
+  };
+
+  React.useEffect(() => {
+    fetchGetStoreByID();
+  }, []);
+
+  return ( 
     <div className={classes.root}>
-      {data !== undefined && (
+      {data !== undefined && loadding && (
         <Grid
           container
           style={{
@@ -106,7 +134,14 @@ const ProductCart: React.FC<RouteComponentProps<some> & Props> = (props) => {
                   alignItems: "center",
                 }}
               >
-                {data?.store?.name}
+                <Typography
+                  onClick={() => {
+                    props?.history?.push(`/store/${storeData?.id}`);
+                  }}
+                  className={classes.linkStore}
+                >
+                  <Box fontSize={15}> {storeData?.name}</Box>
+                </Typography>
                 <NavigateNextIcon
                   className={classes.iconSmall}
                   style={{
@@ -191,7 +226,7 @@ const ProductCart: React.FC<RouteComponentProps<some> & Props> = (props) => {
           >
             <Typography>
               <Box
-                fontSize={14}
+                fontSize={15}
                 padding={1}
                 style={{
                   display: "flex",

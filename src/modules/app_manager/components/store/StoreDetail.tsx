@@ -27,6 +27,7 @@ import {
 import StoreAllCategory from "./StoreAllCategory";
 import StoreWithProduct from "./StoreWithProduct";
 import StoreInfor from "./StoreInfor";
+import LoaddingPage from "../loading/LoaddingPage";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -109,6 +110,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const StoreDetail = (props: some) => {
   const classes = useStyles();
   const id: some = useParams();
+  const [loadding, setLoadding] = React.useState(false);
   const [value, setValue] = React.useState(0);
   const [storeData, setStoreData] = React.useState<some>({});
   const [userID, setUserID] = React.useState(
@@ -118,6 +120,7 @@ const StoreDetail = (props: some) => {
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
+    setLoadding(false);
   };
 
   const fetchGetStoreByID = async () => {
@@ -185,14 +188,16 @@ const StoreDetail = (props: some) => {
 
   React.useEffect(() => {
     fetchGetStoreByID();
-  }, [id,isFollow]);
+  }, [id, isFollow]);
 
   React.useEffect(() => {
     setUserID(localStorage.getItem(ACCOUNTS_ID) || "");
+    setLoadding(false);
   }, []);
 
   return (
     <>
+      {!loadding && <LoaddingPage isOpen={!loadding} />}
       <div className={classes.root}>
         <Paper
           elevation={0}
@@ -266,10 +271,10 @@ const StoreDetail = (props: some) => {
           </StyledTabs>
         </Paper>
         <TabPanel value={value} index={0}>
-          <StoreWithProduct id={id.id} />
+          <StoreWithProduct id={id.id} setLoadding={setLoadding} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <StoreAllCategory id={id.id} />
+          <StoreAllCategory id={id.id} setLoadding={setLoadding} />
         </TabPanel>
       </div>
     </>

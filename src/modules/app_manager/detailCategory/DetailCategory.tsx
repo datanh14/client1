@@ -25,6 +25,7 @@ import {
   actionGetAllProduct,
   actionProductInChild,
 } from "../../system/systemAction";
+import LoaddingPage from "../components/loading/LoaddingPage";
 import Product from "../components/product/Product";
 import SliderAds from "../components/slider/SliderAds";
 const useStyles = makeStyles((theme: Theme) =>
@@ -91,14 +92,16 @@ const DetailCategory = (props: some) => {
   const [dataCategoryChild, setDataCategoryChild] = React.useState<any>();
   const [dataListProductChild, setDataListProductChild] = React.useState<any>();
   const [idProductChild, setIdProductChild] = React.useState<string>(id.id);
-  const [pageProduct, setPageProduct] = React.useState<number>(1);
-  const sizeProduct = 2;
+  const [pageProduct, setPageProduct] = React.useState<number>(0);
+  const sizeProduct = 15;
   const classes = useStyles();
   const [nameListProduct, setNameListProduct] = React.useState<string>();
   const [star, setStar] = React.useState<number>();
   const [fromPrice, setFromPrice] = React.useState<number>();
   const [toPrice, setToPrice] = React.useState<number>();
   const [searchKey, setSearchKey] = React.useState<string>("");
+  const [loadding, setLoadding] = React.useState(false);
+
   const fetchListCategory = async () => {
     try {
       const res: some = await actionGetAllProduct({ parentId: id.id });
@@ -122,6 +125,7 @@ const DetailCategory = (props: some) => {
       });
       if (res?.code === SUCCESS_CODE) {
         setDataListProductChild(res);
+        setLoadding(true);
       } else {
       }
     } catch (error) {}
@@ -131,13 +135,15 @@ const DetailCategory = (props: some) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   React.useEffect(() => {
+    setLoadding(false);
     fetchListProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, idProductChild, star, fromPrice, toPrice, searchKey]);
   return (
-    <div style={{ marginTop: 30 }}>
-      <Container style={{ display: "flex" }}>
-        <Col style={{ maxWidth: 500, minWidth: 300, flex: 1, marginRight: 10 }}>
+    <div style={{ marginTop: 30, minHeight: 704 }}>
+      {!loadding && <LoaddingPage isOpen={!loadding} />}
+      <div style={{ display: "flex" }}>
+        <Col style={{ flex: 1, minWidth: 275, maxWidth: 275, marginRight:10, }}>
           <Paper style={{ padding: 12 }}>
             <Typography
               variant="body2"
@@ -303,7 +309,7 @@ const DetailCategory = (props: some) => {
             </Row>
           </Paper>
         </Col>
-      </Container>
+      </div>
     </div>
   );
 };

@@ -4,16 +4,18 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { some, SUCCESS_CODE } from "../../constants/constants";
+import LoaddingPage from "../app_manager/components/loading/LoaddingPage";
 import Product from "../app_manager/components/product/Product";
 import CarouselProduct from "../app_manager/components/slider/CarouselProduct";
 import { Row } from "../common/Elements";
 import { actionProductInChild } from "../system/systemAction";
 
 const Home = (props: some) => {
+  const [loadding, setLoadding] = React.useState(false);
   const [dataListProduct, setDataListProduct] = React.useState<any>();
   const [data, setData] = React.useState<any[]>([]);
   const [pageProduct, setPageProduct] = React.useState<number>(0);
-  const sizeProduct = 5;
+  const sizeProduct = 15;
 
   const fetchListProduct = async () => {
     try {
@@ -25,6 +27,7 @@ const Home = (props: some) => {
       if (res?.code === SUCCESS_CODE) {
         setDataListProduct(res);
         setData((data) => [...data, ...res.message.productsList]);
+        setLoadding(true);
       } else {
       }
     } catch (error) {}
@@ -36,10 +39,12 @@ const Home = (props: some) => {
 
   const handleClickMore = () => {
     setPageProduct((pageProduct) => pageProduct + 1);
+    setLoadding(false);
   };
 
   return (
     <>
+      {!loadding && <LoaddingPage isOpen={!loadding} />}
       <Box
         style={{
           paddingTop: 20,

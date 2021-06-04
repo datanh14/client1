@@ -14,6 +14,7 @@ import Product from "../product/Product";
 
 interface Props {
   id: string;
+  setLoadding?: (load: boolean) => void;
 }
 
 interface RenderTree {
@@ -23,13 +24,13 @@ interface RenderTree {
 }
 
 const StoreAllCategory: React.FC<Props> = (props) => {
-  const { id } = props;
+  const { id, setLoadding } = props;
   const intl = useIntl();
   const [data, setData] = React.useState<any[]>([]);
   const [dataCategoryChild, setDataCategoryChild] = React.useState<any>();
   const [categoryID, setCategoryID] = React.useState<string>("");
   const [pageProduct, setPageProduct] = React.useState<number>(0);
-  const sizeProduct = 5;
+  const sizeProduct = 16;
   const [nameListProduct, setNameListProduct] = React.useState<string>();
   const [listCategory, setListCatergory] = React.useState<some>([]);
 
@@ -56,6 +57,7 @@ const StoreAllCategory: React.FC<Props> = (props) => {
       });
       if (res?.code === SUCCESS_CODE) {
         setData([...res.message.productsList]);
+        setLoadding?.(true);
       } else {
       }
     } catch (error) {}
@@ -93,7 +95,9 @@ const StoreAllCategory: React.FC<Props> = (props) => {
 
   return (
     <div style={{ marginTop: 30 }}>
-      <Container style={{ display: "flex" }}>
+      <Container
+        style={{ display: "flex", minHeight: 704, backgroundColor: "white" }}
+      >
         <Col
           style={{
             minWidth: 234.5,
@@ -101,12 +105,12 @@ const StoreAllCategory: React.FC<Props> = (props) => {
             flex: 1,
           }}
         >
-          <Paper elevation={0} square style={{ padding: 12 }}>
+          <Paper elevation={0} square style={{ paddingTop: 10 }}>
             <Typography
-              variant="body2"
-              style={{ fontWeight: "bold", marginBottom: 12 }}
+              variant="h6"
+              style={{ marginBottom: 12 }}
             >
-              {intl.formatMessage({ id: "IDS_APP_LIST_PRODUCT" })}
+              {listCategory && intl.formatMessage({ id: "IDS_APP_LIST_PRODUCT" })}
             </Typography>
             <TreeView
               defaultExpanded={["3fba6643-fac5-47f6-9093-3898aac0d2fb"]}
@@ -128,7 +132,6 @@ const StoreAllCategory: React.FC<Props> = (props) => {
               <Row
                 style={{
                   flexWrap: "wrap",
-                  margin: "0 auto",
                   width: "100%",
                 }}
               >
@@ -138,12 +141,14 @@ const StoreAllCategory: React.FC<Props> = (props) => {
                   })}
               </Row>
             ) : (
-              <Col style={{
-                minHeight: 500,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center"
-              }}>
+              <Col
+                style={{
+                  minHeight: 500,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <img
                   style={{
                     minWidth: 100,

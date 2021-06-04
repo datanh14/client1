@@ -7,13 +7,14 @@ import Product from "../product/Product";
 
 interface Props {
   id: string;
+  setLoadding?: (load:boolean) => void;
 }
 
 const StoreWithProduct: React.FC<Props> = (props) => {
-  const { id } = props;
+  const { id, setLoadding } = props;
   const [data, setData] = React.useState<any[]>([]);
   const [pageProduct, setPageProduct] = React.useState<number>(0);
-  const sizeProduct = 5;
+  const sizeProduct = 15;
   const fetchListProduct = async () => {
     try {
       const res: some = await actionGetProductByStoreIDbyRange({
@@ -23,6 +24,7 @@ const StoreWithProduct: React.FC<Props> = (props) => {
       });
       if (res?.code === SUCCESS_CODE) {
         setData((data) => [...data, ...res.message]);
+        setLoadding?.(true);
       } else {
       }
     } catch (error) {}
@@ -33,6 +35,7 @@ const StoreWithProduct: React.FC<Props> = (props) => {
 
   const handleClickMore = () => {
     setPageProduct((pageProduct) => pageProduct + 1);
+    setLoadding?.(false);
   };
 
   return (

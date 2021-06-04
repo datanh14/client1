@@ -43,6 +43,7 @@ import CheckIcon from "@material-ui/icons/Check";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Comment from "../comments/Comment";
+import LoaddingPage from "../loading/LoaddingPage";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -106,6 +107,7 @@ const ProductDetail = (props: any) => {
   const id: some = useParams();
   const imageRef = React.useRef<HTMLDivElement>(null);
   const [sizeImage, setSizeImage] = useState(0);
+  const [loadding, setLoadding] = React.useState(false);
   const [storeData, setStoreData] = React.useState<some>({});
   const [sizeImageSmall, setSizeImageSmall] = useState(0);
   const [index, setIndex] = useState(0);
@@ -190,6 +192,7 @@ const ProductDetail = (props: any) => {
       const res: some = await actionGetStoreFollowing({
         userID: userID,
       });
+      setLoadding(true);
       if (res?.code === SUCCESS_CODE) {
         let follow: boolean = false;
         res?.message &&
@@ -205,6 +208,7 @@ const ProductDetail = (props: any) => {
   };
 
   React.useEffect(() => {
+    setLoadding(false);
     fetchListProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idProduct]);
@@ -226,8 +230,8 @@ const ProductDetail = (props: any) => {
 
   React.useEffect(() => {
     if (imageRef.current) {
-      setSizeImage(imageRef?.current?.offsetWidth / 4 - 20);
-      setSizeImageSmall(imageRef?.current?.offsetWidth / 20 - 14);
+      setSizeImage(imageRef?.current?.offsetWidth / 3 - 20);
+      setSizeImageSmall(imageRef?.current?.offsetWidth / 15 - 14);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imageRef.current]);
@@ -270,7 +274,6 @@ const ProductDetail = (props: any) => {
       CART_LOCAL_STORAGE,
       JSONbig.stringify(listProductInCart)
     );
-    console.log("listProductInCart", listProductInCart);
   };
 
   const onCloseDialog = () => {
@@ -287,6 +290,7 @@ const ProductDetail = (props: any) => {
 
   return (
     <div className={classes.root} ref={imageRef}>
+      {!loadding && <LoaddingPage isOpen={!loadding} />}
       {dataProduct !== undefined && (
         <Col>
           <Grid
@@ -298,9 +302,9 @@ const ProductDetail = (props: any) => {
             <Grid
               item
               xs={12}
-              sm={3}
+              sm={4}
               direction="column"
-              style={{ justifyContent: "space-between", display: "flex" }}
+              style={{ display: "flex" }}
             >
               <img
                 style={{
@@ -308,7 +312,7 @@ const ProductDetail = (props: any) => {
                   height: sizeImage,
                 }}
                 className={classes.img}
-                src={dataProduct?.message.images[index]}
+                src={dataProduct?.message?.image !== "" ? dataProduct?.message?.images[index] :  "https://vnpi-hcm.vn/wp-content/uploads/2018/01/no-image-800x600.png"}
                 alt={dataProduct?.message.name}
               />
               <Row
@@ -317,7 +321,7 @@ const ProductDetail = (props: any) => {
                   marginBottom: 10,
                 }}
               >
-                {dataProduct?.message.images.map(
+                {dataProduct?.message.images && dataProduct?.message.images.map(
                   (item: any, idx: number) =>
                     idx < 4 && (
                       <img
@@ -336,7 +340,7 @@ const ProductDetail = (props: any) => {
                       />
                     )
                 )}
-                {dataProduct?.message.images.length > 4 && (
+                {dataProduct?.message.images && dataProduct?.message.images.length > 4 && (
                   <div
                     style={{
                       backgroundImage: `url(${dataProduct?.message.images[4]})`,
@@ -381,7 +385,7 @@ const ProductDetail = (props: any) => {
                 />
               </Row>
             </Grid>
-            <Grid container xs={12} sm={9}>
+            <Grid container xs={12} sm={8}>
               <Grid item xs={8} style={{ flex: 1, alignContent: "center" }}>
                 <Row>
                   <Typography style={{ flexDirection: "column" }}>
@@ -390,6 +394,7 @@ const ProductDetail = (props: any) => {
                       textAlign="left"
                       fontSize={30}
                       marginBottom={2}
+                      marginTop={1}
                     >
                       {dataProduct?.message.name}
                     </Box>
@@ -404,9 +409,9 @@ const ProductDetail = (props: any) => {
               </Grid>
               <Grid item xs={4}>
                 <CardActions disableSpacing>
-                  <IconButton aria-label="add to favorites">
+                  {/* <IconButton aria-label="add to favorites">
                     <FavoriteIcon />
-                  </IconButton>
+                  </IconButton> */}
                   <IconButton aria-label="share">
                     <ShareIcon />
                   </IconButton>
@@ -676,17 +681,43 @@ const ProductDetail = (props: any) => {
             </Typography>
             {parse(dataProduct?.message.description)}
           </Paper>
-          <Paper elevation={0} style={{ marginTop: 20, padding: 20 }}>
+          <Paper elevation={0} style={{ marginTop: 20, marginBottom: 20,paddingTop: 20 }}>
             <Col>
               <Typography>
-                <Box fontSize={30} style={{ marginBottom: 20 }}>
+                <Box fontSize={30} style={{ marginBottom: 20, marginLeft: 20 }}>
                   Đánh giá cùng nhận xét
                 </Box>
               </Typography>
-              {dataComment &&
+              {dataComment ? (
                 dataComment.message.map((item: some, index: number) => {
-                  return <Comment item={item} storeName={dataProduct?.message.store.name} />;
-                })}
+                  return (
+                    <Comment item={item} store={dataProduct?.message.store} />
+                  );
+                })
+              ) : (
+                <Col
+                  style={{
+                    minHeight: 200,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    style={{
+                      minWidth: 200,
+                      maxWidth: 200,
+                    }}
+                    alt="Chưa có nhận xét của sản phẩm"
+                    src="https://image.freepik.com/free-vector/illustration-customer-reviews-rating-different-people-give-review-rating-feedback-support-business-satisfaction-flat-style-modern-design-illustration-web-page-cards_126608-300.jpg"
+                  />
+                  <Typography>
+                    <Box fontSize={15}>
+                      Chưa có nhận xét, đánh giá của sản phẩm
+                    </Box>
+                  </Typography>
+                </Col>
+              )}
             </Col>
           </Paper>
         </Col>
