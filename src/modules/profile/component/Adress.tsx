@@ -28,7 +28,6 @@ const Adress = (props: any) => {
     JSONbig.parse(localStorage.getItem(ACCOUNTS) || "{}")
   );
 
-
   const [totalItems, setTotaItem] = useState(0);
   const [page, setPage] = useState(1);
   const [dataAdressUser, setDataAdressUser] = React.useState<any>();
@@ -43,7 +42,7 @@ const Adress = (props: any) => {
       } catch (error) {}
     };
     fetchUserId();
-    setTotaItem(dataAdressUser?.message?.length)
+    setTotaItem(dataAdressUser?.message?.length);
   }, []);
   console.log("aaa", dataAdressUser);
 
@@ -53,10 +52,14 @@ const Adress = (props: any) => {
   const showModal = () => {
     setIsModalVisible(true);
   };
+  const token = localStorage.getItem(ACCESS_TOKEN);
   const url = "https://tiki-test-1.herokuapp.com/Address/ChangeAddress";
   const handleOk = () => {
     setIsModalVisible(false);
     Axios.post(url, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
       ID: data.ID,
       Phone: data.Phone,
       Address: data.Address,
@@ -104,11 +107,14 @@ const Adress = (props: any) => {
           height: "500px",
         }}
       >
-        <Spin size="large" style ={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}/>
+        <Spin
+          size="large"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        />
       </Content>
     );
   }
@@ -120,26 +126,26 @@ const Adress = (props: any) => {
           margin: "25px 25px",
           padding: "50px 50px",
           backgroundColor: "white",
-          height: "500px",
         }}
       >
-        {dataAdressUser?.message?.map((val: some, index: number) => (
-          <div key={index}>
-            <Row style={{ borderBottom: "1px solid" }}>
-              <Col span={19}>
-                <Descriptions
-                  layout="horizontal"
-                  title={dataUser?.firstName + " " + dataUser.lastName}
-                >
-                  <Descriptions.Item label="Địa chỉ" span={12}>
-                    {val?.district?.districtName + "/" + val?.city?.cityName}
-                  </Descriptions.Item>
+        <div style = {{margin: "25px 25px"}}>
+          {dataAdressUser?.message?.map((val: some, index: number) => (
+            <div key={index}>
+              <Row style={{ borderBottom: "1px solid" }}>
+                <Col span={19}>
+                  <Descriptions
+                    layout="horizontal"
+                    title={dataUser?.firstName + " " + dataUser.lastName}
+                  >
+                    <Descriptions.Item label="Địa chỉ" span={12}>
+                      {val?.district?.districtName + "/" + val?.city?.cityName}
+                    </Descriptions.Item>
 
-                  <Descriptions.Item label="Số điện thoại" span={12}>
-                    {val?.phone}
-                  </Descriptions.Item>
-                </Descriptions>
-              </Col>
+                    <Descriptions.Item label="Số điện thoại" span={12}>
+                      {val?.phone}
+                    </Descriptions.Item>
+                  </Descriptions>
+                </Col>
                 <Col span={4}>
                   {/* <NavLink to="/customer/create">
                 <Button type="link">Chỉnh sửa</Button>
@@ -169,14 +175,16 @@ const Adress = (props: any) => {
                     Xóa
                   </Button>
                 </Col>
-            </Row>
-          </div>
-        ))}
+              </Row>
+            </div>
+          ))}
+        </div>
+
         <NavLink to="/customer/add">
           <Row style={{ paddingTop: "10px" }}>
             <Form>
               <Form.Item>
-                <Button type="dashed" size="large" style={{ width: "100%" }}>
+                <Button style={{ width: "30px" }}>
                   <PlusOutlined />
                   Thêm địa chỉ
                 </Button>

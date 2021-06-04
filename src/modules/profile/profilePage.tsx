@@ -14,6 +14,7 @@ const ProfileComponent = lazy(() => import("./ProfilePage_1"));
 const AdressComponent = lazy(() => import("./AdressPage"));
 const AddAdressComponent = lazy(() => import("./AddArdessPage"));
 const  PaymentCardPageComponent = lazy(() => import("./PaymentCardPage"));
+const  ChatbotPageComponent = lazy(() => import("./ChatbotPage"));
 function mapStateToProps(state: AppState) {
   return {
     profile: state.system.profile,
@@ -51,6 +52,9 @@ const ProfilePage: React.FC<RouteComponentProps<any> & Props> = (props) => {
           </Route>
           <Route path="/customer">
             <ProfileComponent />
+          </Route>
+          <Route path="/chatbot">
+            <ChatbotPageComponent />
           </Route>
         </Switch>
       </Suspense>
