@@ -1,17 +1,31 @@
-import { Avatar, Box, Container, Paper, Popper } from "@material-ui/core";
-import AppBar from "@material-ui/core/AppBar";
-import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import MenuIcon from "@material-ui/icons/Menu";
-import MoreIcon from "@material-ui/icons/MoreVert";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import React, { useEffect } from "react";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import {
+  Avatar,
+  Box,
+  Container,
+  InputBase,
+  Paper,
+  Popper,
+} from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import {
+  createStyles,
+  fade,
+  makeStyles,
+  Theme,
+} from '@material-ui/core/styles';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import MenuIcon from '@material-ui/icons/Menu';
+import MoreIcon from '@material-ui/icons/MoreVert';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import React, { useEffect } from 'react';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import SearchIcon from '@material-ui/icons/Search';
+
 import {
   ACCESS_TOKEN,
   ACCOUNTS,
@@ -19,18 +33,19 @@ import {
   CART_LOCAL_STORAGE,
   some,
   SUCCESS_CODE,
-} from "../constants/constants";
-import { routes } from "../constants/routes";
-import { Col, Row } from "../modules/common/Elements";
-import { actionGetAllProduct } from "../modules/system/systemAction";
-import JSONbig from "json-bigint";
+} from '../constants/constants';
+import { routes } from '../constants/routes';
+import { Col, Row } from '../modules/common/Elements';
+import { actionGetAllProduct } from '../modules/system/systemAction';
+import JSONbig from 'json-bigint';
+import SearchBox from '../modules/profile/component/SearchBox';
 interface Props {
   readonly profile?: some;
 }
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     popover: {
-      pointerEvents: "none",
+      pointerEvents: 'none',
     },
     paper: {
       padding: theme.spacing(1),
@@ -42,9 +57,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
     },
     title: {
-      display: "none",
-      [theme.breakpoints.up("sm")]: {
-        display: "block",
+      display: 'none',
+      [theme.breakpoints.up('sm')]: {
+        display: 'block',
       },
     },
     large: {
@@ -52,15 +67,52 @@ const useStyles = makeStyles((theme: Theme) =>
       height: theme.spacing(5),
     },
     sectionDesktop: {
-      display: "none",
-      [theme.breakpoints.up("md")]: {
-        display: "flex",
+      display: 'none',
+      [theme.breakpoints.up('md')]: {
+        display: 'flex',
       },
     },
     sectionMobile: {
-      display: "flex",
-      [theme.breakpoints.up("md")]: {
-        display: "none",
+      display: 'flex',
+      [theme.breakpoints.up('md')]: {
+        display: 'none',
+      },
+    },
+    search: {
+      position: 'relative',
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: fade(theme.palette.common.white, 0.15),
+      '&:hover': {
+        backgroundColor: fade(theme.palette.common.white, 0.25),
+      },
+      marginRight: theme.spacing(2),
+      marginLeft: 0,
+      width: '100%',
+      [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(3),
+        width: 'auto',
+      },
+    },
+    searchIcon: {
+      padding: theme.spacing(0, 2),
+      height: '100%',
+      position: 'absolute',
+      pointerEvents: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    inputRoot: {
+      color: 'inherit',
+    },
+    inputInput: {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      [theme.breakpoints.up('md')]: {
+        width: '20ch',
       },
     },
   })
@@ -71,7 +123,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [data, setData] = React.useState<any>();
   const [userProfile, setUserProfile] = React.useState<some>(
-    JSONbig.parse(localStorage.getItem(ACCOUNTS) || "{}")
+    JSONbig.parse(localStorage.getItem(ACCOUNTS) || '{}')
   );
   const [anchorElMenu, setAnchorElMenu] = React.useState<HTMLElement | null>(
     null
@@ -160,14 +212,14 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
     props?.history?.push(`/`);
     props?.history?.push(`customer`);
   };
-  const menuId = "primary-search-account-menu";
+  const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
@@ -201,20 +253,20 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
     </Menu>
   );
 
-  const mobileMenuId = "primary-search-account-menu-mobile";
+  const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
       {islogin && (
         <MenuItem onClick={handleProfileMenuOpen}>
-          <IconButton color="inherit">
+          <IconButton color='inherit'>
             <AccountCircle />
           </IconButton>
           <Typography>Thông tin tài khoản</Typography>
@@ -226,7 +278,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
           gotoCart(routes.PRODUCT_CART);
         }}
       >
-        <IconButton color="inherit">
+        <IconButton color='inherit'>
           <ShoppingCartIcon style={{ marginRight: 10 }} />
           <Typography>Giỏ hàng</Typography>
         </IconButton>
@@ -235,23 +287,25 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   );
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position='static'>
         <Container>
           <Toolbar>
-            <Row style={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "flex-start",
-            }}>
+            <Row
+              style={{
+                flex: 1,
+                display: 'flex',
+                justifyContent: 'flex-start',
+              }}
+            >
               <Typography
                 className={classes.title}
-                variant="h6"
+                variant='h6'
                 noWrap
                 style={{
                   marginRight: 10,
                   width: 150,
-                  cursor: "pointer",
-                  color: "white",
+                  cursor: 'pointer',
+                  color: 'white',
                 }}
                 onClick={() => {
                   props?.history?.push(`/`);
@@ -261,25 +315,25 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
               </Typography>
               <Row style={{ width: 200 }}>
                 <IconButton
-                  edge="start"
-                  color="inherit"
-                  aria-label="open drawer"
-                  aria-owns={open ? "mouse-over-popover" : undefined}
-                  aria-haspopup="true"
+                  edge='start'
+                  color='inherit'
+                  aria-label='open drawer'
+                  aria-owns={open ? 'mouse-over-popover' : undefined}
+                  aria-haspopup='true'
                   // onClick={handleClickAgent}
                   onMouseEnter={handlePopoverOpen}
                   onMouseLeave={handlePopoverClose}
                 >
                   <Row>
-                    <MenuIcon fontSize="large" />
+                    <MenuIcon fontSize='large' />
                     <Col>
                       <Typography
                         style={{
                           fontSize: 10,
                           paddingTop: 10,
-                          textAlign: "left",
+                          textAlign: 'left',
                         }}
-                        variant="body2"
+                        variant='body2'
                       >
                         Danh Mục
                       </Typography>
@@ -287,19 +341,19 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                         style={{
                           fontSize: 12,
                           paddingBottom: 10,
-                          fontWeight: "bold",
+                          fontWeight: 'bold',
                         }}
-                        variant="body2"
+                        variant='body2'
                       >
                         Sản Phẩm
                       </Typography>
                     </Col>
                     <Popper
                       style={{ zIndex: 4 }}
-                      id="mouse-over-popover"
+                      id='mouse-over-popover'
                       open={open}
                       anchorEl={anchorElMenu}
-                      placement="top-start"
+                      placement='top-start'
                       disablePortal={true}
                       modifiers={{
                         flip: {
@@ -307,7 +361,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                         },
                         preventOverflow: {
                           enabled: true,
-                          boundariesElement: "scrollParent",
+                          boundariesElement: 'scrollParent',
                         },
                       }}
                     >
@@ -333,27 +387,30 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                   </Row>
                 </IconButton>
               </Row>
+              <SearchBox />
             </Row>
-            <Row style={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "flex-end",
-            }}>
+            <Row
+              style={{
+                flex: 1,
+                display: 'flex',
+                justifyContent: 'flex-end',
+              }}
+            >
               <div className={classes.grow} />
               <div className={classes.sectionDesktop}>
                 <Row style={{ width: 120 }}>
                   <IconButton
-                    edge="end"
-                    aria-label="account of current user"
+                    edge='end'
+                    aria-label='account of current user'
                     aria-controls={menuId}
-                    aria-haspopup="true"
+                    aria-haspopup='true'
                     onClick={handleProfileMenuOpen}
-                    color="inherit"
+                    color='inherit'
                   >
                     <Row>
                       <Avatar
-                        alt="Remy Sharp"
-                        src="https://scontent.fhan2-5.fna.fbcdn.net/v/t1.6435-9/153745673_1997564207066819_2723027247060726863_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=A5IMouMiviEAX-qd3fr&_nc_ht=scontent.fhan2-5.fna&oh=732a6d84a3ae1cb3d41924496738ebd6&oe=608C0150"
+                        alt='Remy Sharp'
+                        src='https://scontent.fhan2-5.fna.fbcdn.net/v/t1.6435-9/153745673_1997564207066819_2723027247060726863_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=A5IMouMiviEAX-qd3fr&_nc_ht=scontent.fhan2-5.fna&oh=732a6d84a3ae1cb3d41924496738ebd6&oe=608C0150'
                         className={classes.large}
                       />
                       <Col>
@@ -361,15 +418,15 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                           style={{
                             fontSize: 10,
                             paddingTop: 10,
-                            textAlign: "left",
+                            textAlign: 'left',
                           }}
-                          variant="body2"
+                          variant='body2'
                         >
                           Tài khoản
                         </Typography>
                         <Typography
                           style={{ fontSize: 10, paddingBottom: 10 }}
-                          variant="body2"
+                          variant='body2'
                         >
                           {userProfile?.userName}
                         </Typography>
@@ -380,17 +437,17 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
               </div>
               <div className={classes.sectionDesktop}>
                 <IconButton
-                  edge="end"
-                  aria-label="account of current user"
+                  edge='end'
+                  aria-label='account of current user'
                   aria-controls={menuId}
-                  aria-haspopup="true"
-                  color="inherit"
+                  aria-haspopup='true'
+                  color='inherit'
                   onClick={() => {
                     gotoCart(routes.PRODUCT_CART);
                   }}
                 >
                   <Row>
-                    <ShoppingCartIcon fontSize="large" />
+                    <ShoppingCartIcon fontSize='large' />
                     <Typography style={{ fontSize: 10, paddingTop: 12 }}>
                       Giỏ hàng
                     </Typography>
@@ -399,11 +456,11 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
               </div>
               <div className={classes.sectionMobile}>
                 <IconButton
-                  aria-label="show more"
+                  aria-label='show more'
                   aria-controls={mobileMenuId}
-                  aria-haspopup="true"
+                  aria-haspopup='true'
                   onClick={handleMobileMenuOpen}
-                  color="inherit"
+                  color='inherit'
                 >
                   <MoreIcon />
                 </IconButton>

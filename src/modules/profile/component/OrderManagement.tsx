@@ -3,29 +3,29 @@ import FindInPageIcon from '@material-ui/icons/FindInPage';
 import { Layout, Spin } from 'antd';
 import 'antd/dist/antd.css';
 import JSONbig from 'json-bigint';
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { GREY_600 } from '../../../assets/theme/colors';
 import { ACCOUNTS, some, SUCCESS_CODE } from '../../../constants/constants';
 import { Row } from '../../common/Elements';
 import TableCustom from '../../common/TableCustom';
+import { actionGetOrder } from '../../system/systemAction';
 import { getOrder } from '../api/Order';
 import DialogDetailPayment from './DialogDetailPayment';
 const { Content } = Layout;
+interface Props {}
 
-const OrderManagement = () => {
-  const [dataUser, setDataUser] = useState<some>(
-    JSONbig.parse(localStorage.getItem(ACCOUNTS) || '{}')
-  );
+const OrderManagement: React.FC<Props> = (props) => {
+  const dataUser = JSONbig.parse(localStorage.getItem(ACCOUNTS) || '{}');
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
-  const [dataOrder, setOrder] = React.useState<any>();
-  const [detailPayment, setDetailPayment] = React.useState<some>();
+  const [dataOrder, setDataOrder] = React.useState<any[]>([]);
+
+  const [detailPayment, setDetailPayment] = React.useState<any>();
   const columns = [
     {
       title: 'Mã đơn hàng',
@@ -71,16 +71,17 @@ const OrderManagement = () => {
       },
     },
   ];
+  const fetchUserId = async () => {
+    try {
+      const res: some = await actionGetOrder(dataUser?.id);
+      if (res?.code === SUCCESS_CODE) {
+        setDataOrder([...res?.detail]);
+        console.log('setDataOrder', res.detail);
+      } else {
+      }
+    } catch (error) {}
+  };
   React.useEffect(() => {
-    const fetchUserId = async () => {
-      try {
-        const res: some = await getOrder(dataUser.id);
-        if (res?.code === SUCCESS_CODE) {
-          setOrder(res);
-        } else {
-        }
-      } catch (error) {}
-    };
     fetchUserId();
   }, []);
 
@@ -94,16 +95,7 @@ const OrderManagement = () => {
           backgroundColor: 'white',
           height: '600px',
         }}
-      >
-        <Spin
-          size='large'
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        />
-      </Content>
+      ></Content>
     );
   }
   return (
@@ -115,11 +107,7 @@ const OrderManagement = () => {
         backgroundColor: 'white',
       }}
     >
-      <TableCustom
-        dataSource={dataOrder?.detail}
-        columns={columns}
-        noColumnIndex
-      />
+      {/* <TableCustom dataSource={dataOrder} columns={columns} noColumnIndex /> */}
       <DialogDetailPayment
         open={open}
         handleClose={handleClose}
