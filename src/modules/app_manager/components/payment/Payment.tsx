@@ -21,7 +21,7 @@ import {
   some,
   SUCCESS_CODE,
 } from "../../../../constants/constants";
-import { Col, Row } from "../../../common/Elements";
+import { Col, Row, snackbarSetting } from "../../../common/Elements";
 import ProductPayment from "./ProductPayment";
 import JSONbig from "json-bigint";
 import { formatter } from "../../../../utils/helpers/helpers";
@@ -148,9 +148,20 @@ const Payment = (props: some) => {
       if (res?.code === SUCCESS_CODE) {
         localStorage.removeItem(CART_LOCAL_STORAGE);
         setCart(JSONbig.parse("[]"));
+        enqueueSnackbar(
+          res?.message,
+          snackbarSetting((key) => closeSnackbar(key), { color: "error" })
+        );
       } else {
+        enqueueSnackbar(
+          "Đặt hàng không thành công",
+          snackbarSetting((key) => closeSnackbar(key), { color: "error" })
+        );
       }
     } catch (error) {}
+    finally {
+      props?.history?.push(routes.PRODUCT_CART);
+    }
   };
 
   const handleClickChangeAddress = () => {
@@ -684,3 +695,11 @@ export default connect(
   (state: any) => ({ profile: state.system.profile }),
   {}
 )(withRouter(Payment));
+function enqueueSnackbar(message: any, arg1: any) {
+  throw new Error("Function not implemented.");
+}
+
+function closeSnackbar(key: string): void {
+  throw new Error("Function not implemented.");
+}
+
