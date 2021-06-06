@@ -6,12 +6,12 @@ import {
   Grid,
   IconButton,
   Paper,
-  Typography,
+  Typography
 } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import AddBoxIcon from "@material-ui/icons/AddBox";
-import FavoriteIcon from "@material-ui/icons/Favorite";
+import CheckIcon from "@material-ui/icons/Check";
 import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
 import ShareIcon from "@material-ui/icons/Share";
 import StarIcon from "@material-ui/icons/Star";
@@ -20,12 +20,12 @@ import Rating from "@material-ui/lab/Rating";
 import parse from "html-react-parser";
 import JSONbig from "json-bigint";
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, withRouter } from "react-router-dom";
 import {
   ACCOUNTS_ID,
   CART_LOCAL_STORAGE,
   some,
-  SUCCESS_CODE,
+  SUCCESS_CODE
 } from "../../../../constants/constants";
 import { formatter } from "../../../../utils/helpers/helpers";
 import { Col, Row } from "../../../common/Elements";
@@ -33,16 +33,13 @@ import {
   actionAddFollow,
   actionAddProductToCart,
   actionGetRatingForProduct,
-  actionGetStoreByID,
   actionGetStoreFollowing,
+  actionLikeOrDislike,
   actionProductById,
-  actionUnFollow,
+  actionUnFollow
 } from "../../../system/systemAction";
-import PreviewDialog from "../dialog/PreviewDialog";
-import CheckIcon from "@material-ui/icons/Check";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import Comment from "../comments/Comment";
+import PreviewDialog from "../dialog/PreviewDialog";
 import LoaddingPage from "../loading/LoaddingPage";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -190,12 +187,23 @@ const ProductDetail = (props: any) => {
     } catch (error) {}
   };
 
+  const fetchLikeOrDislike = async (id:string) => {
+    try {
+      const res: some = await actionLikeOrDislike({
+        RatingID: id,
+      });
+      if (res?.code === SUCCESS_CODE) {
+        fetchListComment();
+      } else {
+      }
+    } catch (error) {}
+  };
+
   const fetchGetStoreFollowing = async () => {
     try {
       const res: some = await actionGetStoreFollowing({
         userID: userID,
       });
-      setLoading(true);
       if (res?.code === SUCCESS_CODE) {
         let follow: boolean = false;
         res?.message &&
@@ -208,6 +216,9 @@ const ProductDetail = (props: any) => {
       } else {
       }
     } catch (error) {}
+    finally{
+      setLoading(true);
+    }
   };
 
   React.useEffect(() => {
@@ -289,6 +300,10 @@ const ProductDetail = (props: any) => {
   const gotoStore = () => {
     props?.history?.push(`/store/${dataProduct?.message.store.id}`);
   };
+
+  const handleLike = (id : string) => {
+    fetchLikeOrDislike(id);
+  }
 
   return (
     <div className={classes.root} ref={imageRef}>
@@ -693,7 +708,7 @@ const ProductDetail = (props: any) => {
               {dataComment ? (
                 dataComment.message.map((item: some, index: number) => {
                   return (
-                    <Comment item={item} store={dataProduct?.message.store} />
+                    <Comment item={item} store={dataProduct?.message.store} handleLike={handleLike}/>
                   );
                 })
               ) : (

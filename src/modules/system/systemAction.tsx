@@ -170,6 +170,13 @@ export const actionGetRatingForProduct = (params?: some) => {
     params,
   });
 };
+export const actionAddRatingByUser = (data: some) => {
+  return api({ method: "post", url: "/Rating/AddRatingByUser", data });
+};
+
+export const actionLikeOrDislike = (data: some) => {
+  return api({ method: "post", url: "/UsefulRating/LikeOrDislike", data });
+};
 
 export const actionRegister = (data: some) => {
   return api({ method: "post", url: "/api/authenticate/register", data });

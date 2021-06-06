@@ -4,11 +4,13 @@ import AssistantOutlinedIcon from "@material-ui/icons/AssistantOutlined";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
+import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded';
 import Rating from "@material-ui/lab/Rating";
 import React from "react";
 import { some } from "../../../../constants/constants";
 import { Col, Row } from "../../../common/Elements";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import PreviewImageDialog from "../dialog/PreviewImageDialog";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,6 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       color: "#2979ff",
+      padding:10,
     },
     icon: {
       color: "#2979ff",
@@ -37,6 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
     iconsmall: {
       width: 20,
       height: 20,
+      marginRight:5,
     },
     linkStore: {
       display: "flex",
@@ -51,18 +55,22 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   item?: some;
   store?: some;
+  handleLike?: (id : string) => void;
 }
 
 const Comment: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const classes = useStyles();
-  const { item, store } = props;
-  const data = {
-    img: "https://salt.tikicdn.com/cache/280x280/ts/product/62/47/4a/99d8fa9e8b09a9b63e1eabb1b515e8ed.jpg",
-    title: "ok",
-    gia: "100d",
-    dir: "Gối Tựa Lưng Sofa Hình Học Thổ Cẩm PA9251",
-    sao: 2,
-  };
+  const { item, store, handleLike } = props;
+  const [imageProducts, setImageProduct] = React.useState<string[]>(
+    JSON.parse(item?.image || "[]")
+  );
+  const [valuePreviewImage, setValuePreviewImage] = React.useState<string>("");
+  const [isOpenPreviewDialog, setIsOpenPreviewDialog] = React.useState(false);
+
+  const onCloseDialogPreview = () => {
+    setValuePreviewImage("");
+    setIsOpenPreviewDialog(false);
+  }
   return (
     <div className={classes.root}>
       <Grid
@@ -133,7 +141,7 @@ const Comment: React.FC<RouteComponentProps<any> & Props> = (props) => {
                 </Box>
               </Typography>
             </Row> */}
-            {/* <Row>
+            <Row>
               <Typography>
                 <Box
                   fontSize={14}
@@ -144,18 +152,19 @@ const Comment: React.FC<RouteComponentProps<any> & Props> = (props) => {
                     alignItems: "center",
                     justifyContent: "center",
                     display: "flex",
+                    paddingRight: 10,
                   }}
                 >
-                  <ThumbUpAltOutlinedIcon className={classes.iconsmall} />
+                  <ThumbUpAltRoundedIcon className={classes.iconsmall} />
                   Đã nhận
                 </Box>
               </Typography>
               <Typography>
                 <Box marginLeft={1} fontSize={14}>
-                  22 Lượt cảm ơn
+                  {item?.like} Lượt cảm ơn
                 </Box>
               </Typography>
-            </Row> */}
+            </Row>
           </Col>
         </Grid>
         <Grid
@@ -244,14 +253,36 @@ const Comment: React.FC<RouteComponentProps<any> & Props> = (props) => {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <img
-              style={{
-                width: "15%",
-                borderRadius: 10,
-              }}
-              src={data.img}
-              alt={data.title}
-            />
+            <Row>
+              {imageProducts.length > 0 &&
+                imageProducts.map((imga: string, idx: number) => {
+                  return (
+                    <>
+                      <img
+                        style={{
+                          width: 70,
+                          height: 70,
+                          borderRadius: 5,
+                          marginRight: 5,
+                        }}
+                        src={imga}
+                        alt={imga}
+                        onClick={() => {
+                          setValuePreviewImage(imga);
+                          setIsOpenPreviewDialog(true);
+                          console.log("dasdasasdsad",imga);
+                        }}
+                      />
+                      <PreviewImageDialog
+                        key={imga}
+                        isOpen={isOpenPreviewDialog && imga === valuePreviewImage}
+                        onCloseDialog={onCloseDialogPreview}
+                        image={imga}
+                      />
+                    </>
+                  );
+                })}
+            </Row>
           </Grid>
           <Grid item xs={12}>
             <Row>
@@ -261,16 +292,8 @@ const Comment: React.FC<RouteComponentProps<any> & Props> = (props) => {
                   fontSize={15}
                   marginRight={1}
                   paddingRight={1}
-                  style={{
-                    borderRight: "1px solid #ededed",
-                  }}
                 >
-                  Nhận xét vào {item?.time}
-                </Box>
-              </Typography>
-              <Typography>
-                <Box className={classes.grey} fontSize={15}>
-                  Đã dùng 1 tháng
+                  Nhận xét vào {new Date(item?.time).toLocaleString()}
                 </Box>
               </Typography>
             </Row>
@@ -278,9 +301,10 @@ const Comment: React.FC<RouteComponentProps<any> & Props> = (props) => {
           <Grid item xs={12}>
             <Row>
               <Button
-                variant="outlined"
+                onClick={() => handleLike?.(item?.id)}
+                variant= {"outlined"}
                 className={classes.button}
-                startIcon={<ThumbUpAltOutlinedIcon className={classes.icon} />}
+                startIcon={item?.liked ? <ThumbUpAltRoundedIcon className={classes.icon} /> :<ThumbUpAltOutlinedIcon className={classes.icon} />}
               >
                 Hữu ích
               </Button>

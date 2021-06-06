@@ -1,48 +1,19 @@
 import {
-    Avatar,
-    Box,
-    Button,
-    CardActions,
-    Container,
-    Grid,
-    IconButton,
-    Paper,
-    Typography,
-  } from "@material-ui/core";
-  import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-  import AddIcon from "@material-ui/icons/Add";
-  import AddBoxIcon from "@material-ui/icons/AddBox";
-  import FavoriteIcon from "@material-ui/icons/Favorite";
-  import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
-  import ShareIcon from "@material-ui/icons/Share";
-  import StarIcon from "@material-ui/icons/Star";
-  import StorefrontIcon from "@material-ui/icons/Storefront";
-  import Rating from "@material-ui/lab/Rating";
-  import parse from "html-react-parser";
-  import JSONbig from "json-bigint";
-  import React, { useState } from "react";
-  import { useParams } from "react-router-dom";
-  import {
-    ACCOUNTS_ID,
-    CART_LOCAL_STORAGE,
-    some,
-    SUCCESS_CODE,
-  } from "../../../../constants/constants";
-  import { formatter } from "../../../../utils/helpers/helpers";
-  import { Col, Row } from "../../../common/Elements";
-  import {
-    actionAddFollow,
-    actionAddProductToCart,
-    actionGetStoreFollowing,
-    actionProductById,
-    actionGetProductByStoreIDbyRange,
-    actionUnFollow,
-  } from "../../../system/systemAction";
-  import PreviewDialog from "../dialog/PreviewDialog";
-  import CheckIcon from "@material-ui/icons/Check";
-  import { connect } from "react-redux";
-  import { withRouter } from "react-router-dom";
-  import Product from "../product/Product";
+  Box,
+  Button,
+
+  Container
+} from "@material-ui/core";
+import React from "react";
+import {
+  some,
+  SUCCESS_CODE
+} from "../../../../constants/constants";
+import { Row } from "../../../common/Elements";
+import {
+  actionGetProductByStoreIDbyRange
+} from "../../../system/systemAction";
+import Product from "../product/Product";
   
   interface Props {
     id: string;

@@ -189,5 +189,6 @@
   "IDS_TITLE_RESET_PASSWORD": "Đổi mật khẩu",
   "IDS_FORGOT_PASSWORD_SUCCESS_NOTE": "Quên mật khẩu thành công. Bạn vui lòng kiểm tra email và xác nhận",
   "IDS_RESET_PASSWORD_SUCCESS_NOTE": "Đổi mật khẩu thành công. Bạn có thể đăng nhập tài khoản và sử dụng",
-  "IDS_AUTH_ALREADY_LOGIN": "Bạn đã có thể đăng nhập?"
+  "IDS_AUTH_ALREADY_LOGIN": "Bạn đã có thể đăng nhập?",
+  "IDS_CHAT_COMMENT": "Nhận xét"
 }

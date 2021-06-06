@@ -1,16 +1,18 @@
-import { Avatar, Typography } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import { Table } from 'antd';
-import JSONbig from 'json-bigint';
-import React from 'react';
-import { GREY_600 } from '../../../assets/theme/colors';
-import { some } from '../../../constants/constants';
-import { Row } from '../../common/Elements';
+import { Avatar, Typography } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import { Table } from "antd";
+import JSONbig from "json-bigint";
+import React from "react";
+import { GREY_600 } from "../../../assets/theme/colors";
+import { some } from "../../../constants/constants";
+import { formatter } from "../../../utils/helpers/helpers";
+import DialogAddComment from "../../app_manager/components/comments/DialogAddComment";
+import { Row } from "../../common/Elements";
 interface Props {
   open: boolean;
   handleClose(): void;
@@ -21,10 +23,10 @@ const DialogDetailPayment: React.FC<Props> = (props) => {
   const data = dataPayment?.listItem && JSONbig.parse(dataPayment?.listItem);
   const columns = [
     {
-      title: 'Hình ảnh',
-      dataIndex: 'id',
+      title: "Hình ảnh",
+      dataIndex: "id",
       width: 100,
-      styleHeader: { color: GREY_600, textAlign: 'center' },
+      styleHeader: { color: GREY_600, textAlign: "center" },
       render: (text: any, record: any) => {
         return (
           <Row key={record?.id}>
@@ -34,10 +36,10 @@ const DialogDetailPayment: React.FC<Props> = (props) => {
       },
     },
     {
-      title: 'Tên sản phẩm',
-      dataIndex: 'id',
+      title: "Tên sản phẩm",
+      dataIndex: "id",
       width: 250,
-      styleHeader: { color: GREY_600, textAlign: 'left' },
+      styleHeader: { color: GREY_600, textAlign: "left" },
       render: (text: any, record: any) => {
         return (
           <Row key={record?.id}>
@@ -47,23 +49,23 @@ const DialogDetailPayment: React.FC<Props> = (props) => {
       },
     },
     {
-      title: 'Giá',
-      dataIndex: 'id',
+      title: "Giá",
+      dataIndex: "id",
       width: 150,
-      styleHeader: { color: GREY_600, textAlign: 'left' },
+      styleHeader: { color: GREY_600, textAlign: "left" },
       render: (text: any, record: any) => {
         return (
           <Row key={record?.id}>
-            <Typography>{record?.Product.Price}</Typography>
+            <Typography>{formatter(record?.Product.Price)}</Typography>
           </Row>
         );
       },
     },
     {
-      title: 'Đánh giá',
-      dataIndex: 'id',
+      title: "Đánh giá",
+      dataIndex: "id",
       width: 100,
-      styleHeader: { color: GREY_600, textAlign: 'left' },
+      styleHeader: { color: GREY_600, textAlign: "left" },
       render: (text: any, record: any) => {
         return (
           <Row key={record?.id}>
@@ -73,10 +75,10 @@ const DialogDetailPayment: React.FC<Props> = (props) => {
       },
     },
     {
-      title: 'Lượt đánh giá',
-      dataIndex: 'id',
+      title: "Lượt đánh giá",
+      dataIndex: "id",
       width: 100,
-      styleHeader: { color: GREY_600, textAlign: 'left' },
+      styleHeader: { color: GREY_600, textAlign: "left" },
       render: (text: any, record: any) => {
         return (
           <Row key={record?.id}>
@@ -86,14 +88,14 @@ const DialogDetailPayment: React.FC<Props> = (props) => {
       },
     },
     {
-      title: 'Size',
-      dataIndex: 'id',
+      title: "Size",
+      dataIndex: "id",
       width: 100,
-      styleHeader: { color: GREY_600, textAlign: 'left' },
+      styleHeader: { color: GREY_600, textAlign: "left" },
       render: (text: any, record: any) => {
         return (
           <Row key={record?.id}>
-            <Typography style={{ textAlign: 'center' }}>
+            <Typography style={{ textAlign: "center" }}>
               {record?.Product.Size}
             </Typography>
           </Row>
@@ -101,53 +103,68 @@ const DialogDetailPayment: React.FC<Props> = (props) => {
       },
     },
     {
-      title: 'Số lượng mua',
-      dataIndex: 'Quantity',
+      title: "Số lượng mua",
+      dataIndex: "Quantity",
+    },
+  ];
+
+  const columnComment = [
+    ...columns,
+    {
+      title: "Xem",
+      dataIndex: "id",
+      render: (text: any, record: any) => {
+        return (
+          <Row key={record?.id}>
+            <DialogAddComment productId={record?.id} />
+          </Row>
+        );
+      },
     },
   ];
   return (
     <Dialog
       open={open}
       onClose={handleClose}
-      maxWidth='xl'
-      aria-labelledby='alert-dialog-title'
-      aria-describedby='alert-dialog-description'
+      maxWidth="xl"
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id='alert-dialog-title'>{' Chi Tiết đơn hàng'}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{" Chi Tiết đơn hàng"}</DialogTitle>
       <DialogContent>
-        <DialogContentText id='alert-dialog-description'>
+        <DialogContentText id="alert-dialog-description">
           <Row>
-            <Typography variant='body1' style={{ marginRight: '50px' }}>
-              Ngày mua: {dataPayment?.orderTime}
+            <Typography variant="body1" style={{ marginRight: "50px" }}>
+              Ngày mua: {new Date(dataPayment?.orderTime).toLocaleString()}
             </Typography>
-            <Typography variant='body1'>
-              Ngày chuyển: {dataPayment?.shipTime}
+            <Typography variant="body1">
+              Ngày chuyển: {new Date(dataPayment?.shipTime).toLocaleString()}
             </Typography>
           </Row>
           <Row>
-            <Typography variant='body1' style={{ marginRight: '50px' }}>
-              Tổng tiền:{' '}
-              {dataPayment?.total.toLocaleString('it-IT', {
-                style: 'currency',
-                currency: 'VND',
+            <Typography variant="body1" style={{ marginRight: "50px" }}>
+              Tổng tiền:{" "}
+              {dataPayment?.total.toLocaleString("it-IT", {
+                style: "currency",
+                currency: "VND",
               })}
             </Typography>
           </Row>
           <Table
-            columns={columns}
+            columns={dataPayment?.status === 1 ? columnComment : columns}
             dataSource={data}
             pagination={{
               defaultPageSize: 5,
-              position: ['bottomCenter'],
+              position: ["bottomCenter"],
             }}
             style={{
-              margin: '25px 25px',
+              margin: "25px 25px",
             }}
           />
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color='primary' autoFocus>
+        <Button onClick={handleClose} color="primary" autoFocus>
           Đóng
         </Button>
       </DialogActions>
