@@ -16,4 +16,5 @@ export const routes: some = {
   STORE: "/store/:id",
   RESET_PASSWORD: "/resest-password", // Cần sửa lại
   FORGOT_PASSWORD: "/forgot-password", 
+  PAYMENT: "/payment",
 };

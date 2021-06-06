@@ -14,7 +14,7 @@ import ConfirmDialog from "../../../common/ConfirmDialog";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      padding: theme.spacing(3),
+      padding: theme.spacing(5),
     },
     grid: {
       backgroundColor: "white",
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
       borderWidth: 1,
       borderColor: "white",
       borderStyle: "solid",
-      padding: 20,
+      padding: 10,
       color: "white",
     },
     address: {
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
       borderWidth: 1,
       borderColor: "#cccccc",
       borderStyle: "solid",
-      padding: 20,
+      padding: 10,
     },
   })
 );

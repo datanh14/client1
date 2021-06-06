@@ -100,12 +100,14 @@ const ProductCart: React.FC<RouteComponentProps<some> & Props> = (props) => {
       const res: some = await actionGetStoreByID({
         StoreID: data?.storeID,
       });
-      setLoading(true);
       if (res?.code === SUCCESS_CODE) {
         res?.store && setStoreData(res?.store);
       } else {
       }
     } catch (error) {}
+    finally {
+      setLoading(true);
+    }
   };
 
   React.useEffect(() => {

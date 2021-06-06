@@ -55,10 +55,6 @@ const ResetPassword: React.FC<RouteComponentProps<any> & Props> = (props) => {
     } catch (error) {
     } finally {
       setLoading(false);
-      !success && enqueueSnackbar(
-        "Tài khoản của bạn không tồn tại",
-        snackbarSetting((key) => closeSnackbar(key), { color: "error" })
-      );
     }
   };
 

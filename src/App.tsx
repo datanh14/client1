@@ -13,6 +13,7 @@ import "./App.scss";
 import { ACCESS_TOKEN, UUID } from "./constants/constants";
 import { routes } from "./constants/routes";
 import MainLayout from "./layout/MainLayout";
+import Payment from "./modules/app_manager/components/payment/Payment";
 import ForgotPassword from "./modules/auth/ForgotPassword/pages/ForgotPassword";
 import Register from "./modules/auth/register/pages/Register";
 import ResetPassword from "./modules/auth/ResetPassword/pages/ResetPassword";
@@ -55,6 +56,7 @@ const App: React.FC<RouteComponentProps<any> & Props> = (props) => {
           <Route exact path={routes.REGISTER} component={Register} />
           <Route exact path={routes.FORGOT_PASSWORD} component={ForgotPassword} />
           <Route exact path={routes.RESET_PASSWORD} component={ResetPassword} />
+          <Route exact path={routes.PAYMENT} component={Payment} />
           <Route path={"*"} component={MainLayout} />
         </Switch>
       </React.Suspense>
