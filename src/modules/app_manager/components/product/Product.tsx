@@ -41,7 +41,10 @@ const Product = (props: any) => {
         onClick={() => {
           gotoAction(data.id);
         }}
-        style={isHover ? productHoverStyle : productStyle}
+        style={{
+          ...(isHover ? productHoverStyle : productStyle),
+          position: 'relative',
+        }}
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
       >
@@ -85,7 +88,6 @@ const Product = (props: any) => {
           display="flex"
           alignItems="flex-start"
           style={{
-            position: 'relative',
             marginTop: 5,
             bottom: 0,
           }}
@@ -106,7 +108,7 @@ const Product = (props: any) => {
               style={{
                 minWidth: 35,
                 maxHeight: 30,
-                marginLeft: 20,
+                marginLeft: 18,
                 textAlign: 'center',
                 borderRadius: 2,
                 backgroundColor: '#ff424e',
@@ -115,6 +117,8 @@ const Product = (props: any) => {
                 display: 'flex',
                 color: 'white',
                 padding: 2,
+                position: 'absolute',
+                top: 10,
               }}
             >
               <Typography>{data.discount}%</Typography>

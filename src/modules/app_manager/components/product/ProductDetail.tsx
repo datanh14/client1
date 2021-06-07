@@ -21,6 +21,7 @@ import parse from 'html-react-parser';
 import JSONbig from 'json-bigint';
 import React, { useState } from 'react';
 import { useParams, withRouter } from 'react-router-dom';
+import { FacebookShareButton } from 'react-share';
 import {
   ACCOUNTS_ID,
   CART_LOCAL_STORAGE,
@@ -313,7 +314,7 @@ const ProductDetail = (props: any) => {
   const handleLike = (id: string) => {
     fetchLikeOrDislike(id);
   };
-
+  const linkShare = window.location.href;
   return (
     <div className={classes.root} ref={imageRef}>
       {!loading && <LoaddingPage isOpen={!loading} />}
@@ -443,12 +444,11 @@ const ProductDetail = (props: any) => {
               </Grid>
               <Grid item xs={4}>
                 <CardActions disableSpacing>
-                  {/* <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
-                  </IconButton> */}
-                  <IconButton aria-label="share">
-                    <ShareIcon />
-                  </IconButton>
+                  <FacebookShareButton url={linkShare} quote={''}>
+                    <a href="a">
+                      <ShareIcon />
+                    </a>
+                  </FacebookShareButton>
                 </CardActions>
               </Grid>
               <Grid item xs={8}>
