@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Descriptions,
   Row,
@@ -11,21 +11,21 @@ import {
   Layout,
   Pagination,
   Spin,
-} from "antd";
-import "antd/dist/antd.css";
-import { NavLink } from "react-router-dom";
-import { getDataAdressUser } from "../api/AdressUser";
-import { ACCESS_TOKEN, some, SUCCESS_CODE } from "../../../constants/constants";
-import JSONbig from "json-bigint";
-import { useState } from "react";
-import { ACCOUNTS } from "../../../constants/constants";
-import { PlusOutlined } from "@ant-design/icons";
-import Axios from "axios";
+} from 'antd';
+import 'antd/dist/antd.css';
+import { NavLink } from 'react-router-dom';
+import { getDataAdressUser } from '../api/AdressUser';
+import { ACCESS_TOKEN, some, SUCCESS_CODE } from '../../../constants/constants';
+import JSONbig from 'json-bigint';
+import { useState } from 'react';
+import { ACCOUNTS } from '../../../constants/constants';
+import { PlusOutlined } from '@ant-design/icons';
+import Axios from 'axios';
 const { Content } = Layout;
 
 const Adress = (props: any) => {
   const [dataUser, setDataUser] = useState<some>(
-    JSONbig.parse(localStorage.getItem(ACCOUNTS) || "{}")
+    JSONbig.parse(localStorage.getItem(ACCOUNTS) || '{}')
   );
 
   const [totalItems, setTotaItem] = useState(0);
@@ -44,7 +44,6 @@ const Adress = (props: any) => {
     fetchUserId();
     setTotaItem(dataAdressUser?.message?.length);
   }, []);
-  console.log("aaa", dataAdressUser);
 
   //Modal
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -53,19 +52,18 @@ const Adress = (props: any) => {
     setIsModalVisible(true);
   };
   const token = localStorage.getItem(ACCESS_TOKEN);
-  const url = "https://tiki-test-1.herokuapp.com/Address/ChangeAddress";
+  const url = 'https://tiki-test-1.herokuapp.com/Address/ChangeAddress';
   const handleOk = () => {
     setIsModalVisible(false);
     Axios.post(url, {
       headers: {
-        Authorization: "Bearer " + token,
+        Authorization: 'Bearer ' + token,
       },
       ID: data.ID,
       Phone: data.Phone,
       Address: data.Address,
       DistrictID: data.DistrictID,
     }).then((res) => {
-      console.log(res.data);
       window.location.reload();
     });
   };
@@ -73,14 +71,12 @@ const Adress = (props: any) => {
     setIsModalVisible(false);
   };
   const [data, setData] = useState({
-    ID: "",
-    Phone: "",
-    Address: "",
-    DistrictID: "",
+    ID: '',
+    Phone: '',
+    Address: '',
+    DistrictID: '',
   });
-  function onSearch(val: any) {
-    console.log("search:", val);
-  }
+  function onSearch(val: any) {}
   const onChangeAdress = (e: any) => {
     const newdata = { ...data };
     newdata.Address = e.target.value;
@@ -101,18 +97,18 @@ const Adress = (props: any) => {
       <Content
         className="site-layout-background"
         style={{
-          margin: "25px 25px",
-          padding: "50px 50px",
-          backgroundColor: "white",
-          height: "500px",
+          margin: '25px 25px',
+          padding: '50px 50px',
+          backgroundColor: 'white',
+          height: '500px',
         }}
       >
         <Spin
           size="large"
           style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         />
       </Content>
@@ -123,22 +119,22 @@ const Adress = (props: any) => {
       <Content
         className="site-layout-background"
         style={{
-          margin: "25px 25px",
-          padding: "50px 50px",
-          backgroundColor: "white",
+          margin: '25px 25px',
+          padding: '50px 50px',
+          backgroundColor: 'white',
         }}
       >
-        <div style = {{margin: "25px 25px"}}>
+        <div style={{ margin: '25px 25px' }}>
           {dataAdressUser?.message?.map((val: some, index: number) => (
             <div key={index}>
-              <Row style={{ borderBottom: "1px solid" }}>
+              <Row style={{ borderBottom: '1px solid' }}>
                 <Col span={19}>
                   <Descriptions
                     layout="horizontal"
-                    title={dataUser?.firstName + " " + dataUser.lastName}
+                    title={dataUser?.firstName + ' ' + dataUser.lastName}
                   >
                     <Descriptions.Item label="Địa chỉ" span={12}>
-                      {val?.district?.districtName + "/" + val?.city?.cityName}
+                      {val?.district?.districtName + '/' + val?.city?.cityName}
                     </Descriptions.Item>
 
                     <Descriptions.Item label="Số điện thoại" span={12}>
@@ -167,7 +163,6 @@ const Adress = (props: any) => {
                       Axios.delete(
                         `https://tiki-test-1.herokuapp.com/Address/DeleteAddress/${val.id}`
                       ).then((res) => {
-                        console.log(res.data);
                         window.location.reload();
                       });
                     }}
@@ -181,10 +176,10 @@ const Adress = (props: any) => {
         </div>
 
         <NavLink to="/customer/add">
-          <Row style={{ paddingTop: "10px" }}>
+          <Row style={{ paddingTop: '10px' }}>
             <Form>
               <Form.Item>
-                <Button style={{ width: "30px" }}>
+                <Button style={{ width: '30px' }}>
                   <PlusOutlined />
                   Thêm địa chỉ
                 </Button>
@@ -204,14 +199,14 @@ const Adress = (props: any) => {
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 20 }}
           layout="horizontal"
-          initialValues={{ size: "default" }}
+          initialValues={{ size: 'default' }}
           size="large"
         >
           <Form.Item label="Họ và tên">
             <Input
               placeholder="Nhập Họ và tên"
               type="text"
-              defaultValue={dataUser?.firstName + " " + dataUser.lastName}
+              defaultValue={dataUser?.firstName + ' ' + dataUser.lastName}
               allowClear
             />
           </Form.Item>

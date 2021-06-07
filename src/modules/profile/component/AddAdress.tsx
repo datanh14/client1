@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import "antd/dist/antd.css";
-import JSONbig from "json-bigint";
-import { Form, Input, Button, Select, Layout } from "antd";
-import { ACCOUNTS, some } from "../../../constants/constants";
-import Axios from "axios";
-import { NavLink } from "react-router-dom";
-import { ACCESS_TOKEN } from "../../../constants/constants";
+import React, { useState } from 'react';
+import 'antd/dist/antd.css';
+import JSONbig from 'json-bigint';
+import { Form, Input, Button, Select, Layout } from 'antd';
+import { ACCOUNTS, some } from '../../../constants/constants';
+import Axios from 'axios';
+import { NavLink } from 'react-router-dom';
+import { ACCESS_TOKEN } from '../../../constants/constants';
 const { Content } = Layout;
 // const options = [
 //   {
@@ -19,14 +19,14 @@ const { Content } = Layout;
 // ];
 const AddAdress = () => {
   const [dataUser, setDataUser] = useState<some>(
-    JSONbig.parse(localStorage.getItem(ACCOUNTS) || "{}")
+    JSONbig.parse(localStorage.getItem(ACCOUNTS) || '{}')
   );
 
   const [data, setData] = useState({
     UserID: dataUser.id,
-    Phone: "",
-    Address: "",
-    DistrictID: "",
+    Phone: '',
+    Address: '',
+    DistrictID: '',
   });
   const onChangeAdress = (e: any) => {
     const newdata = { ...data };
@@ -46,7 +46,7 @@ const AddAdress = () => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
   };
-  const url = "https://tiki-test-1.herokuapp.com/Address/AddAddressForUser";
+  const url = 'https://tiki-test-1.herokuapp.com/Address/AddAddressForUser';
   const submit = (e: any) => {
     e.preventDefault();
     Axios.post(
@@ -59,33 +59,31 @@ const AddAdress = () => {
       },
       { headers }
     ).then((res) => {
-      console.log(res.data);
       window.location.reload();
     });
   };
-  console.log(data);
 
   return (
     <Content
       className="site-layout-background"
       style={{
-        margin: "25px 25px",
-        padding: "50px 50px",
-        backgroundColor: "white",
+        margin: '25px 25px',
+        padding: '50px 50px',
+        backgroundColor: 'white',
       }}
     >
-      <div style={{margin: "25px 25px"}}>
+      <div style={{ margin: '25px 25px' }}>
         <Form
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 14 }}
           layout="horizontal"
-          initialValues={{ size: "default" }}
+          initialValues={{ size: 'default' }}
           size="large"
         >
           <Form.Item label="Họ và tên">
             <Input
               placeholder="Nhập Họ và tên"
-              defaultValue={dataUser?.firstName + " " + dataUser.lastName}
+              defaultValue={dataUser?.firstName + ' ' + dataUser.lastName}
             />
           </Form.Item>
           <Form.Item label="Số điện thoại">

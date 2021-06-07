@@ -1,37 +1,37 @@
-import { Avatar, Box, Button, Grid, Typography } from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import AssistantOutlinedIcon from "@material-ui/icons/AssistantOutlined";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
-import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
+import { Avatar, Box, Button, Grid, Typography } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import AssistantOutlinedIcon from '@material-ui/icons/AssistantOutlined';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded';
-import Rating from "@material-ui/lab/Rating";
-import React from "react";
-import { some } from "../../../../constants/constants";
-import { Col, Row } from "../../../common/Elements";
-import { RouteComponentProps, withRouter } from "react-router-dom";
-import PreviewImageDialog from "../dialog/PreviewImageDialog";
+import Rating from '@material-ui/lab/Rating';
+import React from 'react';
+import { some } from '../../../../constants/constants';
+import { Col, Row } from '../../../common/Elements';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import PreviewImageDialog from '../dialog/PreviewImageDialog';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "flex",
-      transition: theme.transitions.create("transform"),
-      backgroundColor: "white",
-      borderTop: "1px solid #ededed",
+      display: 'flex',
+      transition: theme.transitions.create('transform'),
+      backgroundColor: 'white',
+      borderTop: '1px solid #ededed',
     },
     grid: {
-      display: "flex",
+      display: 'flex',
     },
     button: {
-      color: "#2979ff",
-      padding:10,
+      color: '#2979ff',
+      padding: 10,
     },
     icon: {
-      color: "#2979ff",
+      color: '#2979ff',
     },
     grey: {
-      color: "#bdbdbd",
+      color: '#bdbdbd',
     },
     large: {
       width: theme.spacing(7),
@@ -40,13 +40,13 @@ const useStyles = makeStyles((theme: Theme) =>
     iconsmall: {
       width: 20,
       height: 20,
-      marginRight:5,
+      marginRight: 5,
     },
     linkStore: {
-      display: "flex",
-      "&:hover": {
-        fontWeight: "bold",
-        cursor: "pointer",
+      display: 'flex',
+      '&:hover': {
+        fontWeight: 'bold',
+        cursor: 'pointer',
       },
     },
   })
@@ -55,29 +55,29 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   item?: some;
   store?: some;
-  handleLike?: (id : string) => void;
+  handleLike?: (id: string) => void;
 }
 
 const Comment: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const classes = useStyles();
   const { item, store, handleLike } = props;
   const [imageProducts, setImageProduct] = React.useState<string[]>(
-    JSON.parse(item?.image || "[]")
+    JSON.parse(item?.image || '[]')
   );
-  const [valuePreviewImage, setValuePreviewImage] = React.useState<string>("");
+  const [valuePreviewImage, setValuePreviewImage] = React.useState<string>('');
   const [isOpenPreviewDialog, setIsOpenPreviewDialog] = React.useState(false);
 
   const onCloseDialogPreview = () => {
-    setValuePreviewImage("");
+    setValuePreviewImage('');
     setIsOpenPreviewDialog(false);
-  }
+  };
   return (
     <div className={classes.root}>
       <Grid
         container
         style={{
           marginBottom: 20,
-          backgroundColor: "white",
+          backgroundColor: 'white',
           paddingTop: 20,
         }}
       >
@@ -103,9 +103,9 @@ const Comment: React.FC<RouteComponentProps<any> & Props> = (props) => {
                   fontSize={15}
                   marginLeft={1}
                   style={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                    display: "flex",
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    display: 'flex',
                   }}
                 >
                   {item?.user.name}
@@ -148,10 +148,10 @@ const Comment: React.FC<RouteComponentProps<any> & Props> = (props) => {
                   marginLeft={1}
                   className={classes.grey}
                   style={{
-                    borderRight: "1px solid #ededed",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    display: "flex",
+                    borderRight: '1px solid #ededed',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    display: 'flex',
                     paddingRight: 10,
                   }}
                 >
@@ -174,7 +174,7 @@ const Comment: React.FC<RouteComponentProps<any> & Props> = (props) => {
           sm={9}
           className={classes.grid}
           style={{
-            backgroundColor: "white",
+            backgroundColor: 'white',
           }}
         >
           <Grid item xs={12}>
@@ -187,7 +187,7 @@ const Comment: React.FC<RouteComponentProps<any> & Props> = (props) => {
                 emptyIcon={
                   <StarBorderIcon
                     fontSize="inherit"
-                    style={{ color: "#ffc107", marginRight: 20 }}
+                    style={{ color: '#ffc107', marginRight: 20 }}
                   />
                 }
                 readOnly
@@ -195,14 +195,14 @@ const Comment: React.FC<RouteComponentProps<any> & Props> = (props) => {
               <Typography>
                 <Box fontWeight="fontWeightBold" fontSize={15}>
                   {item?.star === 5
-                    ? "Cực kì hài lòng"
+                    ? 'Cực kì hài lòng'
                     : item?.star < 5 && item?.star >= 4
-                    ? "Hài lòng"
+                    ? 'Hài lòng'
                     : item?.star < 4 && item?.star >= 3
-                    ? "Bình thường"
+                    ? 'Bình thường'
                     : item?.star < 3 && item?.star >= 2
-                    ? "Không hài lòng"
-                    : "Rất không hài lòng"}
+                    ? 'Không hài lòng'
+                    : 'Rất không hài lòng'}
                 </Box>
               </Typography>
             </Row>
@@ -215,18 +215,18 @@ const Comment: React.FC<RouteComponentProps<any> & Props> = (props) => {
                   marginRight={1}
                   paddingRight={1}
                   style={{
-                    borderRight: "1px solid #ededed",
-                    color: "green",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    display: "flex",
+                    borderRight: '1px solid #ededed',
+                    color: 'green',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    display: 'flex',
                   }}
                 >
                   Đã mua từ
                   <CheckCircleIcon
                     className={classes.iconsmall}
                     style={{
-                      color: "green",
+                      color: 'green',
                       margin: 5,
                     }}
                   />
@@ -270,12 +270,13 @@ const Comment: React.FC<RouteComponentProps<any> & Props> = (props) => {
                         onClick={() => {
                           setValuePreviewImage(imga);
                           setIsOpenPreviewDialog(true);
-                          console.log("dasdasasdsad",imga);
                         }}
                       />
                       <PreviewImageDialog
                         key={imga}
-                        isOpen={isOpenPreviewDialog && imga === valuePreviewImage}
+                        isOpen={
+                          isOpenPreviewDialog && imga === valuePreviewImage
+                        }
                         onCloseDialog={onCloseDialogPreview}
                         image={imga}
                       />
@@ -302,9 +303,15 @@ const Comment: React.FC<RouteComponentProps<any> & Props> = (props) => {
             <Row>
               <Button
                 onClick={() => handleLike?.(item?.id)}
-                variant= {"outlined"}
+                variant={'outlined'}
                 className={classes.button}
-                startIcon={item?.liked ? <ThumbUpAltRoundedIcon className={classes.icon} /> :<ThumbUpAltOutlinedIcon className={classes.icon} />}
+                startIcon={
+                  item?.liked ? (
+                    <ThumbUpAltRoundedIcon className={classes.icon} />
+                  ) : (
+                    <ThumbUpAltOutlinedIcon className={classes.icon} />
+                  )
+                }
               >
                 Hữu ích
               </Button>

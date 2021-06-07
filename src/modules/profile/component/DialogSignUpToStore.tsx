@@ -1,25 +1,25 @@
 // import { FormattedMessage } from 'react-intl';
-import { Button, Typography, Box } from "@material-ui/core";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import { Controller, useForm } from "react-hook-form";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import React from "react";
-import { connect } from "react-redux";
-import { RouteComponentProps, withRouter } from "react-router-dom";
-import FormControlTextField from "../../common/FormControlTextField";
-import { FormattedMessage } from "react-intl";
-import { actionAddStoreByUser } from "../../system/systemAction";
-import { some, SUCCESS_CODE } from "../../../constants/constants";
+import { Button, Typography, Box } from '@material-ui/core';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import { Controller, useForm } from 'react-hook-form';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import React from 'react';
+import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import FormControlTextField from '../../common/FormControlTextField';
+import { FormattedMessage } from 'react-intl';
+import { actionAddStoreByUser } from '../../system/systemAction';
+import { some, SUCCESS_CODE } from '../../../constants/constants';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       padding: theme.spacing(3),
     },
     grid: {
-      backgroundColor: "white",
+      backgroundColor: 'white',
       paddingLeft: 10,
       paddingRight: 10,
     },
@@ -28,21 +28,21 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: 10,
     },
     addressHover: {
-      backgroundColor: "#d1cfcf",
+      backgroundColor: '#d1cfcf',
       margin: 10,
       borderRadius: 10,
       borderWidth: 1,
-      borderColor: "white",
-      borderStyle: "solid",
+      borderColor: 'white',
+      borderStyle: 'solid',
       padding: 20,
-      color: "white",
+      color: 'white',
     },
     address: {
       margin: 10,
       borderRadius: 10,
       borderWidth: 1,
-      borderColor: "#cccccc",
-      borderStyle: "solid",
+      borderColor: '#cccccc',
+      borderStyle: 'solid',
       padding: 20,
     },
   })
@@ -50,22 +50,22 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {
   //   indexDefaut: number;
-    item: some;
+  item: some;
   //   fetchData: () => void;
 }
 
 const DialogSignUpToStore: React.FC<RouteComponentProps<any> & Props> = (
   props
 ) => {
-    const { item } = props;
+  const { item } = props;
   const [loading, setLoading] = React.useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
 
   const { getValues, control, reset } = useForm({
     defaultValues: {
-      Name: "",
-      Detail: "",
+      Name: '',
+      Detail: '',
     },
   });
 
@@ -86,7 +86,7 @@ const DialogSignUpToStore: React.FC<RouteComponentProps<any> & Props> = (
       setLoading(true);
       const res: any = await actionAddStoreByUser({
         ...data,
-        OwnerID : item?.id,
+        OwnerID: item?.id,
       });
       if (res?.code === SUCCESS_CODE) {
         // const { data } = await actionGetEmployeesInfo();
@@ -97,7 +97,6 @@ const DialogSignUpToStore: React.FC<RouteComponentProps<any> & Props> = (
     } finally {
       setLoading(false);
     }
-    console.log(data);
   };
 
   return (
@@ -108,7 +107,7 @@ const DialogSignUpToStore: React.FC<RouteComponentProps<any> & Props> = (
         style={{
           marginLeft: 20,
           fontSize: 15,
-          fontStyle: "unset",
+          fontStyle: 'unset',
         }}
       >
         Đăng ký cửa hàng
@@ -128,8 +127,8 @@ const DialogSignUpToStore: React.FC<RouteComponentProps<any> & Props> = (
                 fontWeight="fontWeightBold"
                 fontSize={20}
                 style={{
-                  display: "flex",
-                  alignItems: "center",
+                  display: 'flex',
+                  alignItems: 'center',
                 }}
               >
                 Đăng ký cửa hàng:
@@ -142,8 +141,8 @@ const DialogSignUpToStore: React.FC<RouteComponentProps<any> & Props> = (
                 <FormControlTextField
                   {...itemProps}
                   label={<FormattedMessage id="IDS_CHAT_STORE_NAME" />}
-                  formControlStyle={{ width: "100%", marginRight: 0 }}
-                  inputProps={{ maxLength: 50, autoComplete: "none" }}
+                  formControlStyle={{ width: '100%', marginRight: 0 }}
+                  inputProps={{ maxLength: 50, autoComplete: 'none' }}
                   optional
                   inputRef={ref}
                 />
@@ -156,8 +155,8 @@ const DialogSignUpToStore: React.FC<RouteComponentProps<any> & Props> = (
                 <FormControlTextField
                   {...itemProps}
                   label={<FormattedMessage id="IDS_CHAT_STORE_DETAIL" />}
-                  formControlStyle={{ width: "100%", marginRight: 0 }}
-                  inputProps={{ maxLength: 50, autoComplete: "none" }}
+                  formControlStyle={{ width: '100%', marginRight: 0 }}
+                  inputProps={{ maxLength: 50, autoComplete: 'none' }}
                   optional
                   inputRef={ref}
                 />
@@ -173,7 +172,7 @@ const DialogSignUpToStore: React.FC<RouteComponentProps<any> & Props> = (
               style={{
                 marginRight: 20,
                 fontSize: 15,
-                fontStyle: "unset",
+                fontStyle: 'unset',
               }}
             >
               Hủy
@@ -184,7 +183,7 @@ const DialogSignUpToStore: React.FC<RouteComponentProps<any> & Props> = (
               style={{
                 marginRight: 20,
                 fontSize: 15,
-                fontStyle: "unset",
+                fontStyle: 'unset',
               }}
             >
               Đăng ký

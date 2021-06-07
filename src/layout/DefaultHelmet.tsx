@@ -1,17 +1,17 @@
-import { Avatar, Box, Container, Paper, Popper } from "@material-ui/core";
-import AppBar from "@material-ui/core/AppBar";
-import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import MenuIcon from "@material-ui/icons/Menu";
-import MoreIcon from "@material-ui/icons/MoreVert";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import React, { useEffect } from "react";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { Avatar, Box, Container, Paper, Popper } from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import MenuIcon from '@material-ui/icons/Menu';
+import MoreIcon from '@material-ui/icons/MoreVert';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import React, { useEffect } from 'react';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import {
   ACCESS_TOKEN,
   ACCOUNTS,
@@ -19,18 +19,19 @@ import {
   CART_LOCAL_STORAGE,
   some,
   SUCCESS_CODE,
-} from "../constants/constants";
-import { routes } from "../constants/routes";
-import { Col, Row } from "../modules/common/Elements";
-import { actionGetAllProduct } from "../modules/system/systemAction";
-import JSONbig from "json-bigint";
+} from '../constants/constants';
+import { routes } from '../constants/routes';
+import { Col, Row } from '../modules/common/Elements';
+import { actionGetAllProduct } from '../modules/system/systemAction';
+import JSONbig from 'json-bigint';
+import SearchBox from '../modules/profile/component/SearchBox';
 interface Props {
   readonly profile?: some;
 }
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     popover: {
-      pointerEvents: "none",
+      pointerEvents: 'none',
     },
     paper: {
       padding: theme.spacing(1),
@@ -42,9 +43,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
     },
     title: {
-      display: "none",
-      [theme.breakpoints.up("sm")]: {
-        display: "block",
+      display: 'none',
+      [theme.breakpoints.up('sm')]: {
+        display: 'block',
       },
     },
     large: {
@@ -52,15 +53,15 @@ const useStyles = makeStyles((theme: Theme) =>
       height: theme.spacing(5),
     },
     sectionDesktop: {
-      display: "none",
-      [theme.breakpoints.up("md")]: {
-        display: "flex",
+      display: 'none',
+      [theme.breakpoints.up('md')]: {
+        display: 'flex',
       },
     },
     sectionMobile: {
-      display: "flex",
-      [theme.breakpoints.up("md")]: {
-        display: "none",
+      display: 'flex',
+      [theme.breakpoints.up('md')]: {
+        display: 'none',
       },
     },
   })
@@ -71,7 +72,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [data, setData] = React.useState<any>();
   const [userProfile, setUserProfile] = React.useState<some>(
-    JSONbig.parse(localStorage.getItem(ACCOUNTS) || "{}")
+    JSONbig.parse(localStorage.getItem(ACCOUNTS) || '{}')
   );
   const [anchorElMenu, setAnchorElMenu] = React.useState<HTMLElement | null>(
     null
@@ -160,14 +161,14 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
     props?.history?.push(`/`);
     props?.history?.push(`customer`);
   };
-  const menuId = "primary-search-account-menu";
+  const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
@@ -201,14 +202,14 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
     </Menu>
   );
 
-  const mobileMenuId = "primary-search-account-menu-mobile";
+  const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
@@ -238,11 +239,13 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
       <AppBar position="static">
         <Container>
           <Toolbar>
-            <Row style={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "flex-start",
-            }}>
+            <Row
+              style={{
+                flex: 1,
+                display: 'flex',
+                justifyContent: 'flex-start',
+              }}
+            >
               <Typography
                 className={classes.title}
                 variant="h6"
@@ -250,8 +253,8 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                 style={{
                   marginRight: 10,
                   width: 150,
-                  cursor: "pointer",
-                  color: "white",
+                  cursor: 'pointer',
+                  color: 'white',
                 }}
                 onClick={() => {
                   props?.history?.push(`/`);
@@ -264,7 +267,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                   edge="start"
                   color="inherit"
                   aria-label="open drawer"
-                  aria-owns={open ? "mouse-over-popover" : undefined}
+                  aria-owns={open ? 'mouse-over-popover' : undefined}
                   aria-haspopup="true"
                   // onClick={handleClickAgent}
                   onMouseEnter={handlePopoverOpen}
@@ -277,7 +280,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                         style={{
                           fontSize: 10,
                           paddingTop: 10,
-                          textAlign: "left",
+                          textAlign: 'left',
                         }}
                         variant="body2"
                       >
@@ -287,7 +290,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                         style={{
                           fontSize: 12,
                           paddingBottom: 10,
-                          fontWeight: "bold",
+                          fontWeight: 'bold',
                         }}
                         variant="body2"
                       >
@@ -307,7 +310,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                         },
                         preventOverflow: {
                           enabled: true,
-                          boundariesElement: "scrollParent",
+                          boundariesElement: 'scrollParent',
                         },
                       }}
                     >
@@ -334,11 +337,14 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                 </IconButton>
               </Row>
             </Row>
-            <Row style={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "flex-end",
-            }}>
+            <SearchBox />
+            <Row
+              style={{
+                flex: 1,
+                display: 'flex',
+                justifyContent: 'flex-end',
+              }}
+            >
               <div className={classes.grow} />
               <div className={classes.sectionDesktop}>
                 <Row style={{ width: 120 }}>
@@ -361,7 +367,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                           style={{
                             fontSize: 10,
                             paddingTop: 10,
-                            textAlign: "left",
+                            textAlign: 'left',
                           }}
                           variant="body2"
                         >
