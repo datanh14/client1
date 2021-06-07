@@ -33,7 +33,7 @@ const ResetPassword: React.FC<RouteComponentProps<any> & Props> = (props) => {
       setLoading(true);
       const res: some = await actionChangePasswordByToken({
         NewPassword: data.password,
-        Token: query.get("token")?.replaceAll(" ", "+"),
+        Token: query.get("token"),
         Account: query.get("userName"),
       });
       if (res?.code === SUCCESS_CODE) {
