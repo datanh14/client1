@@ -6,7 +6,7 @@ import {
   Grid,
   IconButton,
   Paper,
-  Typography,
+  Typography
 } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
@@ -25,7 +25,7 @@ import {
   ACCOUNTS_ID,
   CART_LOCAL_STORAGE,
   some,
-  SUCCESS_CODE,
+  SUCCESS_CODE
 } from '../../../../constants/constants';
 import { formatter } from '../../../../utils/helpers/helpers';
 import { Col, Row } from '../../../common/Elements';
@@ -36,7 +36,7 @@ import {
   actionGetStoreFollowing,
   actionLikeOrDislike,
   actionProductById,
-  actionUnFollow,
+  actionUnFollow
 } from '../../../system/systemAction';
 import Comment from '../comments/Comment';
 import PreviewDialog from '../dialog/PreviewDialog';

@@ -5,26 +5,26 @@ import {
   ListItem,
   TextField,
   Typography,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import DoneIcon from "@material-ui/icons/Done";
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import DoneIcon from '@material-ui/icons/Done';
 import {
   Autocomplete,
   AutocompleteProps,
   AutocompleteRenderInputParams,
-} from "@material-ui/lab";
-import { debounce } from "lodash";
-import React from "react";
-import { FormattedMessage } from "react-intl";
-import { BLUE, GREY_300, PRIMARY } from "../../assets/theme/colors";
-import { redMark, useStylesForm } from "./Form";
+} from '@material-ui/lab';
+import { debounce } from 'lodash';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { BLUE, GREY_300, PRIMARY } from '../../assets/theme/colors';
+import { redMark, useStylesForm } from './Form';
 
 const autocompleteCS = makeStyles(() => ({
   endAdornment: {
     top: 0,
     bottom: 0,
-    display: "flex",
-    alignItems: "center",
+    display: 'flex',
+    alignItems: 'center',
   },
   option: {
     padding: 0,
@@ -38,9 +38,10 @@ interface FormControlAutoCompleteProps<
   Multiple extends boolean | undefined = undefined,
   DisableClearable extends boolean | undefined = undefined,
   FreeSolo extends boolean | undefined = undefined
-> extends Omit<
+>
+  extends Omit<
     AutocompleteProps<T, Multiple, DisableClearable, FreeSolo>,
-    "renderInput"
+    'renderInput'
   > {
   id?: string;
   label?: React.ReactNode;
@@ -152,7 +153,7 @@ export const FormControlAutoComplete: <
 
   React.useEffect(() => {
     if (loadOptions && options.length === 0) {
-      onFirstLoadOptions("");
+      onFirstLoadOptions('');
     } else {
       setOption(options);
     }
@@ -177,7 +178,7 @@ export const FormControlAutoComplete: <
           htmlFor={id}
           style={{
             marginBottom: 4,
-            position: "relative",
+            position: 'relative',
             color: focus ? PRIMARY : undefined,
             ...labelStyle,
           }}
@@ -195,8 +196,8 @@ export const FormControlAutoComplete: <
         size="small"
         options={optionsTmp || []}
         onInputChange={(event: object, value: string, reason: string) => {
-          reason === "input" && loadOptions && onLoadOptions(value);
-          (reason === "clear" || value === "") &&
+          reason === 'input' && loadOptions && onLoadOptions(value);
+          (reason === 'clear' || value === '') &&
             loadOptions &&
             setOption(options.length ? options : firstOption);
         }}
@@ -212,7 +213,7 @@ export const FormControlAutoComplete: <
               className={classes.bootstrap}
               inputProps={{
                 ...params.inputProps,
-                autoComplete: "off",
+                autoComplete: 'off',
                 style: { padding: 8 },
               }}
               InputProps={{
@@ -220,7 +221,7 @@ export const FormControlAutoComplete: <
                 readOnly,
                 style: {
                   minHeight: 34,
-                  padding: "0 4px",
+                  padding: '0 4px',
                   ...inputStyle,
                 },
                 startAdornment: (
@@ -251,15 +252,15 @@ export const FormControlAutoComplete: <
             button
             style={{
               background: selected ? GREY_300 : undefined,
-              overflow: "hidden",
+              overflow: 'hidden',
             }}
           >
             <Typography
               variant="body2"
               style={{
-                textOverflow: "ellipsis",
-                overflow: "hidden",
-                whiteSpace: "nowrap",
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
                 flex: 1,
               }}
             >
@@ -270,9 +271,9 @@ export const FormControlAutoComplete: <
                 opacity: 0.6,
                 width: 18,
                 height: 18,
-                visibility: selected ? "visible" : "hidden",
+                visibility: selected ? 'visible' : 'hidden',
                 color: BLUE,
-                justifySelf: "flex-end",
+                justifySelf: 'flex-end',
               }}
             />
           </ListItem>

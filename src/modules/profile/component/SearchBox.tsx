@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { some, SUCCESS_CODE } from '../../../constants/constants';
 import FormControlAutoComplete from '../../common/FormControlAutoComplete';
