@@ -5,10 +5,7 @@ import { useIntl } from "react-intl";
 import { connect } from "react-redux";
 import { useHistory } from "react-router";
 import { useParams, useLocation } from "react-router-dom";
-import {
-    RouteComponentProps,
-    withRouter
-} from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Action } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 import { some, SUCCESS_CODE } from "../../../../constants/constants";
@@ -18,12 +15,11 @@ import ResetPasswordDesktop from "../components/ResetPasswordDesktop";
 import ResetPasswordSuccess from "../components/ResetPasswordSuccess";
 // eslint-disable-next-line react/require-default-props
 
-interface Props  {
-}
+interface Props {}
 
 function useQuery() {
-    return new URLSearchParams(useLocation().search);
-  }
+  return new URLSearchParams(useLocation().search);
+}
 
 const ResetPassword: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const intl = useIntl();
@@ -31,13 +27,13 @@ const ResetPassword: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = React.useState(false);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  
+
   const onResetPassword = async (data: some) => {
     try {
       setLoading(true);
       const res: some = await actionChangePasswordByToken({
         NewPassword: data.password,
-        Token: query.get("token"),
+        Token: query.get("token")?.replaceAll(" ", "+"),
         Account: query.get("userName"),
       });
       if (res?.code === SUCCESS_CODE) {
@@ -68,7 +64,10 @@ const ResetPassword: React.FC<RouteComponentProps<any> & Props> = (props) => {
         </title>
       </Helmet>
       {!success ? (
-        <ResetPasswordDesktop loading={loading} onResetPassword={onResetPassword} />
+        <ResetPasswordDesktop
+          loading={loading}
+          onResetPassword={onResetPassword}
+        />
       ) : (
         <ResetPasswordSuccess />
       )}
@@ -76,4 +75,4 @@ const ResetPassword: React.FC<RouteComponentProps<any> & Props> = (props) => {
   );
 };
 
-export default (withRouter(ResetPassword));
+export default withRouter(ResetPassword);

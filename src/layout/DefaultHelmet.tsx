@@ -337,7 +337,15 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                 </IconButton>
               </Row>
             </Row>
+            <Row
+              style={{
+                flex: 2,
+                display: 'flex',
+                justifyContent: 'flex-end',
+              }}
+            >
             <SearchBox />
+            </Row>
             <Row
               style={{
                 flex: 1,

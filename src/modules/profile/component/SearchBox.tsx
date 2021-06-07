@@ -51,7 +51,7 @@ const SearchBox: React.FC<Props> = (props) => {
       formControlStyle={{ minWidth: 270, marginRight: 0, flex: 1 }}
       placeholder={'Nhập tên sản phẩm'}
       optional
-      style={{ marginTop: '20px', zIndex: 3000 }}
+      style={{ marginTop: '20px', zIndex: 20 }}
     />
   );
 };
