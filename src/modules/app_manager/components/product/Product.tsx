@@ -103,7 +103,7 @@ const Product = (props: any) => {
             {formatter(data.price)}
           </Typography>
 
-          {data?.discount !== '0' && (
+          {data?.discount !== 0 && (
             <Box
               style={{
                 minWidth: 35,
@@ -116,7 +116,7 @@ const Product = (props: any) => {
                 justifyContent: 'center',
                 display: 'flex',
                 color: 'white',
-                padding: 2,
+                padding: 0.5,
                 position: 'absolute',
                 top: 10,
               }}
