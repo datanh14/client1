@@ -1,8 +1,8 @@
-import { Box, Typography } from "@material-ui/core";
-import Rating from "@material-ui/lab/Rating";
-import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
-import { formatter } from "../../../../utils/helpers/helpers";
+import { Box, Typography } from '@material-ui/core';
+import Rating from '@material-ui/lab/Rating';
+import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
+import { formatter } from '../../../../utils/helpers/helpers';
 
 const Product = (props: any) => {
   const { data } = props;
@@ -14,7 +14,8 @@ const Product = (props: any) => {
     maxHeight: 326,
     padding: 10,
     zIndex: 1,
-    backgroundColor: "white",
+    backgroundColor: 'white',
+    cursor: 'pointer',
   };
   const productHoverStyle = {
     minWidth: 234.5,
@@ -24,10 +25,11 @@ const Product = (props: any) => {
     padding: 10,
     zIndex: 2,
     boxShadow:
-      "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+      '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
     elevation: 10,
-    backgroundColor: "white",
-    overflow: "hidden",
+    backgroundColor: 'white',
+    overflow: 'hidden',
+    cursor: 'pointer',
   };
   const gotoAction = (route: string) => {
     props?.history?.push(`/product-detail/${route}`);
@@ -45,12 +47,16 @@ const Product = (props: any) => {
       >
         <img
           style={{
-            width: "80%",
+            width: '80%',
             height: 187.6,
             marginRight: 18,
             marginLeft: 18,
           }}
-          src={data.images ? data.images[0] : "https://vnpi-hcm.vn/wp-content/uploads/2018/01/no-image-800x600.png"}
+          src={
+            data.images
+              ? data.images[0]
+              : 'https://vnpi-hcm.vn/wp-content/uploads/2018/01/no-image-800x600.png'
+          }
           alt={data.name}
         />
         <Typography
@@ -59,11 +65,11 @@ const Product = (props: any) => {
             height: 40,
             fontSize: 15,
             marginBottom: 5,
-            display: "-webkit-box",
-            WebkitBoxOrient: "vertical",
+            display: '-webkit-box',
+            WebkitBoxOrient: 'vertical',
             WebkitLineClamp: 2,
-            overflow: "hidden",
-            textOverflow: "ellipsis",
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
           }}
         >
           <Box>{data.name}</Box>
@@ -79,35 +85,35 @@ const Product = (props: any) => {
           display="flex"
           alignItems="flex-start"
           style={{
-            position: "relative",
+            position: 'relative',
             marginTop: 5,
-            bottom:0
+            bottom: 0,
           }}
         >
           <Typography
             variant="body2"
             style={{
-              alignItems: "center",
-              display: "flex",
+              alignItems: 'center',
+              display: 'flex',
               fontSize: 18,
             }}
           >
             {formatter(data.price)}
           </Typography>
 
-          {data?.discount !== "0" && (
+          {data?.discount !== '0' && (
             <Box
               style={{
                 minWidth: 35,
                 maxHeight: 30,
                 marginLeft: 20,
-                textAlign: "center",
+                textAlign: 'center',
                 borderRadius: 2,
-                backgroundColor: "#ff424e",
-                alignItems: "center",
-                justifyContent: "center",
-                display: "flex",
-                color: "white",
+                backgroundColor: '#ff424e',
+                alignItems: 'center',
+                justifyContent: 'center',
+                display: 'flex',
+                color: 'white',
                 padding: 2,
               }}
             >
