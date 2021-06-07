@@ -72,6 +72,7 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: 5,
       marginRight: 13,
       borderStyle: 'solid',
+      borderColor: 'blue',
       display: 'flex',
       borderWidth: 1,
     },
@@ -119,6 +120,7 @@ const ProductDetail = (props: any) => {
     localStorage.getItem(ACCOUNTS_ID) || ''
   );
   const [isFollow, setFollow] = React.useState(false);
+  const styleZoom = { width: 400, height: 250, zoomWidth: 500, img: '1.jpg' };
 
   const fetchListProduct = async () => {
     try {
@@ -357,6 +359,7 @@ const ProductDetail = (props: any) => {
                           style={{
                             width: sizeImageSmall,
                             height: sizeImageSmall,
+                            cursor: 'pointer',
                           }}
                           className={
                             index === idx
@@ -396,6 +399,7 @@ const ProductDetail = (props: any) => {
                           opacity: 0.7,
                           borderRadius: 5,
                           paddingTop: 5,
+                          cursor: 'pointer',
                         }}
                       >
                         <Box fontSize={8}>Xem</Box>

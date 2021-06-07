@@ -27,7 +27,6 @@ const SearchBox: React.FC<Props> = (props) => {
     } finally {
     }
   };
-  // const handleOnClick = () =>
   React.useEffect(() => {
     fetchListProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps

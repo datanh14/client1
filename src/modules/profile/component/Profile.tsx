@@ -189,15 +189,18 @@ const Profile = () => {
         onCancel={handleCancel}
       >
         <Form
-          labelCol={{ span: 4 }}
+          labelCol={{ span: 6 }}
           wrapperCol={{ span: 14 }}
           layout="horizontal"
           initialValues={{ size: 'default' }}
         >
           <Form.Item
             name="First Name"
-            label="First Name"
+            label="Tên"
             rules={[{ required: true }]}
+            style={{
+              justifyContent: 'space-around',
+            }}
           >
             <Input
               defaultValue={dataUser.firstName}
@@ -206,8 +209,11 @@ const Profile = () => {
           </Form.Item>
           <Form.Item
             name="Last Name"
-            label="Last Name"
+            label="Họ"
             rules={[{ required: true }]}
+            style={{
+              justifyContent: 'space-around',
+            }}
           >
             <Input
               defaultValue={dataUser.lastName}
@@ -216,12 +222,20 @@ const Profile = () => {
           </Form.Item>
           <Form.Item
             name="Number Phone"
-            label="Phone"
+            label="Số điện thoại"
             rules={[{ required: true }, { type: 'number' }]}
+            style={{
+              justifyContent: 'space-around',
+            }}
           >
             <Input defaultValue={dataUser.phone} onChange={onChangePhone} />
           </Form.Item>
-          <Form.Item label="Giới tính">
+          <Form.Item
+            label="Giới tính"
+            style={{
+              justifyContent: 'space-around',
+            }}
+          >
             <Radio.Group
               onChange={onChangeGender}
               defaultValue={dataUser.gender}
@@ -230,7 +244,12 @@ const Profile = () => {
               <Radio value="F">Nữ</Radio>
             </Radio.Group>
           </Form.Item>
-          <Form.Item label="Ngày sinh">
+          <Form.Item
+            label="Ngày sinh"
+            style={{
+              justifyContent: 'space-around',
+            }}
+          >
             <DatePicker
               defaultValue={moment(dataUser.dateOfBirth)}
               onChange={onChangeDate}
@@ -240,6 +259,9 @@ const Profile = () => {
             name="Email"
             label="Email"
             rules={[{ required: true }, { type: 'email' }]}
+            style={{
+              justifyContent: 'space-around',
+            }}
           >
             <Input defaultValue={dataUser.email} onChange={onChangeEmail} />
           </Form.Item>
