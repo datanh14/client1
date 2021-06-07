@@ -1,22 +1,13 @@
 import {
-  CreditCardOutlined,
-  DollarCircleOutlined,
   EnvironmentOutlined,
-  EyeOutlined,
   FormOutlined,
-  HeartOutlined,
-  NotificationOutlined,
   QuestionCircleOutlined,
-  ShoppingCartOutlined,
-  StarOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import 'antd/dist/antd.css';
-import JSONbig from 'json-bigint';
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { ACCOUNTS, some } from '../../../constants/constants';
 
 const { Sider } = Layout;
 const SubMenu = () => {
