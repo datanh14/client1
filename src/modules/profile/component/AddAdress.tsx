@@ -59,11 +59,9 @@ const AddAdress = () => {
       },
       { headers }
     ).then((res) => {
-      console.log(res.data);
       window.location.reload();
     });
   };
-  console.log(data);
 
   return (
     <Content
@@ -74,7 +72,7 @@ const AddAdress = () => {
         backgroundColor: "white",
       }}
     >
-      <div style={{margin: "25px 25px"}}>
+      <div style={{ margin: "25px 25px" }}>
         <Form
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 14 }}

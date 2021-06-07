@@ -44,7 +44,6 @@ const Adress = (props: any) => {
     fetchUserId();
     setTotaItem(dataAdressUser?.message?.length);
   }, []);
-  console.log("aaa", dataAdressUser);
 
   //Modal
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -65,7 +64,6 @@ const Adress = (props: any) => {
       Address: data.Address,
       DistrictID: data.DistrictID,
     }).then((res) => {
-      console.log(res.data);
       window.location.reload();
     });
   };
@@ -78,9 +76,7 @@ const Adress = (props: any) => {
     Address: "",
     DistrictID: "",
   });
-  function onSearch(val: any) {
-    console.log("search:", val);
-  }
+  function onSearch(val: any) {}
   const onChangeAdress = (e: any) => {
     const newdata = { ...data };
     newdata.Address = e.target.value;
@@ -128,7 +124,7 @@ const Adress = (props: any) => {
           backgroundColor: "white",
         }}
       >
-        <div style = {{margin: "25px 25px"}}>
+        <div style={{ margin: "25px 25px" }}>
           {dataAdressUser?.message?.map((val: some, index: number) => (
             <div key={index}>
               <Row style={{ borderBottom: "1px solid" }}>
@@ -167,7 +163,6 @@ const Adress = (props: any) => {
                       Axios.delete(
                         `https://tiki-test-1.herokuapp.com/Address/DeleteAddress/${val.id}`
                       ).then((res) => {
-                        console.log(res.data);
                         window.location.reload();
                       });
                     }}

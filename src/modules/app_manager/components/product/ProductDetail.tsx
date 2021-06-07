@@ -120,7 +120,6 @@ const ProductDetail = (props: any) => {
     localStorage.getItem(ACCOUNTS_ID) || ""
   );
   const [isFollow, setFollow] = React.useState(false);
-
   const fetchListProduct = async () => {
     try {
       const res: some = await actionProductById({
@@ -144,8 +143,8 @@ const ProductDetail = (props: any) => {
         // setDataListProduct(res);
       } else {
       }
-    } catch (error) {}
-    finally {
+    } catch (error) {
+    } finally {
       setLoading(true);
     }
   };
@@ -209,22 +208,20 @@ const ProductDetail = (props: any) => {
       }
     } catch (error) {}
   };
-
+  React.useEffect(() => {
+    setIdProduct(id.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
   React.useEffect(() => {
     fetchListProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idProduct]);
-
-  React.useEffect(() => {
-    fetchListProduct();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFollow]);
+  }, [idProduct, id, isFollow]);
 
   React.useEffect(() => {
     dataProduct && userID && fetchGetStoreFollowing();
     dataProduct && fetchListComment();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataProduct]);
+  }, [dataProduct, id]);
 
   React.useEffect(() => {
     setUserID(localStorage.getItem(ACCOUNTS_ID) || "");
@@ -314,7 +311,11 @@ const ProductDetail = (props: any) => {
                   height: sizeImage,
                 }}
                 className={classes.img}
-                src={dataProduct?.message?.image !== "" ? dataProduct?.message?.images[index] :  "https://vnpi-hcm.vn/wp-content/uploads/2018/01/no-image-800x600.png"}
+                src={
+                  dataProduct?.message?.image !== ""
+                    ? dataProduct?.message?.images[index]
+                    : "https://vnpi-hcm.vn/wp-content/uploads/2018/01/no-image-800x600.png"
+                }
                 alt={dataProduct?.message.name}
               />
               <Row
@@ -323,61 +324,63 @@ const ProductDetail = (props: any) => {
                   marginBottom: 10,
                 }}
               >
-                {dataProduct?.message.images && dataProduct?.message.images.map(
-                  (item: any, idx: number) =>
-                    idx < 4 && (
-                      <img
+                {dataProduct?.message.images &&
+                  dataProduct?.message.images.map(
+                    (item: any, idx: number) =>
+                      idx < 4 && (
+                        <img
+                          style={{
+                            width: sizeImageSmall,
+                            height: sizeImageSmall,
+                          }}
+                          className={
+                            index === idx
+                              ? classes.imgSmallBorder
+                              : classes.imgSmall
+                          }
+                          src={item}
+                          alt={dataProduct?.message.name}
+                          onClick={() => setIndex(idx)}
+                        />
+                      )
+                  )}
+                {dataProduct?.message.images &&
+                  dataProduct?.message.images.length > 4 && (
+                    <div
+                      style={{
+                        backgroundImage: `url(${dataProduct?.message.images[4]})`,
+                        backgroundSize: `${sizeImageSmall}px ${sizeImageSmall}px`,
+                        width: sizeImageSmall,
+                        height: sizeImageSmall,
+                        marginRight: 10,
+                        borderRadius: 5,
+                        display: "flex",
+                        textAlign: "center",
+                        justifyContent: "center",
+                      }}
+                      onClick={() => setIsOpenPreviewDialog(true)}
+                    >
+                      <Typography
+                        variant="body2"
                         style={{
                           width: sizeImageSmall,
                           height: sizeImageSmall,
+                          lineHeight: 1.8,
+                          color: "white",
+                          backgroundColor: "black",
+                          opacity: 0.7,
+                          borderRadius: 5,
+                          paddingTop: 5,
                         }}
-                        className={
-                          index === idx
-                            ? classes.imgSmallBorder
-                            : classes.imgSmall
-                        }
-                        src={item}
-                        alt={dataProduct?.message.name}
-                        onClick={() => setIndex(idx)}
-                      />
-                    )
-                )}
-                {dataProduct?.message.images && dataProduct?.message.images.length > 4 && (
-                  <div
-                    style={{
-                      backgroundImage: `url(${dataProduct?.message.images[4]})`,
-                      backgroundSize: `${sizeImageSmall}px ${sizeImageSmall}px`,
-                      width: sizeImageSmall,
-                      height: sizeImageSmall,
-                      marginRight: 10,
-                      borderRadius: 5,
-                      display: "flex",
-                      textAlign: "center",
-                      justifyContent: "center",
-                    }}
-                    onClick={() => setIsOpenPreviewDialog(true)}
-                  >
-                    <Typography
-                      variant="body2"
-                      style={{
-                        width: sizeImageSmall,
-                        height: sizeImageSmall,
-                        lineHeight: 1.8,
-                        color: "white",
-                        backgroundColor: "black",
-                        opacity: 0.7,
-                        borderRadius: 5,
-                        paddingTop: 5,
-                      }}
-                    >
-                      <Box fontSize={8}>Xem</Box>
-                      <Box fontSize={8}>
-                        thêm {dataProduct?.message.images.length - 4}
-                      </Box>
-                      <Box fontSize={8}>hình</Box>
-                    </Typography>
-                  </div>
-                )}
+                      >
+                        <Box fontSize={8}>Xem</Box>
+                        <Box fontSize={8}>
+                          thêm {dataProduct?.message.images.length - 4}
+                        </Box>
+                        <Box fontSize={8}>hình</Box>
+                      </Typography>
+                    </div>
+                  )}
 
                 <PreviewDialog
                   key={dataProduct?.message.id}
@@ -683,7 +686,10 @@ const ProductDetail = (props: any) => {
             </Typography>
             {parse(dataProduct?.message.description)}
           </Paper>
-          <Paper elevation={0} style={{ marginTop: 20, marginBottom: 20,paddingTop: 20 }}>
+          <Paper
+            elevation={0}
+            style={{ marginTop: 20, marginBottom: 20, paddingTop: 20 }}
+          >
             <Col>
               <Typography>
                 <Box fontSize={30} style={{ marginBottom: 20, marginLeft: 20 }}>

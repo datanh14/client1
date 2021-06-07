@@ -9,7 +9,7 @@ const SearchBox: React.FC<Props> = (props) => {
   const {} = props;
   const [data, setData] = React.useState<any[]>([]);
   const [searchKey, setSearchKey] = React.useState<string>('');
-  const [dataProduct, setDataProduct] = React.useState<string>('');
+  const [dataForm, setDataForm] = React.useState<some | null>(null);
   const history = useHistory();
 
   const fetchListProduct = async () => {
@@ -27,31 +27,31 @@ const SearchBox: React.FC<Props> = (props) => {
     } finally {
     }
   };
-  const handleOnClick = useCallback(
-    () => history.push(`/product-detail/${dataProduct}`),
-    [history]
-  );
+  // const handleOnClick = () =>
   React.useEffect(() => {
     fetchListProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchKey]);
-  console.log('dataProduct', dataProduct);
 
   return (
     <FormControlAutoComplete
-      value={data.find((v) => v.id === searchKey) || null}
+      value={dataForm}
       options={data}
       getOptionLabel={(v) => v.name}
       onChange={(e, value: some | null) => {
-        setDataProduct(value?.id);
+        value?.id &&
+          history.push({
+            pathname: `/product-detail/${value?.id}`,
+          });
+        value && setDataForm(value);
       }}
       onInputChange={(e, value) => {
         setSearchKey(value);
-        handleOnClick();
       }}
       formControlStyle={{ minWidth: 270, marginRight: 0, flex: 1 }}
       placeholder={'Nhập tên sản phẩm'}
       optional
-      style={{ marginTop: '20px' }}
+      style={{ marginTop: '20px', zIndex: 3000 }}
     />
   );
 };

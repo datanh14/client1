@@ -10,18 +10,14 @@ const { Content } = Layout;
 const Profile = () => {
   const dataUser = JSONbig.parse(localStorage.getItem(ACCOUNTS) || "{}");
   const [value, setValue] = React.useState<any>(1);
-  console.log(value);
   const onChange = (e: any) => {
-    console.log("radio checked", e.target.value);
     setValue(e.target.value);
   };
   const token = localStorage.getItem(ACCESS_TOKEN);
-  console.log(token);
   const urlprofile =
     "https://tiki-test-1.herokuapp.com/api/authenticate/ChangeInfo";
   const urlpass =
     "https://tiki-test-1.herokuapp.com/api/authenticate/ChangePassword";
-  console.log(dataUser);
   //Modal
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalVisiblePass, setIsModalVisiblePass] = useState(false);
@@ -37,23 +33,20 @@ const Profile = () => {
   const showModal = () => {
     setIsModalVisible(true);
   };
-   
+
   const handleOk = () => {
     setIsModalVisible(false);
-    Axios.post(urlprofile,{
+    Axios.post(urlprofile, {
       headers: {
-        'Authorization': 'Bearer ' + token,
-    },
+        Authorization: "Bearer " + token,
+      },
       Email: data.Email,
       firstname: data.firstname,
       lastname: data.lastname,
       dateofbirth: data.dateofbirth,
       gender: data.gender,
       phonenumber: data.phonenumber,
-    })
-    .then(res =>{
-      console.log(res.data)
-    })
+    }).then((res) => {});
   };
   const handleCancel = () => {
     setIsModalVisible(false);
@@ -89,7 +82,6 @@ const Profile = () => {
     newdata.dateofbirth = value.format("YYYY-MM-DD");
     setData(newdata);
   };
-  console.log(data);
 
   // pass
   const [pass, setPass] = useState({
@@ -108,9 +100,7 @@ const Profile = () => {
       },
       Password: pass.Password,
       NewPassword: pass.NewPassword,
-    }).then((res) => {
-      console.log(res.data);
-    });
+    }).then((res) => {});
   };
 
   const handleCancelPass = () => {
@@ -126,7 +116,6 @@ const Profile = () => {
     newdata.NewPassword = e.target.value;
     setPass(newdata);
   };
-  console.log(pass);
   return (
     <div>
       <Content
@@ -137,58 +126,61 @@ const Profile = () => {
           backgroundColor: "white",
         }}
       >
-        <div style={{margin: "25px 25px"}}>
-        <Form
-          labelCol={{ span: 4 }}
-          wrapperCol={{ span: 14 }}
-          layout="horizontal"
-          initialValues={{ size: "default" }}
-          // size="default"
-        >
-          <Form.Item label="Họ và tên">
-            {dataUser?.firstName && (
-              <Input
-                defaultValue={dataUser?.firstName + " " + dataUser.lastName}
-              ></Input>
-            )}
-          </Form.Item>
-          <Form.Item label="Số điện thoại">
-            {dataUser?.phone && <Input defaultValue={dataUser?.phone}></Input>}
-          </Form.Item>
-          <Form.Item label="Email">
-            {dataUser?.email && <Input defaultValue={dataUser?.email}></Input>}
-          </Form.Item>
-          <Form.Item label="Giới tính">
-            <Radio.Group onChange={onChange} defaultValue={dataUser.gender}>
-              <Radio value="M">Nam</Radio>
-              <Radio value="F">Nữ</Radio>
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item label="Ngày sinh">
-            <DatePicker defaultValue={moment(dataUser.dateOfBirth)} />
-          </Form.Item>
-          <Form.Item
-            wrapperCol={{
-              xs: { span: 24, offset: 0 },
-              sm: { span: 16, offset: 8 },
-            }}
+        <div style={{ margin: "25px 25px" }}>
+          <Form
+            labelCol={{ span: 4 }}
+            wrapperCol={{ span: 14 }}
+            layout="horizontal"
+            initialValues={{ size: "default" }}
+            // size="default"
           >
-            <Button type="primary" size="large" onClick={showModal}>
-              Sửa thông tin
-            </Button>
-            <Button
-              type="primary"
-              size="large"
-              onClick={showModalPass}
-              style={{ margin: "5px 5px" }}
+            <Form.Item label="Họ và tên">
+              {dataUser?.firstName && (
+                <Input
+                  defaultValue={dataUser?.firstName + " " + dataUser.lastName}
+                ></Input>
+              )}
+            </Form.Item>
+            <Form.Item label="Số điện thoại">
+              {dataUser?.phone && (
+                <Input defaultValue={dataUser?.phone}></Input>
+              )}
+            </Form.Item>
+            <Form.Item label="Email">
+              {dataUser?.email && (
+                <Input defaultValue={dataUser?.email}></Input>
+              )}
+            </Form.Item>
+            <Form.Item label="Giới tính">
+              <Radio.Group onChange={onChange} defaultValue={dataUser.gender}>
+                <Radio value="M">Nam</Radio>
+                <Radio value="F">Nữ</Radio>
+              </Radio.Group>
+            </Form.Item>
+            <Form.Item label="Ngày sinh">
+              <DatePicker defaultValue={moment(dataUser.dateOfBirth)} />
+            </Form.Item>
+            <Form.Item
+              wrapperCol={{
+                xs: { span: 24, offset: 0 },
+                sm: { span: 16, offset: 8 },
+              }}
             >
-              Đổi mật khẩu
-            </Button>
-            <DialogSignUpToStore item={dataUser} />
-          </Form.Item>
-        </Form>
+              <Button type="primary" size="large" onClick={showModal}>
+                Sửa thông tin
+              </Button>
+              <Button
+                type="primary"
+                size="large"
+                onClick={showModalPass}
+                style={{ margin: "5px 5px" }}
+              >
+                Đổi mật khẩu
+              </Button>
+              <DialogSignUpToStore item={dataUser} />
+            </Form.Item>
+          </Form>
         </div>
-        
       </Content>
       <Modal
         title="Sửa thông tin"

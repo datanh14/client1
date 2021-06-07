@@ -62,7 +62,6 @@ request.interceptors.response.use(
 );
 
 const api = (options: some) => {
-  console.log(configs().BASE_URL);
   return request({
     baseURL: configs().BASE_URL,
     ...options,

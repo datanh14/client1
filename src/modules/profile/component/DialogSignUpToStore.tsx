@@ -50,14 +50,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {
   //   indexDefaut: number;
-    item: some;
+  item: some;
   //   fetchData: () => void;
 }
 
 const DialogSignUpToStore: React.FC<RouteComponentProps<any> & Props> = (
   props
 ) => {
-    const { item } = props;
+  const { item } = props;
   const [loading, setLoading] = React.useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
@@ -86,7 +86,7 @@ const DialogSignUpToStore: React.FC<RouteComponentProps<any> & Props> = (
       setLoading(true);
       const res: any = await actionAddStoreByUser({
         ...data,
-        OwnerID : item?.id,
+        OwnerID: item?.id,
       });
       if (res?.code === SUCCESS_CODE) {
         // const { data } = await actionGetEmployeesInfo();
@@ -97,7 +97,6 @@ const DialogSignUpToStore: React.FC<RouteComponentProps<any> & Props> = (
     } finally {
       setLoading(false);
     }
-    console.log(data);
   };
 
   return (

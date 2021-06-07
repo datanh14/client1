@@ -138,7 +138,6 @@ const Cart = (props: some) => {
         Quantity: data.count,
       });
       if (res?.code === SUCCESS_CODE) {
-        console.log("fetchAllProductInCart ok ");
       } else {
       }
     } catch (error) {}
@@ -182,7 +181,6 @@ const Cart = (props: some) => {
         ProductID: data.id,
       });
       if (res?.code === SUCCESS_CODE) {
-        console.log("actionAddProductToCart");
       } else {
       }
     } catch (error) {}
@@ -206,8 +204,8 @@ const Cart = (props: some) => {
         }
       } else {
       }
-    } catch (error) {}
-    finally {
+    } catch (error) {
+    } finally {
       setLoading(true);
     }
   };
