@@ -7,28 +7,28 @@ import {
   IconButton,
   Paper,
   Typography,
-} from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import AddIcon from "@material-ui/icons/Add";
-import AddBoxIcon from "@material-ui/icons/AddBox";
-import CheckIcon from "@material-ui/icons/Check";
-import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
-import ShareIcon from "@material-ui/icons/Share";
-import StarIcon from "@material-ui/icons/Star";
-import StorefrontIcon from "@material-ui/icons/Storefront";
-import Rating from "@material-ui/lab/Rating";
-import parse from "html-react-parser";
-import JSONbig from "json-bigint";
-import React, { useState } from "react";
-import { useParams, withRouter } from "react-router-dom";
+} from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import AddIcon from '@material-ui/icons/Add';
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import CheckIcon from '@material-ui/icons/Check';
+import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
+import ShareIcon from '@material-ui/icons/Share';
+import StarIcon from '@material-ui/icons/Star';
+import StorefrontIcon from '@material-ui/icons/Storefront';
+import Rating from '@material-ui/lab/Rating';
+import parse from 'html-react-parser';
+import JSONbig from 'json-bigint';
+import React, { useState } from 'react';
+import { useParams, withRouter } from 'react-router-dom';
 import {
   ACCOUNTS_ID,
   CART_LOCAL_STORAGE,
   some,
   SUCCESS_CODE,
-} from "../../../../constants/constants";
-import { formatter } from "../../../../utils/helpers/helpers";
-import { Col, Row } from "../../../common/Elements";
+} from '../../../../constants/constants';
+import { formatter } from '../../../../utils/helpers/helpers';
+import { Col, Row } from '../../../common/Elements';
 import {
   actionAddFollow,
   actionAddProductToCart,
@@ -37,22 +37,22 @@ import {
   actionLikeOrDislike,
   actionProductById,
   actionUnFollow,
-} from "../../../system/systemAction";
-import Comment from "../comments/Comment";
-import LoginDialog from "../dialog/LoginDialog";
-import PreviewDialog from "../dialog/PreviewDialog";
-import LoaddingPage from "../loading/LoaddingPage";
+} from '../../../system/systemAction';
+import Comment from '../comments/Comment';
+import LoginDialog from '../dialog/LoginDialog';
+import PreviewDialog from '../dialog/PreviewDialog';
+import LoaddingPage from '../loading/LoaddingPage';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "flex",
-      flexDirection: "column",
+      display: 'flex',
+      flexDirection: 'column',
       marginTop: 20,
     },
     grow: {
       flexGrow: 1,
-      background: "white",
+      background: 'white',
     },
     img: {
       // width: 400,
@@ -64,38 +64,38 @@ const useStyles = makeStyles((theme: Theme) =>
       // height: 70,
       marginRight: 13,
       borderRadius: 5,
-      display: "flex",
+      display: 'flex',
     },
     imgSmallBorder: {
       // width: 70,
       // height: 70,
       borderRadius: 5,
       marginRight: 13,
-      borderStyle: "solid",
-      display: "flex",
+      borderStyle: 'solid',
+      display: 'flex',
       borderWidth: 1,
     },
     content: {
-      display: "flex",
-      flexDirection: "row",
+      display: 'flex',
+      flexDirection: 'row',
     },
     details: {
-      display: "flex",
-      flexDirection: "column",
+      display: 'flex',
+      flexDirection: 'column',
     },
     price: {
       maxHeight: 30,
-      alignItems: "center",
-      display: "flex",
+      alignItems: 'center',
+      display: 'flex',
     },
     button: {
-      fontWeight: "bold",
+      fontWeight: 'bold',
     },
     grid: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      textAlign: "center",
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlign: 'center',
     },
   })
 );
@@ -116,7 +116,7 @@ const ProductDetail = (props: any) => {
   const [dataComment, setDataComment] = React.useState<any>();
   const [count, setCount] = React.useState<number>(1);
   const [userID, setUserID] = React.useState(
-    localStorage.getItem(ACCOUNTS_ID) || ""
+    localStorage.getItem(ACCOUNTS_ID) || ''
   );
   const [isFollow, setFollow] = React.useState(false);
 
@@ -241,7 +241,7 @@ const ProductDetail = (props: any) => {
   }, [dataProduct]);
 
   React.useEffect(() => {
-    setUserID(localStorage.getItem(ACCOUNTS_ID) || "");
+    setUserID(localStorage.getItem(ACCOUNTS_ID) || '');
   }, []);
 
   React.useEffect(() => {
@@ -255,7 +255,7 @@ const ProductDetail = (props: any) => {
   const handleAddToCart = () => {
     var check = false;
     var listProductInCart: some[] = JSONbig.parse(
-      localStorage.getItem(CART_LOCAL_STORAGE) || "[]"
+      localStorage.getItem(CART_LOCAL_STORAGE) || '[]'
     );
     if (listProductInCart === []) {
       listProductInCart = [
@@ -297,7 +297,7 @@ const ProductDetail = (props: any) => {
   };
 
   const handleFollow = () => {
-    userID === ""
+    userID === ''
       ? setOpenLoginDialog(true)
       : isFollow
       ? fetchUnFollow()
@@ -328,7 +328,7 @@ const ProductDetail = (props: any) => {
               xs={12}
               sm={4}
               direction="column"
-              style={{ display: "flex" }}
+              style={{ display: 'flex' }}
             >
               <img
                 style={{
@@ -337,9 +337,9 @@ const ProductDetail = (props: any) => {
                 }}
                 className={classes.img}
                 src={
-                  dataProduct?.message?.image !== ""
+                  dataProduct?.message?.image !== ''
                     ? dataProduct?.message?.images[index]
-                    : "https://vnpi-hcm.vn/wp-content/uploads/2018/01/no-image-800x600.png"
+                    : 'https://vnpi-hcm.vn/wp-content/uploads/2018/01/no-image-800x600.png'
                 }
                 alt={dataProduct?.message.name}
               />
@@ -379,9 +379,9 @@ const ProductDetail = (props: any) => {
                         height: sizeImageSmall,
                         marginRight: 10,
                         borderRadius: 5,
-                        display: "flex",
-                        textAlign: "center",
-                        justifyContent: "center",
+                        display: 'flex',
+                        textAlign: 'center',
+                        justifyContent: 'center',
                       }}
                       onClick={() => setIsOpenPreviewDialog(true)}
                     >
@@ -391,8 +391,8 @@ const ProductDetail = (props: any) => {
                           width: sizeImageSmall,
                           height: sizeImageSmall,
                           lineHeight: 1.8,
-                          color: "white",
-                          backgroundColor: "black",
+                          color: 'white',
+                          backgroundColor: 'black',
                           opacity: 0.7,
                           borderRadius: 5,
                           paddingTop: 5,
@@ -416,9 +416,9 @@ const ProductDetail = (props: any) => {
               </Row>
             </Grid>
             <Grid container xs={12} sm={8}>
-              <Grid item xs={8} style={{ flex: 1, alignContent: "center" }}>
+              <Grid item xs={8} style={{ flex: 1, alignContent: 'center' }}>
                 <Row>
-                  <Typography style={{ flexDirection: "column" }}>
+                  <Typography style={{ flexDirection: 'column' }}>
                     <Box
                       lineHeight={1.2}
                       textAlign="left"
@@ -457,7 +457,7 @@ const ProductDetail = (props: any) => {
                   <Col
                     style={{
                       padding: 15,
-                      backgroundColor: "#f5f5f5",
+                      backgroundColor: '#f5f5f5',
                       borderRadius: 5,
                     }}
                   >
@@ -480,7 +480,7 @@ const ProductDetail = (props: any) => {
                         <Box
                           fontSize={15}
                           marginLeft={1.5}
-                          style={{ textDecoration: "line-through" }}
+                          style={{ textDecoration: 'line-through' }}
                         >
                           {formatter(dataProduct?.message.price)}
                         </Box>
@@ -492,12 +492,13 @@ const ProductDetail = (props: any) => {
                             maxHeight: 30,
                             padding: 10,
                             marginLeft: 10,
-                            textAlign: "center",
+                            textAlign: 'center',
                             borderRadius: 5,
-                            backgroundColor: "#ff424e",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            display: "flex",
+                            backgroundColor: '#ff424e',
+                            alignItems: 'center',
+                            color: 'white',
+                            justifyContent: 'center',
+                            display: 'flex',
                           }}
                         >
                           {dataProduct?.message.discount}%
@@ -515,8 +516,8 @@ const ProductDetail = (props: any) => {
                       style={{
                         padding: 10,
                         marginTop: 10,
-                        borderTop: "1px solid #ededed",
-                        borderBottom: "1px solid #ededed",
+                        borderTop: '1px solid #ededed',
+                        borderBottom: '1px solid #ededed',
                       }}
                     >
                       Bạn hãy NHẬP ĐỊA CHỈ nhận hàng để được dự báo thời gian &
@@ -532,7 +533,7 @@ const ProductDetail = (props: any) => {
                         }}
                       >
                         <IndeterminateCheckBoxIcon
-                          style={{ color: "#eb4034" }}
+                          style={{ color: '#eb4034' }}
                         />
                       </IconButton>
                       <Typography>
@@ -550,22 +551,22 @@ const ProductDetail = (props: any) => {
                           setCount(count + 1);
                         }}
                       >
-                        <AddBoxIcon style={{ color: "#eb4034" }} />
+                        <AddBoxIcon style={{ color: '#eb4034' }} />
                       </IconButton>
                     </Row>
                     <Typography>
                       <Button
                         style={{
-                          width: "50%",
-                          textAlign: "center",
+                          width: '50%',
+                          textAlign: 'center',
                           padding: 10,
-                          color: "#ffffff",
-                          backgroundColor: "#eb4034",
+                          color: '#ffffff',
+                          backgroundColor: '#eb4034',
                           borderRadius: 5,
                           marginTop: 10,
                           marginBottom: 10,
                           fontSize: 15,
-                          fontWeight: "bold",
+                          fontWeight: 'bold',
                         }}
                         onClick={handleAddToCart}
                       >
@@ -611,7 +612,7 @@ const ProductDetail = (props: any) => {
                         sm={6}
                         className={classes.grid}
                         style={{
-                          borderRight: "1px solid #ededed",
+                          borderRight: '1px solid #ededed',
                         }}
                       >
                         <Typography>
@@ -621,7 +622,7 @@ const ProductDetail = (props: any) => {
                         </Typography>
                         <StarIcon
                           style={{
-                            color: "#ffea00",
+                            color: '#ffea00',
                             height: 20,
                             width: 20,
                             marginLeft: 2,
@@ -634,7 +635,7 @@ const ProductDetail = (props: any) => {
                         sm={6}
                         className={classes.grid}
                         style={{
-                          borderLeft: "1px solid #ededed",
+                          borderLeft: '1px solid #ededed',
                         }}
                       >
                         <Typography>
@@ -675,14 +676,14 @@ const ProductDetail = (props: any) => {
                           className={classes.button}
                           startIcon={
                             isFollow ? (
-                              <CheckIcon style={{ color: "blue" }} />
+                              <CheckIcon style={{ color: 'blue' }} />
                             ) : (
                               <AddIcon />
                             )
                           }
                           onClick={handleFollow}
                         >
-                          {isFollow ? "Đã theo dõi" : "Theo dõi"}
+                          {isFollow ? 'Đã theo dõi' : 'Theo dõi'}
                         </Button>
                         <LoginDialog
                           isOpen={openLoginDialog}
@@ -705,7 +706,7 @@ const ProductDetail = (props: any) => {
               <Box fontSize={30} style={{ marginBottom: 20 }}>
                 Thông tin chi tiết
               </Box>
-            </Typography>{" "}
+            </Typography>{' '}
             {parse(dataProduct?.message.detail)}
           </Paper>
           <Paper elevation={0} style={{ marginTop: 20, padding: 20 }}>
@@ -740,9 +741,9 @@ const ProductDetail = (props: any) => {
                 <Col
                   style={{
                     minHeight: 200,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}
                 >
                   <img
