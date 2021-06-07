@@ -117,7 +117,7 @@ const Product = (props: any) => {
                 padding: 2,
               }}
             >
-              <p>{data.discount}%</p>
+              <Typography>{data.discount}%</Typography>
             </Box>
           )}
         </Box>
