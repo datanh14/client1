@@ -1,5 +1,6 @@
 // import { FormattedMessage } from 'react-intl';
 import {
+  Box,
   Container,
   Divider,
   InputBase,
@@ -76,7 +77,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     searchIcon: {
-      padding: theme.spacing(0, 2),
+      padding: theme.spacing(0, 1),
       height: "100%",
       position: "absolute",
       pointerEvents: "none",
@@ -127,8 +128,8 @@ const DetailCategory = (props: some) => {
         setDataListProductChild(res);
       } else {
       }
-    } catch (error) {}
-    finally {
+    } catch (error) {
+    } finally {
       setLoading(true);
     }
   };
@@ -145,7 +146,7 @@ const DetailCategory = (props: some) => {
     <div style={{ marginTop: 30, minHeight: 704 }}>
       {!loading && <LoaddingPage isOpen={!loading} />}
       <div style={{ display: "flex" }}>
-        <Col style={{ flex: 1, minWidth: 275, maxWidth: 275, marginRight:10, }}>
+        <Col style={{ flex: 1, minWidth: 275, maxWidth: 275, marginRight: 10 }}>
           <Paper style={{ padding: 12 }}>
             <Typography
               variant="body2"
@@ -170,14 +171,14 @@ const DetailCategory = (props: some) => {
                 )
               )}
             <Divider />
-            <Typography
+            {/* <Typography
               variant="body2"
               style={{ fontWeight: "bold", marginBottom: 12 }}
             >
               {intl.formatMessage({ id: "IDS_APP_DELIVERY_ADDRESS" })}
             </Typography>
-            <Typography variant="body2">Tổ 7 Khu 6 Mông Dương</Typography>{" "}
-            <Divider />
+            <Typography variant="body2">Tổ 7 Khu 6 Mông Dương</Typography>{" "} */}
+            {/* <Divider /> */}
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -295,20 +296,44 @@ const DetailCategory = (props: some) => {
               {nameListProduct}
             </Typography>
             {/* <SliderAds /> */}
-            <Row
-              style={{
-                flexWrap: "wrap",
-                margin: "0 auto",
-                width: "100%",
-              }}
-            >
-              {dataListProductChild !== undefined &&
-                dataListProductChild.message.productsList.map(
+
+            {dataListProductChild !== undefined &&
+            dataListProductChild.message.productsList.length > 0 ? (
+              <Row
+                style={{
+                  flexWrap: "wrap",
+                  margin: "0 auto",
+                  width: "100%",
+                }}
+              >
+                {dataListProductChild.message.productsList.map(
                   (item: some, index: number) => {
                     return <Product key={index} data={item} />;
                   }
                 )}
-            </Row>
+              </Row>
+            ) : (
+              <Col
+                style={{
+                  minHeight: 500,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <img
+                  style={{
+                    minWidth: 100,
+                    maxWidth: 100,
+                  }}
+                  alt="Không có sản phẩm"
+                  src="https://www.orientappliances.pk//images/no.svg"
+                />
+                <Typography>
+                  <Box fontSize={15}>Không có sản phẩm</Box>
+                </Typography>
+              </Col>
+            )}
           </Paper>
         </Col>
       </div>
