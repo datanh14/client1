@@ -27,6 +27,13 @@ export const actionGetAllProduct = (params?: some) => {
     params,
   });
 };
+export const actionCategoryAll = (params?: some) => {
+  return api({
+    method: "get",
+    url: "/Category/CategoryAll",
+    params,
+  });
+};
 export const actionProductInChild = (params?: some) => {
   return api({
     method: "get",

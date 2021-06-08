@@ -149,7 +149,7 @@ const DetailCategory = (props: some) => {
         <Col style={{ flex: 1, minWidth: 275, maxWidth: 275, marginRight: 10 }}>
           <Paper style={{ padding: 12 }}>
             <Typography
-              variant="body2"
+              variant="h6"
               style={{ fontWeight: "bold", marginBottom: 12 }}
             >
               {intl.formatMessage({ id: "IDS_APP_LIST_PRODUCT" })}

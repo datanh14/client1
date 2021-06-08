@@ -9,7 +9,11 @@ import {
   withRouter,
 } from "react-router-dom";
 import { GREY_100 } from "../assets/theme/colors";
-import { some, WIDTH_PRODUCT } from "../constants/constants";
+import {
+  CART_LOCAL_STORAGE,
+  some,
+  WIDTH_PRODUCT,
+} from "../constants/constants";
 import { routes } from "../constants/routes";
 import { PageWrapper } from "../modules/common/Elements";
 import LoadingIcon from "../modules/common/LoadingIcon";
@@ -23,6 +27,8 @@ import Footer from "../modules/app_manager/components/footer/Footer";
 import DetailCategory from "../modules/app_manager/detailCategory/DetailCategory";
 import profilePage from "../modules/profile/profilePage";
 import StoreDetail from "../modules/app_manager/components/store/StoreDetail";
+import { ProductCount } from "../models/object";
+import JSONbig from "json-bigint";
 
 const SIDE_BAR_MENU: some[] = [
   {
@@ -74,6 +80,9 @@ const MainLayout: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const homeRef = React.useRef<HTMLDivElement>(null);
   const classes = mainStyles();
   const size = useWindowSize();
+  const [countProduct, setCountProduct] = React.useState(
+    JSONbig.parse(localStorage.getItem(CART_LOCAL_STORAGE) || "[]").length
+  );
 
   React.useEffect(() => {
     homeRef.current &&
@@ -104,32 +113,34 @@ const MainLayout: React.FC<RouteComponentProps<any> & Props> = (props) => {
   }
 
   return (
-    <PageWrapper style={{ background: GREY_100 }}>
-      <DefaultHelmet profile={profile} />
-      <CssBaseline />
-      <main
-        className={classes.content}
-        style={{
-          transition: "linear 225ms",
-          paddingLeft: (size.width - 1178) / 2 - 25,
-          paddingRight: (size.width - 1178) / 2 - 25,
-        }}
-      >
-        <React.Suspense fallback={<LoadingIcon />}>
-          <Switch>
-            {[...SIDE_BAR_MENU].map((item: some) => (
-              <Route
-                exact
-                path={item.route}
-                component={item.component}
-                key={item.route}
-              />
-            ))}
-          </Switch>
-        </React.Suspense>
-      </main>
-      <Footer />
-    </PageWrapper>
+    <ProductCount.Provider value={{ countProduct, setCountProduct }}>
+      <PageWrapper style={{ background: GREY_100 }}>
+        <DefaultHelmet profile={profile} />
+        <CssBaseline />
+        <main
+          className={classes.content}
+          style={{
+            transition: "linear 225ms",
+            paddingLeft: (size.width - 1178) / 2 - 25,
+            paddingRight: (size.width - 1178) / 2 - 25,
+          }}
+        >
+          <React.Suspense fallback={<LoadingIcon />}>
+            <Switch>
+              {[...SIDE_BAR_MENU].map((item: some) => (
+                <Route
+                  exact
+                  path={item.route}
+                  component={item.component}
+                  key={item.route}
+                />
+              ))}
+            </Switch>
+          </React.Suspense>
+        </main>
+        <Footer />
+      </PageWrapper>
+    </ProductCount.Provider>
   );
 };
 

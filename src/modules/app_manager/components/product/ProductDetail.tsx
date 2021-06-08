@@ -29,6 +29,7 @@ import {
   some,
   SUCCESS_CODE,
 } from '../../../../constants/constants';
+import { ProductCount } from '../../../../models/object';
 import { formatter } from '../../../../utils/helpers/helpers';
 import { Col, Row } from '../../../common/Elements';
 import {
@@ -123,7 +124,10 @@ const ProductDetail = (props: any) => {
   );
   const [isFollow, setFollow] = React.useState(false);
   const numberProduct = Number(localStorage.getItem('countProduct'));
-
+  const { countProduct, setCountProduct } = React.useContext(ProductCount) as {
+    countProduct: number;
+    setCountProduct: React.Dispatch<React.SetStateAction<number>>;
+  };
   const fetchListProduct = async () => {
     try {
       const res: some = await actionProductById({
@@ -230,11 +234,10 @@ const ProductDetail = (props: any) => {
   React.useEffect(() => {
     fetchListProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idProduct, isFollow, id]);
+  }, [idProduct, isFollow]);
 
   React.useEffect(() => {
     setIdProduct(id.id);
-    setLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
@@ -294,6 +297,8 @@ const ProductDetail = (props: any) => {
       CART_LOCAL_STORAGE,
       JSONbig.stringify(listProductInCart)
     );
+    // Truyền useCOntext
+    setCountProduct(listProductInCart.length)
   };
 
   const onCloseDialog = () => {

@@ -1,9 +1,18 @@
 // import { FormattedMessage } from 'react-intl';
-import { Box, Button, Container } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Paper,
+  Typography,
+} from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { some, SUCCESS_CODE } from "../../constants/constants";
+import CategoryProduct from "../app_manager/components/category/CategoryProduct";
 import LoaddingPage from "../app_manager/components/loading/LoaddingPage";
 import Product from "../app_manager/components/product/Product";
 import CarouselProduct from "../app_manager/components/slider/CarouselProduct";
@@ -29,8 +38,8 @@ const Home = (props: some) => {
         setData((data) => [...data, ...res.message.productsList]);
       } else {
       }
-    } catch (error) {}
-    finally {
+    } catch (error) {
+    } finally {
       setLoading(true);
     }
   };
@@ -60,22 +69,40 @@ const Home = (props: some) => {
         ></Row>
         <Container maxWidth="xl">
           <CarouselProduct />
-          <div>
-            <Row
+          <CategoryProduct />
+          <Paper
+            elevation={0}
+            style={{
+              marginBottom: 25,
+            }}
+          >
+            <Typography
+              color="textSecondary"
+              gutterBottom
+              variant="h5"
               style={{
-                display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "flex-start",
-                margin: "0 auto",
-                width: "100%",
+                padding: 15,
               }}
             >
-              {data !== undefined &&
-                data.map((item: some, index: number) => {
-                  return <Product key={index} data={item} />;
-                })}
-            </Row>
-          </div>
+              Danh sách sản phẩm
+            </Typography>
+            <div>
+              <Row
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "flex-start",
+                  margin: "0 auto",
+                  width: "100%",
+                }}
+              >
+                {data !== undefined &&
+                  data.map((item: some, index: number) => {
+                    return <Product key={index} data={item} />;
+                  })}
+              </Row>
+            </div>
+          </Paper>
 
           <Row
             style={{

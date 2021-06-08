@@ -115,7 +115,7 @@ const ProductCart: React.FC<RouteComponentProps<some> & Props> = (props) => {
   }, []);
 
   return ( 
-    <div className={classes.root}>
+    <div className={classes.root} key={data?.id}>
       {data !== undefined && loading && (
         <Grid
           container

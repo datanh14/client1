@@ -22,6 +22,7 @@ import {
   SUCCESS_CODE,
 } from '../constants/constants';
 import { routes } from '../constants/routes';
+import { ProductCount } from '../models/object';
 import { Col, Row } from '../modules/common/Elements';
 import SearchBox from '../modules/profile/component/SearchBox';
 import { actionGetAllProduct } from '../modules/system/systemAction';
@@ -87,6 +88,10 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   );
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const { countProduct, setCountProduct } = React.useContext(ProductCount) as {
+    countProduct: number;
+    setCountProduct: React.Dispatch<React.SetStateAction<number>>;
+  };
 
   useEffect(() => {
     setLogin(userProfile?.userName !== undefined); // eslint-disable-next-line
@@ -145,14 +150,12 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
     props?.history?.push(route);
   };
   const gotoDetailCategory = (id: number) => {
-    props?.history?.push(`/`);
-    props?.history?.push(`detail-category/${id}`);
+    props?.history?.push(`/detail-category/${id}`);
   };
 
   const gotoCart = (route: string) => props?.history?.push(route);
   const gotoProfile = (route: string) => {
-    props?.history?.push(`/`);
-    props?.history?.push(`customer`);
+    props?.history?.push(`/customer`);
   };
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -411,14 +414,15 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                   <div
                     style={{
                       backgroundColor: 'orange',
-                      padding: '2px 9px',
-                      borderRadius: 100,
+                      width: 25,
+                      height: 25,
+                      borderRadius: "50%",
                       position: 'absolute',
                       top: 0,
                     }}
                   >
-                    <Typography style={{ fontSize: '10px' }}>
-                      {localStorage.getItem('countProduct')}
+                    <Typography style={{ fontSize: '13px', marginTop:2 }}>
+                      {countProduct}
                     </Typography>
                   </div>
                 </IconButton>

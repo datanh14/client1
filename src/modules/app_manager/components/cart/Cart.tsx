@@ -14,6 +14,7 @@ import {
   SUCCESS_CODE,
 } from '../../../../constants/constants';
 import { routes } from '../../../../constants/routes';
+import { ProductCount } from '../../../../models/object';
 import { formatter } from '../../../../utils/helpers/helpers';
 import { Row } from '../../../common/Elements';
 import {
@@ -57,7 +58,7 @@ const Cart = (props: some) => {
   const [isGetAll, setIsGetAll] = React.useState(
     localStorage.getItem(GET_CART_LOCAL_STORAGE)
   );
-  const [countProduct, setCountProduct] = React.useState(0);
+  const [countAllProduct, setCountAllProduct] = React.useState(0);
   const [userID, setUserID] = React.useState(
     localStorage.getItem(ACCOUNTS_ID) || ''
   );
@@ -66,6 +67,10 @@ const Cart = (props: some) => {
   const [indexDefaut, setIndexDefaut] = React.useState(-1);
   const [loading, setLoading] = React.useState(false);
   const [openLoginDialog, setOpenLoginDialog] = React.useState(false);
+  const { countProduct, setCountProduct } = React.useContext(ProductCount) as {
+    countProduct: number;
+    setCountProduct: React.Dispatch<React.SetStateAction<number>>;
+  };
 
   const handleBill = () => {
     var sum = 0;
@@ -77,7 +82,7 @@ const Cart = (props: some) => {
         count = count + item.count;
       });
     setBill(sum);
-    setCountProduct(count);
+    setCountAllProduct(count);
   };
 
   const changeCount = (index: number, count: number) => {
@@ -88,7 +93,7 @@ const Cart = (props: some) => {
       { ...temp },
       ...cart.slice(index + 1),
     ];
-    fetchAddProductToCart(temp);
+    userID !== "" && fetchAddProductToCart(temp);
     setCart(listProductInCart);
     localStorage.setItem(
       CART_LOCAL_STORAGE,
@@ -105,6 +110,8 @@ const Cart = (props: some) => {
     if (userID !== '') {
       fetchDeleteProductFromCart(temp);
     }
+     // Truyền useContext
+     setCountProduct(list.length)
   };
 
   const fetchAllProductInCart = async () => {
@@ -229,9 +236,7 @@ const Cart = (props: some) => {
     fetchGetAddressByUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  React.useEffect(() => {
-    localStorage.setItem('countProduct', countProduct.toString());
-  }, [countProduct]);
+ 
 
   return (
     <>
@@ -263,7 +268,7 @@ const Cart = (props: some) => {
               color: 'black',
             }}
           >
-            ({countProduct} sản phẩm)
+            ({countAllProduct} sản phẩm)
           </Box>
         </Typography>
       </Row>
@@ -287,7 +292,7 @@ const Cart = (props: some) => {
                   {cart.map((item: some, index: number) => {
                     return (
                       <ProductCart
-                        key={index}
+                        key={item?.id}
                         index={index}
                         data={item}
                         changeCount={changeCount}
