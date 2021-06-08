@@ -244,7 +244,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
             >
               <Typography
                 className={classes.title}
-                variant="h6"
+                variant="h5"
                 noWrap
                 style={{
                   marginRight: 10,
@@ -275,7 +275,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                     <Col>
                       <Typography
                         style={{
-                          fontSize: 10,
+                          fontSize: 14,
                           paddingTop: 10,
                           textAlign: 'left',
                         }}
@@ -285,7 +285,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                       </Typography>
                       <Typography
                         style={{
-                          fontSize: 12,
+                          fontSize: 14,
                           paddingBottom: 10,
                           fontWeight: 'bold',
                         }}
@@ -371,7 +371,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                       <Col>
                         <Typography
                           style={{
-                            fontSize: 10,
+                            fontSize: 14,
                             paddingTop: 10,
                             textAlign: 'left',
                           }}
@@ -380,7 +380,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                           Tài khoản
                         </Typography>
                         <Typography
-                          style={{ fontSize: 10, paddingBottom: 10 }}
+                          style={{ fontSize: 14, paddingBottom: 10 }}
                           variant="body2"
                         >
                           {userProfile?.userName}
@@ -407,7 +407,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                 >
                   <Row>
                     <ShoppingCartIcon fontSize="large" />
-                    <Typography style={{ fontSize: 10, paddingTop: 12 }}>
+                    <Typography style={{ fontSize: 14, paddingTop: 12 }}>
                       Giỏ hàng
                     </Typography>
                   </Row>
