@@ -46,7 +46,7 @@ const DialogAddComment: React.FC<RouteComponentProps<any> & Props> = (
   const [valid, setValid] = useState<boolean>(false);
   const [value, setValue] = React.useState<number | null>(0);
   const [hover, setHover] = React.useState(-1);
-
+  const formId = "formDialogAddcomment" + productId;
   const schema = yup.object().shape({
     Comment: yup
       .string()
@@ -126,7 +126,7 @@ const DialogAddComment: React.FC<RouteComponentProps<any> & Props> = (
         Nhận xét
       </Button>
       <form
-        id="formDialog"
+        id={formId}
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="none"
       >
@@ -226,7 +226,7 @@ const DialogAddComment: React.FC<RouteComponentProps<any> & Props> = (
                 fontStyle: "unset",
               }}
               type="submit"
-              form="formDialog"
+              form={formId}
             >
               Nhận xét
             </Button>
