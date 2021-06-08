@@ -1,4 +1,4 @@
-import { Avatar, Box, Container, Paper, Popper } from '@material-ui/core';
+import { Avatar, Container, Paper, Popper } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
@@ -10,6 +10,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import JSONbig from 'json-bigint';
 import React, { useEffect } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import {
@@ -22,9 +23,8 @@ import {
 } from '../constants/constants';
 import { routes } from '../constants/routes';
 import { Col, Row } from '../modules/common/Elements';
-import { actionGetAllProduct } from '../modules/system/systemAction';
-import JSONbig from 'json-bigint';
 import SearchBox from '../modules/profile/component/SearchBox';
+import { actionGetAllProduct } from '../modules/system/systemAction';
 interface Props {
   readonly profile?: some;
 }
@@ -272,6 +272,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                   // onClick={handleClickAgent}
                   onMouseEnter={handlePopoverOpen}
                   onMouseLeave={handlePopoverClose}
+                  style={{ borderRadius: 0 }}
                 >
                   <Row>
                     <MenuIcon fontSize="large" />
@@ -344,7 +345,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                 justifyContent: 'flex-end',
               }}
             >
-            <SearchBox />
+              <SearchBox />
             </Row>
             <Row
               style={{
@@ -363,6 +364,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                     aria-haspopup="true"
                     onClick={handleProfileMenuOpen}
                     color="inherit"
+                    style={{ borderRadius: 0 }}
                   >
                     <Row>
                       <Avatar
@@ -392,7 +394,10 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                   </IconButton>
                 </Row>
               </div>
-              <div className={classes.sectionDesktop}>
+              <div
+                className={classes.sectionDesktop}
+                style={{ position: 'relative' }}
+              >
                 <IconButton
                   edge="end"
                   aria-label="account of current user"
@@ -402,6 +407,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                   onClick={() => {
                     gotoCart(routes.PRODUCT_CART);
                   }}
+                  style={{ borderRadius: 0 }}
                 >
                   <Row>
                     <ShoppingCartIcon fontSize="large" />
@@ -409,6 +415,19 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                       Giỏ hàng
                     </Typography>
                   </Row>
+                  <div
+                    style={{
+                      backgroundColor: 'orange',
+                      padding: '2px 9px',
+                      borderRadius: 100,
+                      position: 'absolute',
+                      top: 0,
+                    }}
+                  >
+                    <Typography style={{ fontSize: '10px' }}>
+                      {localStorage.getItem('countProduct')}
+                    </Typography>
+                  </div>
                 </IconButton>
               </div>
               <div className={classes.sectionMobile}>
