@@ -22,6 +22,7 @@ import JSONbig from 'json-bigint';
 import React, { useState } from 'react';
 import { useParams, withRouter } from 'react-router-dom';
 import { FacebookShareButton } from 'react-share';
+import useResizeObserver from 'use-resize-observer';
 import {
   ACCOUNTS_ID,
   CART_LOCAL_STORAGE,
@@ -43,7 +44,6 @@ import Comment from '../comments/Comment';
 import LoginDialog from '../dialog/LoginDialog';
 import PreviewDialog from '../dialog/PreviewDialog';
 import LoaddingPage from '../loading/LoaddingPage';
-import useResizeObserver from 'use-resize-observer';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -103,15 +103,13 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 const ProductDetail = (props: any) => {
-  const { productId } = props;
+  // const {} = props;
   const classes = useStyles();
   const id: some = useParams();
-  const imageRef = React.useRef<HTMLDivElement>(null);
   const ref = React.useRef<HTMLDivElement>(null);
-  const { width, height } = useResizeObserver<HTMLDivElement>({ ref });
+  const { width } = useResizeObserver<HTMLDivElement>({ ref });
   const [sizeImage, setSizeImage] = useState(0);
   const [loading, setLoading] = React.useState(false);
-  const [storeData, setStoreData] = React.useState<some>({});
   const [sizeImageSmall, setSizeImageSmall] = useState(0);
   const [index, setIndex] = useState(0);
   const [isOpenPreviewDialog, setIsOpenPreviewDialog] = React.useState(false);
@@ -124,7 +122,6 @@ const ProductDetail = (props: any) => {
     localStorage.getItem(ACCOUNTS_ID) || ''
   );
   const [isFollow, setFollow] = React.useState(false);
-  const styleZoom = { width: 400, height: 250, zoomWidth: 500, img: '1.jpg' };
   const numberProduct = Number(localStorage.getItem('countProduct'));
 
   const fetchListProduct = async () => {

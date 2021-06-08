@@ -1,6 +1,7 @@
 // import { FormattedMessage } from 'react-intl';
 import { Box, Button, Grid, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import JSONbig from 'json-bigint';
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -12,23 +13,21 @@ import {
   some,
   SUCCESS_CODE,
 } from '../../../../constants/constants';
-import { Row } from '../../../common/Elements';
-import ProductCart from './ProductCart';
-import JSONbig from 'json-bigint';
+import { routes } from '../../../../constants/routes';
 import { formatter } from '../../../../utils/helpers/helpers';
-import EmptyCart from './EmptyCart';
+import { Row } from '../../../common/Elements';
 import {
   actionAddProductToCart,
-  actionDeleteProductFromCart,
-  actionGetAllProductInCart,
-  actionGetAddressByUser,
-  actionConfirmPayment,
   actionDeleteAllCart,
+  actionDeleteProductFromCart,
+  actionGetAddressByUser,
+  actionGetAllProductInCart,
 } from '../../../system/systemAction';
-import DialogChangeAddress from './DialogChangeAddress';
-import { routes } from '../../../../constants/routes';
-import LoaddingPage from '../loading/LoaddingPage';
 import LoginDialog from '../dialog/LoginDialog';
+import LoaddingPage from '../loading/LoaddingPage';
+import DialogChangeAddress from './DialogChangeAddress';
+import EmptyCart from './EmptyCart';
+import ProductCart from './ProductCart';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -53,9 +52,7 @@ const Cart = (props: some) => {
   const [cart, setCart] = React.useState<some[]>(
     JSONbig.parse(localStorage.getItem(CART_LOCAL_STORAGE) || '[]')
   );
-  const [profile, setProfile] = React.useState<some>(
-    JSONbig.parse(localStorage.getItem(ACCOUNTS) || '{}')
-  );
+  const profile = JSONbig.parse(localStorage.getItem(ACCOUNTS) || '{}');
   const [bill, setBill] = React.useState(0);
   const [isGetAll, setIsGetAll] = React.useState(
     localStorage.getItem(GET_CART_LOCAL_STORAGE)
@@ -223,16 +220,17 @@ const Cart = (props: some) => {
   React.useEffect(() => {
     handleBill();
     // addAllProductToCart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cart]);
 
   React.useEffect(() => {
     setUserID(localStorage.getItem(ACCOUNTS_ID) || '');
     addAllProductToCart();
     fetchGetAddressByUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   React.useEffect(() => {
     localStorage.setItem('countProduct', countProduct.toString());
-    // addAllProductToCart();
   }, [countProduct]);
 
   return (

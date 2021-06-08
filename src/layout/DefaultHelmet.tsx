@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
-  const { profile } = props;
+  // const { profile } = props;
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [data, setData] = React.useState<any>();
@@ -77,13 +77,6 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
   const [anchorElMenu, setAnchorElMenu] = React.useState<HTMLElement | null>(
     null
   );
-  const [anchorElMenuAgent, setAnchorElMenuAgent] = React.useState(null);
-  const handleClickAgent = (event: any) => {
-    setAnchorElMenuAgent(event.currentTarget);
-  };
-  const handleCloseAgent = () => {
-    setAnchorElMenuAgent(null);
-  };
   const open = Boolean(anchorElMenu);
   const [
     mobileMoreAnchorEl,
