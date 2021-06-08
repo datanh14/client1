@@ -115,8 +115,8 @@ const DialogDetailPayment: React.FC<Props> = (props) => {
       dataIndex: "id",
       render: (text: any, record: any) => {
         return (
-          <Row key={record?.id}>
-            <DialogAddComment productId={record?.id} />
+          <Row key={record?.Product.ID}>
+            <DialogAddComment productId={record?.Product.ID} />
           </Row>
         );
       },
