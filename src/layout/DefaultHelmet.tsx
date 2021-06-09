@@ -138,6 +138,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
     setAnchorEl(null);
     setAnchorElMenu(null);
     setLogin(false);
+    setCountProduct(0);
   };
 
   const handleMenuLogin = (route: string) => props?.history?.push(route);

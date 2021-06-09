@@ -83,6 +83,7 @@ const Cart = (props: some) => {
       });
     setBill(sum);
     setCountAllProduct(count);
+    setCountProduct(cart.length);
   };
 
   const changeCount = (index: number, count: number) => {
