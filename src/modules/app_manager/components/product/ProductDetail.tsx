@@ -442,7 +442,7 @@ const ProductDetail = (props: any) => {
                     </Box>
                     <Rating
                       name="half-rating-read"
-                      defaultValue={dataProduct?.message.ratingsCount}
+                      defaultValue={dataProduct?.message.star}
                       precision={0.5}
                       readOnly
                     />
@@ -680,6 +680,9 @@ const ProductDetail = (props: any) => {
                           variant="outlined"
                           color="default"
                           className={classes.button}
+                          style={{
+                            height: "100%"
+                          }}
                           startIcon={<StorefrontIcon />}
                           onClick={gotoStore}
                         >
