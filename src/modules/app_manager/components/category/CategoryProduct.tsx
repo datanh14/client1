@@ -23,6 +23,13 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 10,
       margin: 10,
     },
+    hover: {
+      "&:hover": {
+        borderWidth: 1,
+        borderColor: "orange",
+        borderStyle: "solid",
+      },
+    },
   })
 );
 const CategoryProduct = (props: some) => {
@@ -90,6 +97,7 @@ const CategoryProduct = (props: some) => {
                           alignItems: "center",
                           width: "100%",
                           height: "100%",
+                          cursor: "pointer",
                           // backgroundColor: idx % 2 === 0 ? "red" : "blue",
                         }}
                         onClick={() => {
@@ -108,6 +116,7 @@ const CategoryProduct = (props: some) => {
                             borderRadius: 5,
                             marginBottom: 10,
                           }}
+                          className={classes.hover}
                         />
                         <Typography
                           style={{
