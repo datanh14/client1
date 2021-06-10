@@ -16,7 +16,7 @@ import {
 import { routes } from '../../../../constants/routes';
 import { ProductCount } from '../../../../models/object';
 import { formatter } from '../../../../utils/helpers/helpers';
-import { Row } from '../../../common/Elements';
+import { Col, Row } from '../../../common/Elements';
 import {
   actionAddProductToCart,
   actionDeleteAllCart,
@@ -283,10 +283,8 @@ const Cart = (props: some) => {
                     width: '100%',
                   }}
                 ></Row>
-                <Row
+                <Col
                   style={{
-                    flexWrap: 'wrap',
-                    margin: '0 auto',
                     width: '100%',
                   }}
                 >
@@ -301,7 +299,7 @@ const Cart = (props: some) => {
                       />
                     );
                   })}
-                </Row>
+                </Col>
               </Box>
             </Grid>
             <Grid item xs={12} sm={4} style={{ width: '100%' }}>

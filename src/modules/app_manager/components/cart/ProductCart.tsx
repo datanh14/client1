@@ -123,6 +123,7 @@ const ProductCart: React.FC<RouteComponentProps<some> & Props> = (props) => {
             marginBottom: 20,
             backgroundColor: "white",
             padding: 20,
+            width: "100%"
           }}
         >
           <Grid item xs={12}>
@@ -206,7 +207,8 @@ const ProductCart: React.FC<RouteComponentProps<some> & Props> = (props) => {
           <Grid item xs={12} sm={2}>
             <img
               style={{
-                width: "100%",
+                width: 100,
+                height: 100,
                 borderRadius: 10,
                 cursor: "pointer",
               }}

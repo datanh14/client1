@@ -79,7 +79,7 @@ const Product = (props: any) => {
         </Typography>
         <Rating
           name="customized-10"
-          defaultValue={data.ratingsCount}
+          defaultValue={data.star}
           max={5}
           size="small"
           readOnly={true}

@@ -16,6 +16,7 @@ const labels: { [index: string]: string } = {
   0: "Đang giao",
   1: "Đã giao",
   2: "Đã hủy",
+  3: "Chưa hoàn thành đơn",
 };
 
 const OrderManagement = () => {
