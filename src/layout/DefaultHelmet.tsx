@@ -259,7 +259,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
               >
                 TIKO DUT
               </Typography>
-              <Row style={{ width: 200 }}>
+              <Row style={{ width: 150 }}>
                 <IconButton
                   edge="start"
                   color="inherit"
@@ -339,7 +339,6 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
               style={{
                 flex: 2,
                 display: 'flex',
-                justifyContent: 'flex-end',
               }}
             >
               <SearchBox />
@@ -353,7 +352,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
             >
               <div className={classes.grow} />
               <div className={classes.sectionDesktop}>
-                <Row style={{ width: 120 }}>
+                <Row style={{ width: 150 }}>
                   <IconButton
                     edge="end"
                     aria-label="account of current user"

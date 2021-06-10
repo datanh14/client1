@@ -50,6 +50,14 @@ export const actionProductFollowing = (params?: some) => {
   });
 };
 
+export const actionGetCityList = (params?: some) => {
+  return api({
+    method: "get",
+    url: "/Address/GetCityList",
+    params,
+  });
+};
+
 export const actionProductById = (params?: some) => {
   return api({
     method: "get",

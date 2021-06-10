@@ -109,6 +109,8 @@ const DetailCategory = (props: some) => {
       if (res?.code === SUCCESS_CODE) {
         setDataCategoryChild(res);
         setNameListProduct(res?.message.name);
+        setIdProductChild(id.id);
+        reset();
       } else {
       }
     } catch (error) {}
@@ -142,9 +144,16 @@ const DetailCategory = (props: some) => {
     fetchListProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, idProductChild, star, fromPrice, toPrice, searchKey]);
+
+  const reset = () => {
+    setStar(undefined);
+    setFromPrice(undefined);
+    setToPrice(undefined);
+    setSearchKey("");
+  };
   return (
     <div style={{ marginTop: 30, minHeight: 704 }}>
-      {!loading && <LoaddingPage isOpen={!loading} />}
+      {/* {!loading && <LoaddingPage isOpen={!loading} />} */}
       <div style={{ display: "flex" }}>
         <Col style={{ flex: 1, minWidth: 275, maxWidth: 275, marginRight: 10 }}>
           <Paper style={{ padding: 12 }}>
@@ -161,6 +170,7 @@ const DetailCategory = (props: some) => {
                     onClick={() => {
                       setIdProductChild(data.id);
                       setNameListProduct(data.name);
+                      reset();
                     }}
                     key={i}
                     variant="body2"
@@ -308,7 +318,7 @@ const DetailCategory = (props: some) => {
               >
                 {dataListProductChild.message.productsList.map(
                   (item: some, index: number) => {
-                    return <Product key={index} data={item} />;
+                    return <Product key={item?.id} data={item} />;
                   }
                 )}
               </Row>
