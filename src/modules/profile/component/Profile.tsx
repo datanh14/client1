@@ -37,15 +37,16 @@ const Profile = () => {
   const handleOk = () => {
     setIsModalVisible(false);
     Axios.post(urlprofile, {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
       Email: data.Email,
       firstname: data.firstname,
       lastname: data.lastname,
       dateofbirth: data.dateofbirth,
       gender: data.gender,
       phonenumber: data.phonenumber,
+    }, {
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
     }).then((res) => {});
   };
   const handleCancel = () => {
@@ -95,11 +96,12 @@ const Profile = () => {
   const handleOkPass = () => {
     setIsModalVisiblePass(false);
     Axios.post(urlpass, {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
       Password: pass.Password,
       NewPassword: pass.NewPassword,
+    }, {
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
     }).then((res) => {});
   };
 
