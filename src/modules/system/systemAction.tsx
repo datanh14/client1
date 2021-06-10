@@ -42,6 +42,14 @@ export const actionProductInChild = (params?: some) => {
   });
 };
 
+export const actionProductFollowing = (params?: some) => {
+  return api({
+    method: "get",
+    url: "/Product/GetProductFollowing",
+    params,
+  });
+};
+
 export const actionProductById = (params?: some) => {
   return api({
     method: "get",

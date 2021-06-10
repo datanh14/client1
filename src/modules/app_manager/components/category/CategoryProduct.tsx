@@ -55,7 +55,7 @@ const CategoryProduct = (props: some) => {
         }}
       >
         <CardContent>
-          <Typography color="textSecondary" variant="h5" gutterBottom>
+          <Typography color="textSecondary" variant="h6" gutterBottom>
             Danh mục sản phẩm
           </Typography>
           <Row
