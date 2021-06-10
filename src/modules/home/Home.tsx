@@ -71,6 +71,7 @@ const Home = (props: some) => {
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
+    setLoading(false);
   };
 
   const fetchListProduct = async () => {
@@ -111,11 +112,11 @@ const Home = (props: some) => {
 
   React.useEffect(() => {
     fetchListProduct();
-  }, [pageProduct]);
+  }, [pageProduct,value]);
 
   React.useEffect(() => {
-    userID !== "" && fetchListProductFollow();
-  }, [pageProductFollow]);
+    value === 1 && userID !== "" && fetchListProductFollow();
+  }, [pageProductFollow,value]);
 
   const handleClickMore = () => {
     setPageProduct((pageProduct) => pageProduct + 1);
