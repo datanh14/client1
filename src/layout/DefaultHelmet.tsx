@@ -420,6 +420,7 @@ const DefaultHelmet: React.FC<RouteComponentProps<any> & Props> = (props) => {
                       borderRadius: "50%",
                       position: 'absolute',
                       top: 0,
+                      marginLeft: -15,
                     }}
                   >
                     <Typography style={{ fontSize: '13px', marginTop:2 }}>
