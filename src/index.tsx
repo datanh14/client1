@@ -16,12 +16,8 @@ import * as serviceWorker from "./serviceWorker";
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker
     .register("../firebase-messaging-sw.js")
-    .then(function (registration) {
-      console.log("Registration successful:", registration.scope);
-    })
-    .catch(function (err) {
-      console.log("Service worker registration failed, error:", err);
-    });
+    .then(function(registration) {})
+    .catch(function(err) {});
 }
 
 ReactDOM.render(

@@ -42,7 +42,6 @@ const ChangeAdress = () => {
 
   function onSearch(val: any) {}
   function onChange(value: any) {
-    console.log("ádsaddassad",value);
     // setDistrict(city[value])
   }
   const onChangeAdress = (e: any) => {
@@ -105,7 +104,7 @@ const ChangeAdress = () => {
           onChange={onChange}
           allowClear
         >
-           {district &&
+          {district &&
             district.map((item: any, idx: number) => {
               return (
                 <Select.Option value={idx}>
