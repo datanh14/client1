@@ -4,7 +4,7 @@ import { ACCESS_TOKEN } from "../../../constants/constants";
 
 
 export const getDataAdressUser = async (id :string ) => {
-  const url = `https://tiki-test-1.herokuapp.com/Address/GetAddressByUser?UserID=${id}`;
+  const url = `https://hello-world-vuanhlk12.cloud.okteto.net/Address/GetAddressByUser?UserID=${id}`;
   const response = await axios.get(url, {
     headers: {
       'Authorization': `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`
@@ -16,7 +16,7 @@ export const getDataAdressUser = async (id :string ) => {
 };
 
 export const getCity = async (id = 0) => {
-  const url = 'https://tiki-test-1.herokuapp.com/Address/GetCity'
+  const url = 'https://hello-world-vuanhlk12.cloud.okteto.net/Address/GetCity'
   const response = await axios.get(url);
   const result = (await response.status) === 200 ? response.data : [];
   return result;

@@ -15,9 +15,9 @@ const Profile = () => {
   };
   const token = localStorage.getItem(ACCESS_TOKEN);
   const urlprofile =
-    'https://tiki-test-1.herokuapp.com/api/authenticate/ChangeInfo';
+    'https://hello-world-vuanhlk12.cloud.okteto.net/api/authenticate/ChangeInfo';
   const urlpass =
-    'https://tiki-test-1.herokuapp.com/api/authenticate/ChangePassword';
+    'https://hello-world-vuanhlk12.cloud.okteto.net/api/authenticate/ChangePassword';
   //Modal
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalVisiblePass, setIsModalVisiblePass] = useState(false);

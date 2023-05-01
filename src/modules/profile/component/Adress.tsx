@@ -80,7 +80,7 @@ const Adress = (props: any) => {
     setIsModalVisible(true);
   };
   const token = localStorage.getItem(ACCESS_TOKEN);
-  const url = 'https://tiki-test-1.herokuapp.com/Address/ChangeAddress';
+  const url = 'https://hello-world-vuanhlk12.cloud.okteto.net/Address/ChangeAddress';
   const handleOk = () => {
     setIsModalVisible(false);
     Axios.post(url, {
@@ -201,7 +201,7 @@ const Adress = (props: any) => {
                     type="link"
                     onClick={() => {
                       Axios.delete(
-                        `https://tiki-test-1.herokuapp.com/Address/DeleteAddress/${val.id}`
+                        `https://hello-world-vuanhlk12.cloud.okteto.net/Address/DeleteAddress/${val.id}`
                       ).then((res) => {
                         window.location.reload();
                       });

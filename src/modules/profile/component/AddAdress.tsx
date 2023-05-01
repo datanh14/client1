@@ -71,7 +71,7 @@ const AddAdress = () => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
   };
-  const url = "https://tiki-test-1.herokuapp.com/Address/AddAddressForUser";
+  const url = "https://hello-world-vuanhlk12.cloud.okteto.net/Address/AddAddressForUser";
   const submit = (e: any) => {
     e.preventDefault();
     Axios.post(
