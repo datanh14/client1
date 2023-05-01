@@ -41,7 +41,9 @@ const FirebaseUpload: React.FC<Props> = (props) => {
           setProgress(progress);
           progress === 100 ? setLoadding(true) : setLoadding(false);
         },
-        (error) => {},
+        (error) => {
+          console.log(error);
+        },
         () => {
           storage
             .ref("images")
@@ -58,6 +60,7 @@ const FirebaseUpload: React.FC<Props> = (props) => {
 
   const deleteImage = (index: number) => {
     var filtered = arr.filter((value, idx, arr) => idx !== index);
+    console.log(filtered);
     setArr((arr) => [...filtered]);
   };
 
